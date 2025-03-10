@@ -1,0 +1,25 @@
+{
+    "type": "ARRAY",
+    "items": {
+        "type": "OBJECT",
+        "properties": {
+            "description": {
+                "type": "STRING",
+                "description": "The requirement description"
+            },
+            "is_ambiguous": {
+                "type": "BOOLEAN",
+                "description": "Whether the requirement is ambiguous"
+            },
+            "is_functional": {
+                "type": "BOOLEAN",
+                "description": "Whether the requirement is functional"
+            },
+            "feedback": {
+                "type": "STRING",
+                "description": "Explanation about why the requirement is ambiguous or not"
+            }
+        },
+        "required": ["description", "is_ambiguous", "feedback"]
+    }
+}

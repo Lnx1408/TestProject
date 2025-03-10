@@ -1,0 +1,61 @@
+/* Estilos para el modal de selección de tipo de juego */
+.game-types-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.game-type-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border: 2px solid var(--light-primary);
+    border-radius: var(--border-radius-1);
+    background: var(--body-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-type-btn:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: var(--transparent-theme-color);
+}
+
+.game-type-btn i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.game-type-btn h3 {
+    color: var(--title-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.game-type-btn p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.game-levels-popup {
+    background: var(--body-color) !important;
+}
+
+.modal-subtitle {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 576px) {
+    .game-types-container {
+        flex-direction: column;
+    }
+}

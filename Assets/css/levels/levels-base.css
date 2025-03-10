@@ -1,0 +1,206 @@
+:root {
+  --light: #f6f6f9;
+  --primary: #1976D2;
+  --light-primary: #CFE8FF;
+  --grey: #eee;
+  --dark-grey: #AAAAAA;
+  --dark: #363949;
+  --danger: #D32F2F;
+  --light-danger: #FECDD3;
+  --warning: #FBC02D;
+  --light-warning: #FFF2C6;
+  --success: #388E3C;
+  --light-success: #BBF7D0;
+
+  --color-primary: #6C9BCF;
+  --color-danger: #FF0060;
+  --color-success: #1B9C85;
+  --color-warning: #F7D060;
+  --color-white: #fff;
+  --color-info-dark: #7d8da1;
+  --color-dark: #363949;
+  --color-light: rgba(132, 139, 200, 0.18);
+  --color-dark-variant: #677483;
+  --color-background: #f6f6f9;
+
+  --card-border-radius: 2rem;
+  --border-radius-1: 0.4rem;
+  --border-radius-2: 1.2rem;
+
+  --card-padding: 1.8rem;
+  --padding-1: 1.2rem;
+
+  --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+.game-container {
+  max-width: 95vw;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  margin-top: 2.5rem;
+}
+
+main .bottom-data {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 24px;
+  margin-top: 24px;
+  width: 100%;
+}
+
+main .bottom-data>div {
+  border-radius: 20px;
+  /*background: var(--light);*/
+  padding: 24px;
+  overflow-x: auto;
+  box-shadow: var(--shadow-color-strong);
+}
+
+main .bottom-data .header-table {
+  display: flex;
+  align-items: center;
+  grid-gap: 16px;
+  margin-bottom: 24px;
+  color: var(--title-color);
+}
+
+main .bottom-data .header-table h2 {
+  margin-right: auto;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+main .bottom-data .header-table .bx {
+  cursor: pointer;
+}
+
+main .bottom-data .data-info {
+  flex-grow: 1;
+  flex-basis: 500px;
+  color: var(--text-color-table) !important;
+}
+
+main .bottom-data .data-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+main .bottom-data .data-info table th {
+  padding-bottom: 12px;
+  font-size: 13px;
+  text-align: left;
+  border-bottom: 1px solid var(--grey);
+  color: var(--title-color);
+}
+
+main .bottom-data .data-info table td {
+  padding: 1rem 0.5rem;
+  color: var(--text-color-table);
+}
+
+
+main .bottom-data .data-info table tbody tr {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+main .bottom-data .data-info table tbody tr:hover {
+  background: var(--shadow-color);
+}
+
+main .bottom-data .data-info table tr td .status {
+  font-size: 10px;
+  padding: 6px 16px;
+  color: var(--light);
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+main .bottom-data .data-info table tr td .status.completed {
+  background: var(--success);
+}
+
+main .bottom-data .data-info table tr td .status.process {
+  background: var(--primary);
+}
+
+main .bottom-data .data-info table tr td .status.pending {
+  background: var(--warning);
+}
+
+
+.bottom-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.bottom-actions .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-aux {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary);
+  color: var(--light);
+}
+
+
+
+/*MODAL DE CREACION EXITOSA*/
+.game-code-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.code-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.game-code {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary);
+  padding: 8px 16px;
+  background: var(--light-primary);
+  border-radius: var(--border-radius-1);
+  letter-spacing: 2px;
+}
+
+.info-icon:hover {
+  color: var(--primary) !important;
+}
+
+.game-code-info {
+  text-align: left;
+  padding: 10px;
+}
+
+.game-code-info ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.game-code-info li {
+  margin-bottom: 8px;
+}
+/**FIN CSS MODAL***/

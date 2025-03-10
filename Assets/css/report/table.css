@@ -1,0 +1,106 @@
+/* File: /Libraries/Reports/assets/css/table.css */
+/* Estilos para la sección de intentos */
+.attempts-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.attempts-section h3 {
+    color: var(--primary-color);
+    font-size: 20px;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Tabla principal */
+.attempts-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Encabezados de la tabla */
+.attempts-table thead {
+    background-color: var(--primary-color);
+}
+
+.attempts-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    color: var(--background-color);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Celdas de la tabla */
+.attempts-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--table-border);
+    font-size: 14px;
+}
+
+/* Columnas específicas */
+.attempts-table .column-attempt {
+    width: 80px;
+    text-align: center;
+}
+
+.attempts-table .column-time {
+    width: 100px;
+}
+
+.attempts-table .column-movements {
+    width: 120px;
+    text-align: center;
+}
+
+.attempts-table .column-requirements {
+    width: 100px;
+    text-align: center;
+}
+
+.attempts-table .column-precision {
+    width: 120px;
+    text-align: right;
+}
+
+/* Formato de porcentajes */
+.attempts-table .percentage {
+    font-weight: 500;
+}
+
+.attempts-table .percentage-success {
+    color: #10B981; /* Color verde para éxito */
+}
+
+.attempts-table .percentage-error {
+    color: #EF4444; /* Color rojo para error */
+}
+
+/* Últimas filas sin borde inferior */
+.attempts-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Estilo hover para las filas */
+.attempts-table tbody tr:hover {
+    background-color: rgba(75, 108, 193, 0.05);
+}
+
+/* Responsividad de la tabla */
+@media (max-width: 768px) {
+    .attempts-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .attempts-table thead,
+    .attempts-table tbody,
+    .attempts-table th,
+    .attempts-table td,
+    .attempts-table tr {
+        display: revert;
+    }
+}

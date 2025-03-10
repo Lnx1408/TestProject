@@ -1,0 +1,77 @@
+{
+    "general": {
+        "classification": {
+            "summary_narrative_templates": {
+                "high_completion": "La partida muestra una alta tasa de finalización con un {completed_percentage}% de jugadores habiendo completado todos los requisitos. {in_progress_count} jugadores están actualmente trabajando en los desafíos.",
+                "medium_completion": "El progreso es constante con una tasa de finalización del {completed_percentage}%. Un número significativo de jugadores ({in_progress_count}) están activamente participando.",
+                "low_completion": "La partida está en etapas iniciales con un {completed_percentage}% de finalización. La mayoría de los jugadores ({in_progress_count}) aún están trabajando en los requisitos."
+            },
+            "time_narrative_templates": {
+                "fast_completion": "Los estudiantes muestran tiempos de finalización eficientes, completando los requisitos en un tiempo promedio de {avg_time}. Esto indica una buena comprensión del proceso de reconocimiento de requerimientos Ambiguos y No Ambiguos.",
+                "moderate_completion": "El tiempo promedio de finalización es de {avg_time} sugiere un ritmo razonable, aunque podría haber espacio para mejoras en ciertas áreas.",
+                "slow_completion": "El tiempo promedio de finalización es de {avg_time} indica que los estudiantes podrían estar enfrentando desafíos que necesitan ser abordados."
+            }
+        },
+        "construction": {
+            "summary_narrative_templates": {
+                "high_completion": "La partida muestra una alta tasa de finalización con un {completed_percentage}% de jugadores habiendo completado todos los requisitos. {in_progress_count} jugadores están actualmente trabajando en los desafíos.",
+                "medium_completion": "El progreso es constante con una tasa de finalización del {completed_percentage}%. Un número significativo de jugadores ({in_progress_count}) están activamente participando.",
+                "low_completion": "La partida está en etapas iniciales con un {completed_percentage}% de finalización. La mayoría de los jugadores ({in_progress_count}) aún están trabajando en los requisitos."
+            },
+            "time_narrative_templates": {
+                "fast_completion": "Los estudiantes muestran tiempos de finalización eficientes, completando los requisitos en un tiempo promedio de {avg_time}. Esto indica una buena comprensión del proceso de construcción.",
+                "moderate_completion": "El tiempo promedio de finalización por requisito de {avg_time} sugiere un ritmo razonable, aunque podría haber espacio para mejoras en ciertas áreas.",
+                "slow_completion": "El tiempo promedio de finalización por requisito de {avg_time} indica que los estudiantes podrían estar enfrentando desafíos que necesitan ser abordados."
+            },
+            "difficulty_narrative_templates": {
+                "high_difficulty": "Los estudiantes mostraron mayor dificultad en '{top_requirement}', requiriendo un promedio de {avg_attempts} intentos. La variación en el desempeño es notable, con casos desde {min_attempts} hasta {max_attempts} intentos para completar la partida.",
+                "medium_difficulty": "Se observa una dificultad moderada, destacando '{top_requirement}' con {avg_attempts} intentos promedio. Los estudiantes completaron la partida en un rango de {min_attempts} a {max_attempts} intentos.",
+                "low_difficulty": "Los requisitos presentaron una dificultad manejable, con '{top_requirement}' requiriendo {avg_attempts} intentos en promedio. Los estudiantes necesitaron entre {min_attempts} y {max_attempts} intentos para completar la partida."
+            }
+        }
+    },
+    "classification": {
+        "narrativeTemplates": {
+            "startingPhrase": {
+                "good": "El estudiante comenzó resolviendo correctamente {correctos_inicial} de {total_requisitos} requisitos en su primer intento, mostrando una buena comprensión inicial.",
+                "average": "En su primer intento, logró clasificar correctamente {correctos_inicial} de {total_requisitos} requisitos, estableciendo una base moderada.",
+                "poor": "El primer intento resultó en {correctos_inicial} requisitos correctos de {total_requisitos}, indicando la necesidad de fortalecer conceptos básicos."
+            },
+            "progressionPhrase": {
+                "efficient": "Completó la clasificación en solo {total_intentos} intentos, demostrando un entendimiento rápido y efectivo.",
+                "steady": "Progresó constantemente a través de {total_intentos} intentos hasta completar la clasificación, manteniendo un ritmo estable.",
+                "gradual": "Requirió {total_intentos} intentos para completar la clasificación, mostrando una mejora gradual en su comprensión."
+            },
+            "efficiencyPhrase": {
+                "high": "Mostró una alta eficiencia, clasificando correctamente un promedio de {promedio_correctos} requisitos por intento.",
+                "medium": "Mantuvo una eficiencia moderada con un promedio de {promedio_correctos} requisitos correctos por intento.",
+                "low": "En promedio, clasificó correctamente {promedio_correctos} requisitos por intento, sugiriendo áreas de mejora."
+            }
+        },
+        "recommendationTemplates": {
+            "attempts": {
+                "few": "Excelente capacidad de clasificación, completando la tarea en pocos intentos.",
+                "moderate": "Buen progreso, aunque hay espacio para mejorar la precisión inicial.",
+                "many": "Se recomienda reforzar los conceptos básicos para reducir el número de intentos necesarios."
+            },
+            "efficiency": {
+                "high": "Mantiene una excelente tasa de aciertos por intento.",
+                "medium": "Considere revisar cuidadosamente cada requisito antes de clasificarlo.",
+                "low": "Se sugiere un análisis más detallado de los criterios de clasificación."
+            },
+            "consistency": {
+                "high": "Demuestra un entendimiento estable de los conceptos.",
+                "medium": "Procure mantener un enfoque más constante en la clasificación.",
+                "low": "Se sugiere revisar la metodología de clasificación para lograr resultados más consistentes."
+            }
+        }
+    },
+    "construction": {
+        "requirement_summary": {
+            "base": "Para el requisito '{requisito_texto}', se necesitaron {total_intentos} intentos y un tiempo total de {tiempo_minutos} minutos {tiempo_segundos} segundos. La precisión inicial fue del {precision_inicial}%, llegando finalmente a una precisión del {precision_final}%.",
+            "improvement": "Esto representa una mejora del {porcentaje_mejora}% desde el primer intento.",
+            "decoys": "Durante el proceso, se interactuó {total_señuelos} veces con señuelos."
+        },
+        "attempt_detail": "Durante el intento {numero_intento} empleó {tiempo_minutos} minutos {tiempo_segundos} segundos y realizó {total_movimientos} movimientos para construir el requisito. Logró posicionar {fragmentos_correctos} fragmentos de forma correcta y {fragmentos_incorrectos} de forma incorrecta. Además de haber interactuado con {señuelos_usados} señuelos, lo que resultó en una precisión del {precision}%."
+    }
+}

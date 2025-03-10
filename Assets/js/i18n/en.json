@@ -1,0 +1,1350 @@
+{
+    "nav": {
+        "home": "Home",
+        "dashboard": "Home",
+        "game": "Game",
+        "levels": "Levels",
+        "profile": "Profile",
+        "analytics": "Statistics",
+        "analyticsStudent": "Analysis",
+        "settings": "Settings",
+        "theme": "Theme",
+        "language": "Language",
+        "logout": "Logout"
+    },
+    "dashboard_welcome": {
+        "student": {
+            "welcome": "👋🏼 Welcome to",
+            "phrase1": "We're excited to have you here. Your journey to learning and growth begins now.",
+            "phrase2": "Your dedicated learning space awaits you."
+        },
+        "teacher": {
+            "welcome": "👨🏼‍🏫 Welcome to",
+            "phrase1": "Thank you for being an integral part of our educational community.",
+            "phrase2": "Your dedicated teaching space is ready for you."
+        }
+    },
+    "error_404": {
+        "phrase1": "Error 404",
+        "phrase2": "Page not found"
+    },
+    "game_welcome": {
+        "title": "Improve your Requirements Skills",
+        "description": "Each game is an opportunity to enhance your requirements analysis and specification abilities. Ready for the next challenge? Enter the game code and start playing.",
+        "start_button": "Enter Game",
+        "modal": {
+            "title": "Game Code",
+            "input_placeholder": "Enter the game code",
+            "submit_button": "Start",
+            "cancel_button": "Cancel",
+            "invalid_code": "Invalid game code",
+            "error_message": "An error occurred while verifying the code",
+            "loading": "Verifying code..."
+        }
+    },
+    "levels_welcome": {
+        "title": "Create Learning Challenges",
+        "description": "As a teacher, you have the opportunity to create meaningful learning experiences. Design games that help your students develop skills in requirements specification through practical classification and construction exercises.",
+        "start_button": "Create New Game",
+        "modal": {
+            "title": "Select Game Type",
+            "subtitle": "What type of game would you like to create?",
+            "classification": {
+                "title": "Requirements Classification",
+                "description": "Students will learn to identify and classify ambiguous and non-ambiguous requirements."
+            },
+            "construction": {
+                "title": "Requirements Construction",
+                "description": "Students will practice correct requirement construction from fragments."
+            },
+            "cancel_button": "Cancel"
+        }
+    },
+    "create_classification": {
+        "title": "Create Classification Game",
+        "counter": {
+            "title": "Selected Requirements",
+            "minimum": "Minimum required: 5"
+        },
+        "messages": {
+            "input_placeholder": "Enter the required data",
+            "error_message": "An error occurred while creating the requirement",
+            "loading": "Registering...",
+            "confirm_remove": "Are you sure you want to delete this requirement?",
+            "requirement_created": "Requirement successfully created",
+            "requirement_deleted": "Requirement successfully deleted",
+            "min_requirements": "You must select at least 5 requirements to create the game",
+            "max_requirements": "You have reached the maximum number of requirements allowed",
+            "error": "Error",
+            "error_creating": "Error creating requirement",
+            "error_deleting": "Error deleting requirement",
+            "error_loading": "Error loading requirements",
+            "game_created": "Game successfully created!",
+            "game_code": "Game code",
+            "confirm_exit": "Are you sure you want to exit? Unsaved changes will be lost",
+            "confirm_create": "Are you sure you want to create the game with the selected requirements?",
+            "loading_requirements": "Loading requirements...",
+            "processing": "Processing request...",
+            "no_requirements_selected": "No requirements selected"
+        },
+        "buttons": {
+            "select_existing": "Select Existing Requirements",
+            "create_new": "Create New Requirement",
+            "create_game": "Create Game",
+            "accept": "Aceppt",
+            "continue": "Continue",
+            "yes": "Yes",
+            "no": "No",
+            "export": "Export",
+            "import": "Import Requirements"
+        },
+        "main_table": {
+            "title": "Game Requirements",
+            "columns": {
+                "description": "Description",
+                "type": "Type",
+                "is_ambiguous": "Is Ambiguous",
+                "feedback": "Feedback",
+                "actions": "Actions"
+            },
+            "empty": "No requirements selected"
+        },
+        "select_modal": {
+            "title": "Select Existing Requirements",
+            "confirm": "Add Selected",
+            "cancel": "Cancel"
+        },
+        "create_modal": {
+            "title": "Create New Requirement",
+            "game_code_info": {
+                "title": "Game Code",
+                "description": "The game code is a unique identifier that allows students to join the game you have created.",
+                "point1": "Share this code with your students so they can access the game.",
+                "point2": "The code is unique and cannot be modified.",
+                "point3": "Students will need this code to access the activity from the 'Game' section."
+            },
+            "form": {
+                "description": "Requirement Description",
+                "description_placeholder": "Enter requirement description",
+                "is_ambiguous": "Is ambiguous?",
+                "is_functional": "Is functional?",
+                "feedback": "Feedback",
+                "feedback_placeholder": "Enter feedback for this requirement"
+            },
+            "validation": {
+                "description_required": "Requirement description is required",
+                "description_min_length": "Description must be at least 10 characters long",
+                "description_max_length": "Description cannot exceed 500 characters",
+                "feedback_required": "Feedback is required",
+                "feedback_min_length": "Feedback must be at least 10 characters long",
+                "feedback_max_length": "Feedback cannot exceed 500 characters",
+                "invalid_format": "Invalid data format",
+                "duplicate_description": "A requirement with this description already exists"
+            },
+            "buttons": {
+                "create": "Create and Add",
+                "cancel": "Cancel"
+            }
+        },
+        "import_modal": {
+            "title": "Import Requirements",
+            "instructions": "Select a CSV file with the requirements to import. Make sure the file follows the correct format.",
+            "format_info": "The file must be a CSV with columns: descripcion, es_ambiguo, es_funcional, retroalimentacion",
+            "columns_info": "Values for es_ambiguo and es_funcional must be 0 or 1",
+            "download_template": "Download Template",
+            "select_file": "Select File",
+            "preview_title": "Preview",
+            "import": "Import",
+            "cancel": "Cancel",
+            "success": "Requirements imported successfully",
+            "errors": {
+                "invalid_extension": "File must be CSV",
+                "file_too_large": "File is too large. Maximum 1MB",
+                "invalid_format": "Invalid file format",
+                "missing_columns": "Required columns are missing",
+                "invalid_data": "Data is not valid"
+            }
+        },
+        "errors": {
+            "server_error": "Server error",
+            "connection_error": "Connection error",
+            "invalid_data": "Invalid data",
+            "session_expired": "Session expired",
+            "unauthorized": "Unauthorized to perform this action",
+            "general": "An error has occurred, we apologize for the inconvenience."
+        }
+    },
+    "requirements_generator": {
+        "steps": {
+            "configuration": {
+                "title": "Configuration",
+                "description": "Generation parameters",
+                "header": "Configure requirements generation",
+                "subheader": "Define the parameters for automatic requirements generation with artificial intelligence."
+            },
+            "visualization": {
+                "title": "Visualization",
+                "description": "Review and edit results",
+                "header": "Generated requirements",
+                "subheader": "Review the generated requirements and edit them if necessary."
+            },
+            "confirmation": {
+                "title": "Confirmation",
+                "description": "Save generated requirements",
+                "header": "Confirm and save",
+                "subheader": "Review the summary and save the generated requirements."
+            }
+        },
+        "form": {
+            "provider": {
+                "label": "Select AI provider",
+                "openai_sublabel": "Recommended",
+                "gemini_sublabel": "Google AI"
+            },
+            "language": {
+                "label": "Requirements language",
+                "es_sublabel": "Spanish",
+                "en_sublabel": "English"
+            },
+            "context": {
+                "label": "Project context",
+                "placeholder": "Briefly describe the context or domain of the project for which you need to generate requirements."
+            },
+            "num_requirements": {
+                "label": "Number of requirements to generate",
+                "hint": "Minimum: 5, Maximum: 20"
+            }
+        },
+        "buttons": {
+            "generate": "Generate requirements",
+            "regenerate": "Regenerate",
+            "back": "Back",
+            "continue": "Continue",
+            "save": "Save requirements"
+        },
+        "table": {
+            "count_label": "requirements generated",
+            "columns": {
+                "description": "Description",
+                "type": "Type",
+                "ambiguous": "Ambiguity",
+                "feedback": "Feedback",
+                "actions": "Actions"
+            }
+        },
+        "loading": {
+            "message": "Generating requirements, please wait..."
+        },
+        "summary": {
+            "provider": "AI Provider",
+            "language": "Language",
+            "context": "Context",
+            "functional": "Functional",
+            "non_functional": "Non-Functional",
+            "ambiguous": "Ambiguous",
+            "non_ambiguous": "Non-Ambiguous"
+        },
+        "validation": {
+            "context_required": "Please enter the project context",
+            "no_requirements": "There are no requirements to save"
+        },
+        "regenerate": {
+            "title": "Regenerate requirements",
+            "confirmation": "Are you sure you want to regenerate the requirements? Current requirements will be replaced.",
+            "confirm": "Regenerate",
+            "cancel": "Cancel"
+        },
+        "delete": {
+            "title": "Delete requirement",
+            "confirmation": "Are you sure you want to delete this requirement?",
+            "confirm": "Delete",
+            "cancel": "Cancel"
+        },
+        "edit": {
+            "title": "Edit requirement",
+            "form": {
+                "description": "Description",
+                "type": "Requirement type",
+                "functional": "Functional",
+                "non_functional": "Non-Functional",
+                "ambiguous": "Is it ambiguous?",
+                "yes": "Yes",
+                "no": "No",
+                "feedback": "Feedback"
+            },
+            "save": "Save",
+            "cancel": "Cancel",
+            "validation": {
+                "description_required": "Description is required",
+                "feedback_required": "Feedback is required"
+            }
+        },
+        "saving": {
+            "title": "Saving requirements",
+            "message": "Please wait...",
+            "success_title": "Requirements saved",
+            "success_message": "The requirements have been successfully saved",
+            "success_button": "Accept"
+        },
+        "errors": {
+            "title": "Error",
+            "button": "Accept",
+            "generation_failed": "Error generating requirements",
+            "save_failed": "Error saving requirements",
+            "ai_generator_not_loaded": "The AI generator is not available"
+        },
+        "messages": {
+            "ai_requirements_added": "{count} requirements successfully added"
+        }
+    },
+    "create_construction": {
+        "title": "Create Construction Game",
+        "counter": {
+            "title": "Selected Requirements",
+            "minimum": "Minimum required: 5"
+        },
+        "buttons": {
+            "select_existing": "Select Existing Requirements",
+            "create_new": "Create New Requirement",
+            "create_game": "Create Game",
+            "generate_fragments": "Generate Fragments",
+            "create_manually": "Create Manually",
+            "add_decoy": "Add Decoy",
+            "save": "Save",
+            "cancel": "Cancel",
+            "continue": "Continue",
+            "yes": "Yes",
+            "no": "No",
+            "export": "Export",
+            "import": "Import Requirements"
+        },
+        "main_table": {
+            "title": "Game Requirements",
+            "columns": {
+                "requirement": "Requirement",
+                "fragments": "Fragments",
+                "decoys": "Decoys",
+                "actions": "Actions"
+            },
+            "details": {
+                "additional_info": "Additional Details",
+                "main_fragments": "Main Fragments",
+                "decoys": "Decoys",
+                "position": "Position"
+            },
+            "empty": "No requirements selected"
+        },
+        "select_modal": {
+            "title": "Select Existing Requirements",
+            "confirm": "Add Selected",
+            "cancel": "Cancel",
+            "preview": "Fragments Preview"
+        },
+        "create_modal": {
+            "title": "Create New Requirement",
+            "sections": {
+                "requirement": "Complete Requirement",
+                "fragments": "Requirement Fragments",
+                "decoys": "Decoys"
+            },
+            "form": {
+                "requirement": {
+                    "label": "Complete Requirement",
+                    "placeholder": "Enter the complete requirement"
+                },
+                "fragments": {
+                    "title": "Fragments",
+                    "auto_generation": "Automatic Generation",
+                    "manual_creation": "Manual Creation",
+                    "fragment_text": "Fragment Text",
+                    "position": "Position",
+                    "add": "Add Fragment"
+                },
+                "decoys": {
+                    "title": "Decoys",
+                    "text": "Decoy Text",
+                    "add": "Add Decoy"
+                }
+            },
+            "validation": {
+                "requirement_required": "Complete requirement is required",
+                "requirement_min_length": "Requirement must be at least 10 characters long",
+                "fragments_required": "At least one fragment is required",
+                "fragments_match": "Fragments must match the complete requirement",
+                "fragment_text_required": "Fragment text is required",
+                "position_required": "Position is required",
+                "position_duplicate": "A fragment already exists in this position",
+                "decoy_text_required": "Decoy text is required",
+                "decoys_required": "At least one decoy is required"
+            }
+        },
+        "import_modal": {
+            "title": "Import Construction Requirements",
+            "instructions": "Select a CSV file with the requirements to import. Make sure the file follows the correct format.",
+            "format_info": "The file must be a CSV with columns: requisito_completo, fragmentos",
+            "columns_info": "Fragments must have the format: text|position|is_decoy, separated by ¬",
+            "download_template": "Download Template",
+            "select_file": "Select File",
+            "preview_title": "Preview",
+            "import": "Import",
+            "cancel": "Cancel",
+            "success": "Requirements imported successfully",
+            "errors": {
+                "invalid_extension": "File must be CSV",
+                "file_too_large": "File is too large. Maximum 1MB",
+                "invalid_format": "Invalid file format",
+                "missing_columns": "Required columns are missing",
+                "missing_fragments": "There must be at least one main fragment and one decoy",
+                "invalid_fragment_format": "Invalid fragment format"
+            }
+        },
+        "messages": {
+            "requirement_created": "Requirement successfully created",
+            "requirement_deleted": "Requirement successfully deleted",
+            "confirm_remove": "Are you sure you want to delete this requirement?",
+            "min_requirements": "You must select at least 5 requirements to create the game",
+            "game_created": "Game successfully created!",
+            "game_code": "Game code",
+            "generating_fragments": "Generating fragments...",
+            "fragments_generated": "Fragments successfully generated",
+            "error_generating": "Error generating fragments",
+            "no_requirements_selected": "No requirements selected",
+            "import_success": "Requirements imported successfully",
+            "generating_preview": "Generating preview...",
+            "error_generating_preview": "Error generating preview"
+        },
+        "errors": {
+            "server_error": "Server error",
+            "connection_error": "Connection error",
+            "invalid_data": "Invalid data",
+            "validation_error": "Validation error",
+            "creation_error": "Error creating requirement",
+            "deletion_error": "Error deleting requirement",
+            "modal_error": "An error occurred",
+            "game_creation_error": "Error creating game"
+        },
+        "modals": {
+            "game_code_info": {
+                "title": "Game Code",
+                "description": "The game code is a unique identifier that allows students to join the game you have created.",
+                "point1": "Share this code with your students so they can access the game.",
+                "point2": "The code is unique and cannot be modified.",
+                "point3": "Students will need this code to access the activity from the 'Game' section."
+            }
+        }
+    },
+    "my_games": {
+        "title": "My Games",
+        "stats": {
+            "classification": "Classification Games",
+            "construction": "Construction Games"
+        },
+        "search": {
+            "placeholder": "Search games by code..."
+        },
+        "sections": {
+            "classification": "Classification Games",
+            "construction": "Construction Games"
+        },
+        "buttons": {
+            "load_more": "Load More",
+            "load_less": "Show Less",
+            "view": "View Details",
+            "cancel": "Cancel"
+        },
+        "cards": {
+            "students": "students",
+            "created": "Created on"
+        },
+        "modals": {
+            "view_details": {
+                "title": "View Details",
+                "message": "Do you want to view details for game {code}?"
+            }
+        },
+        "messages": {
+            "no_games": "No games available",
+            "loading": "Loading games...",
+            "search_no_results": "No games found with that code"
+        },
+        "errors": {
+            "title": "Error",
+            "initialization": "Error initializing games",
+            "loading": "Error loading games",
+            "loading_more": "Error loading more games",
+            "search": "Error searching games"
+        }
+    },
+    "game_classification": {
+        "header": {
+            "match": "Match",
+            "attempts": "Attempts",
+            "time": "Time",
+            "moves": "Moves"
+        },
+        "panels": {
+            "ambiguous": "Ambiguous Requirements",
+            "to_classify": "Requirements to Classify",
+            "non_ambiguous": "Non-Ambiguous Requirements"
+        },
+        "placeholders": {
+            "drag_requirements": "Drag the requirements here"
+        },
+        "buttons": {
+            "validate": "Validate Classification",
+            "continue": "Continue",
+            "accept": "Accept"
+        },
+        "modals": {
+            "validation_result": "Validation Result",
+            "attempt_result": "Attempt Result",
+            "game_unavailable": "Game Unavailable",
+            "metrics": {
+                "time_spent": "Time spent in this attempt",
+                "moves_made": "Moves made in this attempt",
+                "correct_req": "Correct requirements",
+                "incorrect_req": "Incorrect requirements",
+                "accuracy": "Accuracy"
+            },
+            "feedback": {
+                "reclassify_title": "Requirements that need reclassification",
+                "success_title": "Congratulations!",
+                "success_message": "You have correctly classified all requirements.",
+                "classify_all": "Please classify all requirements before validating.",
+                "game_unavailable": "The game code is invalid or the game has already been completed. Please try another code or contact the administrator."
+            },
+            "game_completed": {
+                "title": "Game Completed!",
+                "stats_title": "Final Statistics",
+                "total_attempts": "Total attempts",
+                "total_moves": "Total moves",
+                "total_time": "Total time"
+            }
+        }
+    },
+    "game_construction": {
+        "header": {
+            "match": "Game",
+            "requirements": "Requirement",
+            "of": "of",
+            "attempts": "Attempt",
+            "time": "Time"
+        },
+        "sections": {
+            "construction_area": "Construction Area",
+            "available_fragments": "Available Fragments"
+        },
+        "buttons": {
+            "validate": "Validate Construction",
+            "reset": "Reset Fragments",
+            "continue": "Continue",
+            "ok": "OK",
+            "yes": "Yes",
+            "no": "No",
+            "back_to_dashboard": "Back to Dashboard"
+        },
+        "messages": {
+            "game_completed": "Game Completed!",
+            "congratulations": "Congratulations! You have completed all requirements in this game.",
+            "confirm_reset": {
+                "title": "Reset Fragments?",
+                "text": "Are you sure you want to reset all fragments to their initial position?"
+            },
+            "validation": {
+                "empty": {
+                    "title": "Empty Construction",
+                    "text": "Please place fragments in the construction area before validating."
+                },
+                "loading": "Validating construction..."
+            },
+            "feedback": {
+                "success_title": "Correct!",
+                "try_again_title": "Almost there",
+                "accuracy": "Accuracy",
+                "correct_fragments": "Correct fragments",
+                "of": "of",
+                "attempt": "Attempt",
+                "hint": "Review the order of fragments and try again"
+            }
+        },
+        "errors": {
+            "title": "Error",
+            "validation": "Error validating construction. Please try again.",
+            "load_game": "Error loading game data.",
+            "save_progress": "Error saving progress."
+        },
+        "tooltips": {
+            "drag_fragment": "Drag this fragment",
+            "drag_fragments": "Drag the fragments here to construct the requirement",
+            "drop_here": "Drop fragment here",
+            "validate_button": "Validate current construction",
+            "reset_button": "Reset all fragments"
+        }
+    },
+    "game_analytics_construction": {
+        "cards": {
+            "average": {
+                "title": "Average",
+                "subtitle": "Accuracy",
+                "info": {
+                    "title": "Average Accuracy",
+                    "description": "Represents the average accuracy percentage achieved by all players in the construction of requirements."
+                }
+            },
+            "time": {
+                "title": "Average Time",
+                "info": {
+                    "title": "Average Time",
+                    "description": "The average time players have spent completing the requirements."
+                }
+            },
+            "players": {
+                "title": "Total Players",
+                "info": {
+                    "title": "Total Players",
+                    "description": "The total number of players who have participated in this game."
+                }
+            },
+            "attempts": {
+                "title": "Average Attempts",
+                "info": {
+                    "title": "Average Attempts",
+                    "description": "The average number of attempts required to complete the requirements."
+                }
+            },
+            "min_attempts": {
+                "title": "Minimum Attempts",
+                "info": {
+                    "title": "Minimum Attempts",
+                    "description": "The lowest number of attempts a player has needed to complete a requirement."
+                }
+            },
+            "max_attempts": {
+                "title": "Maximum Attempts",
+                "info": {
+                    "title": "Maximum Attempts",
+                    "description": "The highest number of attempts a player has needed to complete a requirement."
+                }
+            }
+        },
+        "buttons": {
+            "show_more": "Show more",
+            "show_less": "Show less"
+        },
+        "table": {
+            "title": "Players",
+            "columns": {
+                "player": "Player",
+                "time": "Time",
+                "attempts": "Attempts",
+                "last_attempt": "Last Attempt",
+                "progress": "Progress",
+                "status": "Status",
+                "actions": "Actions"
+            },
+            "info": {
+                "player": {
+                    "title": "Player Information",
+                    "description": "Displays the full name of the participating player."
+                },
+                "time": {
+                    "title": "Total Time",
+                    "description": "Total time the player has spent across all attempts."
+                },
+                "attempts": {
+                    "title": "Number of Attempts",
+                    "description": "Total attempts made by the player in this game."
+                },
+                "last_attempt": {
+                    "title": "Last Attempt",
+                    "description": "Date and time of the player's last attempt."
+                },
+                "progress": {
+                    "title": "Progress Percentage",
+                    "description": "The percentage of requirements correctly completed."
+                },
+                "status": {
+                    "title": "Game Status",
+                    "description": "The player's current status in the game: completed, in progress, or pending."
+                }
+            }
+        },
+        "messages": {
+            "no_data": "No data available",
+            "loading": "Loading data..."
+        },
+        "modals": {
+            "view_details": {
+                "title": "Would you like to see the details?",
+                "message": "View details for",
+                "confirm": "Yes, view details",
+                "cancel": "No, cancel"
+            }
+        }
+    },
+    "game_analytics_classification": {
+        "cards": {
+            "first_attempt": {
+                "title": "First Attempt Average",
+                "subtitle": "Hits",
+                "info": {
+                    "title": "First Attempt Average",
+                    "description": "Represents the average percentage of correct classifications that players achieve on their first attempt."
+                }
+            },
+            "time": {
+                "title": "Average Time",
+                "info": {
+                    "title": "Average Time",
+                    "description": "Average time players have spent completing the requirements classification."
+                }
+            },
+            "players": {
+                "title": "Total Players",
+                "info": {
+                    "title": "Total Players",
+                    "description": "Total number of players who have participated in this classification game."
+                }
+            },
+            "attempts": {
+                "title": "Average Attempts",
+                "info": {
+                    "title": "Average Attempts",
+                    "description": "Average number of attempts needed to complete the classification."
+                }
+            },
+            "one_attempt": {
+                "title": "One Attempt Players",
+                "info": {
+                    "title": "Players with 1 Attempt",
+                    "description": "Percentage of players who completed the classification on their first attempt."
+                }
+            },
+            "two_three_attempts": {
+                "title": "2-3 Attempts Players",
+                "info": {
+                    "title": "Players with 2-3 Attempts",
+                    "description": "Percentage of players who needed between 2 and 3 attempts to complete the classification."
+                }
+            },
+            "more_attempts": {
+                "title": "3+ Attempts Players",
+                "info": {
+                    "title": "Players with more than 3 Attempts",
+                    "description": "Percentage of players who needed more than 3 attempts to complete the classification."
+                }
+            }
+        },
+        "buttons": {
+            "show_more": "Show more",
+            "show_less": "Show less"
+        },
+        "table": {
+            "title": "Players",
+            "columns": {
+                "player": "Player",
+                "time": "Time",
+                "attempts": "Attempts",
+                "last_attempt": "Last Attempt",
+                "progress": "Progress",
+                "status": "Status",
+                "actions": "Actions"
+            },
+            "info": {
+                "player": {
+                    "title": "Player Information",
+                    "description": "Shows the full name of the player participating in the classification."
+                },
+                "time": {
+                    "title": "Total Time",
+                    "description": "Total time the player has spent on all classification attempts."
+                },
+                "attempts": {
+                    "title": "Number of Attempts",
+                    "description": "Total attempts made by the player in this classification game."
+                },
+                "last_attempt": {
+                    "title": "Last Attempt",
+                    "description": "Date and time of the last classification attempt made."
+                },
+                "progress": {
+                    "title": "Progress Percentage",
+                    "description": "Percentage of requirements correctly classified."
+                },
+                "status": {
+                    "title": "Game Status",
+                    "description": "Current player status in the classification game: completed, in progress, or pending."
+                }
+            }
+        },
+        "modals": {
+            "view_details": {
+                "title": "View details?",
+                "message": "View details for",
+                "confirm": "Yes, view details",
+                "cancel": "No, cancel"
+            }
+        },
+        "messages": {
+            "no_data": "No data available",
+            "loading": "Loading data..."
+        }
+    },
+    "details_construction": {
+        "stats": {
+            "time": {
+                "title": "Total Time",
+                "description": "Total accumulated time that the player has spent on requirement construction across all attempts."
+            },
+            "attempts": {
+                "title": "Number of Attempts",
+                "description": "Total number of attempts the player has made to construct all requirements."
+            }
+        },
+        "table": {
+            "title": "Attempts",
+            "attempt": {
+                "title": "Attempt",
+                "title_modal": "Attempt Number",
+                "description": "Indicates the sequential order of attempts made by the user in requirement construction."
+            },
+            "requirement_id": {
+                "title": "Requirement ID",
+                "title_modal": "Requirement ID",
+                "description": "Unique identifier for the requirement being constructed."
+            },
+            "time": {
+                "title": "Attempt Time",
+                "title_modal": "Attempt Time",
+                "description": "Total duration taken by the user to complete this specific attempt."
+            },
+            "movements": {
+                "title": "Number of Movements",
+                "title_modal": "Number of Movements",
+                "description": "Total number of times fragments were moved during this attempt."
+            },
+            "correct_fragments": {
+                "title": "Correct Fragments",
+                "title_modal": "Correct Fragments",
+                "description": "Number of fragments placed in the correct position."
+            },
+            "incorrect_fragments": {
+                "title": "Incorrect Fragments",
+                "title_modal": "Incorrect Fragments",
+                "description": "Number of fragments placed in an incorrect position."
+            },
+            "decoys_used": {
+                "title": "Decoys Used",
+                "title_modal": "Decoys Used",
+                "description": "Number of decoy fragments that were used in the attempt."
+            },
+            "progressive_accuracy": {
+                "title": "Progressive Accuracy",
+                "title_modal": "Progressive Accuracy",
+                "description": "Percentage indicating the accumulated accuracy in requirement construction."
+            },
+            "date": {
+                "title": "Attempt Date",
+                "title_modal": "Attempt Date",
+                "description": "Date and time when the attempt was made."
+            }
+        },
+        "modal": {
+            "loading": "Loading details...",
+            "title": "Attempt Details",
+            "constructed_requirement": "Constructed Requirement",
+            "user_construction": "User Construction",
+            "decoys_used": "Decoys Used",
+            "unused_fragments": "Unused Fragments",
+            "correct_fragments": "Correct Fragments",
+            "total_time": "Total Time",
+            "total_movements": "Total Movements",
+            "see_details": "See Details",
+            "movements": "movements",
+            "position": "Position",
+            "close": "Close"
+        },
+        "buttons": {
+            "generate_report": "Generate Report",
+            "cancel": "Cancel",
+            "accept": "Accept"
+        }
+    },
+    "details_classification": {
+        "stats": {
+            "time": {
+                "title": "Time",
+                "info": {
+                    "title": "Total Time",
+                    "description": "Total time accumulated across all classification attempts."
+                }
+            },
+            "attempts": {
+                "title": "Number of Attempts",
+                "info": {
+                    "title": "Number of Attempts",
+                    "description": "Total attempts made in the classification of requirements."
+                }
+            }
+        },
+        "buttons": {
+            "generate_report": "Generate Report"
+        },
+        "table": {
+            "title": "Attempts",
+            "columns": {
+                "attempt": "Attempt No.",
+                "time": "Time",
+                "movements": "No. of Movements",
+                "requirements": "Requirements",
+                "correct": "Correct",
+                "incorrect": "Incorrect",
+                "success_precision": "Success Precision",
+                "error_precision": "Error Precision",
+                "progressive_precision": "Progressive Precision",
+                "date": "Date",
+                "actions": "Actions"
+            },
+            "info": {
+                "attempt": {
+                    "title": "Attempt Number",
+                    "description": "Sequential number indicating the order of the attempt in the classification."
+                },
+                "time": {
+                    "title": "Attempt Time",
+                    "description": "Total duration of this specific classification attempt."
+                },
+                "movements": {
+                    "title": "Number of Movements",
+                    "description": "Total number of movements made during this attempt."
+                },
+                "requirements": {
+                    "title": "Requirements",
+                    "description": "Total number of requirements evaluated in this attempt."
+                },
+                "correct": {
+                    "title": "Correct Requirements",
+                    "description": "Number of requirements correctly classified in this attempt."
+                },
+                "incorrect": {
+                    "title": "Incorrect Requirements",
+                    "description": "Number of requirements incorrectly classified in this attempt."
+                },
+                "success_precision": {
+                    "title": "Success Precision",
+                    "description": "Percentage of accuracy in correctly classified requirements."
+                },
+                "error_precision": {
+                    "title": "Error Precision",
+                    "description": "Percentage of inaccuracy in incorrectly classified requirements."
+                },
+                "progressive_precision": {
+                    "title": "Progressive Precision",
+                    "description": "Cumulative precision percentage considering all attempts made."
+                },
+                "date": {
+                    "title": "Attempt Date",
+                    "description": "Date and time this classification attempt was made."
+                }
+            }
+        },
+        "modals": {
+            "attempt_details": {
+                "loading": "Loading details...",
+                "title": "Attempt Details",
+                "headers": {
+                    "time": "Time",
+                    "success": "Successes",
+                    "errors": "Errors"
+                },
+                "requirements": {
+                    "title": "Evaluated Requirements",
+                    "feedback": "Feedback",
+                    "movements": "Movements"
+                },
+                "close": "Close"
+            },
+            "report": {
+                "title": "Generate Report",
+                "message": "Select an option",
+                "preview": "Preview",
+                "print": "Print",
+                "cancel": "Cancel"
+            }
+        }
+    },
+    "analytics": {
+        "report": {
+            "modal": {
+                "title": "Generate Report",
+                "select_option": "What do you want to do with the report?",
+                "preview": "Preview",
+                "print": "Print",
+                "cancel": "Cancel"
+            }
+        }
+    },
+    "report": {
+        "title": {
+            "line1": "REPORT",
+            "line2": "DESCRIPTIVE"
+        },
+        "game_code": {
+            "label": "Game Code"
+        },
+        "sections": {
+            "game_details": "Game Details",
+            "attempt_details": "Attempt Details",
+            "summary": "Summary",
+            "analysis": "Performance Analysis",
+            "recommendations": "Recommendations",
+            "progression": "Learning Curve",
+            "attempts_description": "Detailed Attempts Description",
+            "requirements_analysis": " Analysis by Requirement"
+        },
+        "stats": {
+            "time": "Time",
+            "attempts": "Attempts",
+            "precision": "Precision",
+            "average_correct": "Average Correct Requirements",
+            "consistency": "Consistency",
+            "total_requirements": "Total Requirements",
+            "average_attempts": "Average Attempts per Requirement"
+        },
+        "metrics_explanation": {
+            "average_title": "Average Correct Requirements",
+            "average_description": "Represents the mean of correctly classified requirements per attempt. Calculated as:",
+            "average_formula": "Average = (Total correct requirements) / (Total number of attempts)",
+            "average_interpretation": "A higher value indicates better accuracy in requirement classification.",
+            "consistency_title": "Consistency Index",
+            "consistency_description": "Combined measure that evaluates both performance stability and improvement trend. Composed of two factors:",
+            "stability_formula": "Stability = 100 × (1 - σ/σ_max)",
+            "improvement_formula": "Improvement = Average of positive increments between consecutive attempts",
+            "consistency_formula": "Final Consistency = (0.7 × Stability) + (0.3 × Improvement)",
+            "consistency_interpretation": "A higher value (100%) indicates perfectly stable performance with constant improvement. Considered as:",
+            "consistency_levels": [
+                "High (≥75%): Very stable performance with positive trend",
+                "Medium (≥50%): Moderately stable performance",
+                "Low (<50%): Variable performance or no clear improvement"
+            ]
+        },
+        "table": {
+            "columns": {
+                "attempt": "Attempt",
+                "time": "Time",
+                "movements": "Movements",
+                "requirements": "Requirements",
+                "correct": "Correct",
+                "incorrect": "Incorrect",
+                "precision_success": "Success Precision",
+                "precision_errors": "Error Precision",
+                "precision_progressive": "Progressive Precision"
+            },
+            "explanation": {
+                "title": "Column Descriptions",
+                "attempt": "Sequential number indicating the order of each attempt made.",
+                "time": "Total duration taken to complete the attempt.",
+                "movements": "Total number of classification actions performed during the attempt.",
+                "requirements": "Total number of requirements available for classification in the attempt.",
+                "correct": "Number of requirements correctly classified.",
+                "incorrect": "Number of requirements incorrectly classified.",
+                "precision_success": "Percentage representing the accuracy of correct classifications, calculated as (Correct/Total) × 100.",
+                "precision_errors": "Percentage representing the error rate in classifications, calculated as (Incorrect/Total) × 100.",
+                "precision_progressive": "Metric reflecting the cumulative improvement in the student's precision over their attempts."
+            }
+        },
+        "summary": {
+            "player_prefix": "The player",
+            "progress_record": "has recorded their progress in the game, accumulating a total playing time of",
+            "minutes": "minutes",
+            "seconds": "seconds",
+            "distributed_in": "distributed across",
+            "attempts": "attempts",
+            "game_identified": "The game is identified under the unique code",
+            "last_attempt_prefix": "and their last attempt was made on"
+        },
+        "attempts_narrative": {
+            "title": "Detailed Attempts Description",
+            "improvement": "increase",
+            "decline": "decrease",
+            "compared_to_previous": "compared to the previous attempt",
+            "during_attempt": "During attempt",
+            "spent": "spent",
+            "minutes": "minutes",
+            "seconds": "seconds",
+            "and_made": "and made",
+            "movements": "moves",
+            "to_classify": "to classify the",
+            "available_requirements": "available requirements",
+            "managed_to_classify": "Successfully classified",
+            "requirements": "requirements",
+            "leaving": "leaving",
+            "incorrect": "incorrect",
+            "resulting_in": "resulting in a precision of",
+            "and_a": "and a",
+            "increase": "increase",
+            "decrease": "decrease",
+            "of": "of",
+            "in_precision": "in precision",
+            "classified_requirements": "Classified Requirements",
+            "total_moves": "Total Moves",
+            "to_ambiguous": "To Ambiguous",
+            "to_non_ambiguous": "To Non-Ambiguous"
+        },
+        "recommendations": {
+            "title": "Improvement Recommendations",
+            "attempts": "Attempt Management",
+            "efficiency": "Efficiency",
+            "consistency": "Consistency"
+        },
+        "chart": {
+            "title": "Learning Progression",
+            "y_axis": "Accuracy (%)",
+            "attempt_label": "Attempt",
+            "precision_label": "Progressive Accuracy"
+        },
+        "analysis": {
+            "title": "Detailed Analysis",
+            "performance_subtitle": "Overall Performance",
+            "progression_subtitle": "Learning Progression"
+        },
+        "footer": {
+            "generated_by": "Report generated by"
+        }
+    },
+    "report_general": {
+        "title": {
+            "line1": "REPORT",
+            "line2": "GENERAL"
+        },
+        "game_info": {
+            "code": "Game Code",
+            "requirements": "Total Requirements: ",
+            "creator": "Created by: ",
+            "date": "Creation Date"
+        },
+        "construction": {
+            "summary": {
+                "title": "General Overview",
+                "metrics": {
+                    "players": "Total Players",
+                    "accuracy": "Average Accuracy",
+                    "time": "Average Time",
+                    "completion": "Completion Rate",
+                    "per_requirement": "per Game"
+                },
+                "progress": {
+                    "title": "Progress Status",
+                    "completed": "Completed",
+                    "in_progress": "In Progress",
+                    "not_started": "Not Started"
+                }
+            },
+            "metrics_explanation": {
+                "title": "Metrics Explanation",
+                "average_accuracy": {
+                    "title": "Average Accuracy",
+                    "description": "Represents the general average of the average accuracies achieved by each player. Each player's accuracy is calculated by averaging the accuracies obtained in all their attempts per requirement.",
+                    "formula": {
+                        "step1": "1. Accuracy per attempt = (Correctly placed fragments / Total fragments) × 100",
+                        "step2": "2. Player's average accuracy = Sum of accuracies from all attempts / Total attempts",
+                        "step3": "3. General average accuracy = Sum of players' average accuracies / Total players"
+                    },
+                    "interpretation": "This metric reflects the overall accuracy of the game, considering all attempts by each player for each requirement. A higher value indicates a better general ability of players to construct requirements correctly."
+                },
+                "average_game_time": {
+                    "title": "Average Game Time",
+                    "description": "Represents the average time it takes to complete the entire game, calculated from each player's total time.",
+                    "formula": {
+                        "step1": "1. Player's total time = Sum of time spent on all requirements",
+                        "step2": "2. Average game time = Sum of all players' total times / Total players"
+                    },
+                    "interpretation": "This metric provides an overview of the time needed to complete all requirements in the game."
+                },
+                "average_time": {
+                    "title": "Average Time per Requirement",
+                    "description": "Represents the average time it takes players to correctly complete each requirement, considering all their attempts until success.",
+                    "formula": {
+                        "step1": "1. Player's total time per requirement = Sum of times from all attempts on the requirement",
+                        "step2": "2. Average time per requirement = Sum of all players' total times / Total players"
+                    },
+                    "interpretation": "This metric helps identify which requirements take longer to be constructed correctly, which may indicate their level of complexity."
+                },
+                "average_attempts": {
+                    "title": "Average Attempts",
+                    "description": "Indicates the average number of attempts players need to correctly construct each requirement.",
+                    "formula": {
+                        "step1": "1. Attempts per requirement = Number of attempts until correct completion",
+                        "step2": "2. Average attempts per requirement = Sum of all players' attempts / Total players"
+                    },
+                    "interpretation": "A higher average number of attempts suggests that the requirement is more challenging or complex to construct correctly."
+                },
+                "completion_rate": {
+                    "title": "Completion Rate",
+                    "description": "Indicates the percentage of players who have completed all requirements in the game.",
+                    "formula": "Completion Rate = (Players who completed / Total players) × 100",
+                    "interpretation": "A rate of 66.67% indicates that two-thirds of the players have successfully completed all requirements."
+                },
+                "difficulty_index": {
+                    "title": "Difficulty Index",
+                    "description": "Uses the average number of attempts to determine which requirements are more challenging.",
+                    "formula": "Average Attempts = Total attempts per requirement / Number of players",
+                    "interpretation": "A higher average of attempts indicates greater difficulty in requirement construction."
+                }
+            },
+            "resume_players": {
+                "table": {
+                    "title": "Resume Players",
+                    "columns": {
+                        "player": "Player",
+                        "time": "Time",
+                        "attempts": "Attempts",
+                        "last_attempt": "Last Attempt",
+                        "progress": "Progress"
+                    }
+                }
+            },
+            "time": {
+                "title": "Time Analysis",
+                "metrics": {
+                    "average": "Average Time",
+                    "best": "Best Time",
+                    "total": "Total Time Invested",
+                    "per_requirement": "per requirement",
+                    "all_players": "all players"
+                },
+                "distribution": {
+                    "title": "Time Distribution",
+                    "y_axis": "Number of Students",
+                    "x_axis": "Time Range"
+                },
+                "requirements": {
+                    "title": "Time per Requirement",
+                    "columns": {
+                        "requirement": "Requirement",
+                        "avg_time": "Average Time",
+                        "completion_rate": "Average Completion",
+                        "attempts": "Average Attempts"
+                    }
+                },
+                "insights": {
+                    "title": "Insights",
+                    "recommendations": "Recommendations"
+                }
+            },
+            "difficulty": {
+                "title": "Difficulty Analysis",
+                "challenging_requirements": {
+                    "title": "Most Challenging Requirements",
+                    "subtitle": "Top 3 requirements that required the most attempts",
+                    "metrics": {
+                        "avg_attempts": "Average Attempts",
+                        "rank": "Rank"
+                    }
+                },
+                "attempts_stats": {
+                    "title": "Attempts Statistics",
+                    "metrics": {
+                        "min_attempts": "Minimum Attempts",
+                        "max_attempts": "Maximum Attempts",
+                        "by": "by"
+                    }
+                }
+            }
+        },
+        "classification": {
+            "summary": {
+                "title": "General Overview",
+                "metrics": {
+                    "players": "Total Players",
+                    "first_attempt": "First Attempt Accuracy",
+                    "avg_time": "Average Time"
+                },
+                "distribution": {
+                    "title": "Attempts Distribution",
+                    "playerlabel": "Players",
+                    "one_attempt": "1 Attempt",
+                    "two_three_attempts": "2-3 Attempts",
+                    "more_attempts": "More than 3 Attempts"
+                },
+                "progress": {
+                    "title": "Progress Status",
+                    "completed": "Completed",
+                    "in_progress": "In Progress",
+                    "not_started": "Not Started"
+                }
+            },
+            "metrics_explanation": {
+                "title": "Metrics Explanation",
+                "first_attempt_accuracy": {
+                    "title": "First Attempt Accuracy",
+                    "description": "Represents the percentage of requirements that were correctly classified by players on their first attempt.",
+                    "formula": "Accuracy = (Correctly classified requirements on first attempt / Total requirements) × 100",
+                    "interpretation": "A higher value indicates a better initial understanding of the difference between ambiguous and non-ambiguous requirements. This is an important indicator of the clarity of requirement ambiguity concepts."
+                },
+                "error_rate": {
+                    "title": "Error Rate per Requirement",
+                    "description": "Indicates the percentage of players who incorrectly classified a specific requirement. This metric helps identify the most challenging requirements.",
+                    "formula": "Error Rate = (Players who classified incorrectly / Total players) × 100",
+                    "interpretation": "A high rate may indicate that the requirement is particularly challenging or may need clarification in its wording. It's useful for identifying areas of improvement in requirement design."
+                },
+                "average_movements": {
+                    "title": "Average Movements",
+                    "description": "Represents the average number of times players moved each requirement during the classification process.",
+                    "formula": "Average Movements = Total classification movements / Number of attempts",
+                    "interpretation": "A higher number of movements may indicate indecision or difficulty in classification. This can signal the need to reinforce classification criteria."
+                },
+                "progress_percentage": {
+                    "title": "Progress Percentage",
+                    "description": "Measures the overall progress of players in classifying all game requirements.",
+                    "formula": "Progress Percentage = (Correctly classified requirements / Total requirements) × 100",
+                    "interpretation": "Represents the game completion level for each player. A 100% indicates that all requirements have been correctly classified."
+                }
+            },
+            "requirements": {
+                "title": "Requirements Analysis",
+                "distribution": {
+                    "ambiguous": "Ambiguous",
+                    "non_ambiguous": "Non-Ambiguous"
+                },
+                "table": {
+                    "requirement": "Requirement",
+                    "avg_time": "Average Time",
+                    "avg_moves": "Average Moves",
+                    "correct_rate": "Classification Rate",
+                    "challenging": "Most Challenging Requirements",
+                    "error_pattern": "Error Pattern"
+                }
+            },
+            "time": {
+                "title": "Time Analysis",
+                "metrics": {
+                    "average": "Average Time",
+                    "subaverage": "for Game",
+                    "best": "Best Time",
+                    "worst": "Worst Time"
+                },
+                "distribution": {
+                    "title": "Time Distribution",
+                    "students": "Number of students",
+                    "time_range": "Time range"
+                }
+            }
+        },
+        "footer": {
+            "generated_by": "Report generated by"
+        }
+    },
+    "logout": {
+        "confirmation": {
+            "title": "Log Out",
+            "message": "Are you sure you want to log out?",
+            "confirm": "Yes, log out",
+            "cancel": "Cancel"
+        },
+        "errors": {
+            "title": "Error",
+            "message": "An error occurred while logging out. Please try again."
+        }
+    }
+}

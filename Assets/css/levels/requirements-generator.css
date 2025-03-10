@@ -1,0 +1,659 @@
+/* Estilos para el Generador de Requisitos con IA */
+
+/* Contenedor principal del modal */
+.ai-generator-swal-popup {
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 12px;
+    max-width: 1000px !important;
+}
+
+.ai-generator-modal {
+    display: flex;
+    width: 100%;
+    min-height: 320px;
+    text-align: center;
+}
+
+.modal-container {
+    display: flex;
+    width: 100%;
+}
+
+/* Contenedor del stepper */
+.stepper-container {
+    width: 260px;
+    padding: 30px 20px;
+    background-color: #f5f7fa;
+    border-right: 1px solid #e0e6ed;
+}
+
+.stepper-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stepper-title i {
+    font-size: 20px;
+    color: #1976D2;
+}
+
+/* Estilos del stepper vertical */
+.stepper-steps {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    position: relative;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.step-item.active {
+    opacity: 1;
+}
+
+.step-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 38px;
+    left: 16px;
+    width: 2px;
+    height: calc(100% + 20px);
+    background-color: #ddd;
+    z-index: 0;
+}
+
+.step-item.completed:not(:last-child)::after {
+    background-color: #4CAF50;
+}
+
+.step-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+    color: #777;
+}
+
+.step-item.active .step-circle {
+    border-color: #1976D2;
+    background-color: #1976D2;
+    color: white;
+    box-shadow: 0 3px 6px rgba(25, 118, 210, 0.3);
+}
+
+.step-item.completed .step-circle {
+    border-color: #4CAF50;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.step-item.completed .step-circle::before {
+    content: '✓';
+    font-size: 16px;
+}
+
+.step-item.completed .step-circle span {
+    display: none;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.step-label {
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: #333;
+}
+
+.step-description {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Contenedor del contenido de cada paso */
+.step-content-container {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    max-height: 75vh;
+}
+
+.step-content-header {
+    margin-bottom: 25px;
+}
+
+.step-content-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.step-content-subtitle {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Estilos para los formularios */
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #1976D2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+}
+
+.form-hint {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Estilos para el input con range */
+.input-with-range {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.input-with-range input[type="number"] {
+    width: 80px;
+}
+
+.input-with-range input[type="range"] {
+    flex: 1;
+    height: 5px;
+    -webkit-appearance: none;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-with-range input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1976D2;
+    cursor: pointer;
+}
+
+.input-with-range input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1976D2;
+    cursor: pointer;
+    border: none;
+}
+
+/* Estilos para los radio buttons personalizados */
+.radio-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 180px;
+}
+
+.radio-option:hover {
+    border-color: #bbdefb;
+}
+
+.radio-option.selected {
+    border-color: #1976D2;
+    background-color: rgba(25, 118, 210, 0.05);
+}
+
+.radio-option input[type="radio"] {
+    display: none;
+}
+
+.radio-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    color: #777;
+    font-size: 22px;
+}
+
+.radio-option.selected .radio-icon {
+    color: #1976D2;
+}
+
+.radio-label {
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-sublabel {
+    font-size: 12px;
+    color: #666;
+    font-weight: normal;
+    margin-top: 2px;
+}
+
+/* Estilos para los botones */
+.actions-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+}
+
+.btn i {
+    font-size: 18px;
+}
+
+.btn-primary {
+    background-color: #1976D2;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1565C0;
+    box-shadow: 0 3px 8px rgba(21, 101, 192, 0.3);
+}
+
+.btn-secondary {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background-color: #e9e9e9;
+}
+
+.btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Estilos para el paso 2 (tabla de requisitos) */
+.requirements-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.requirements-stats {
+    font-size: 14px;
+    color: #555;
+}
+
+.requirements-stats #requirements-count {
+    font-weight: 600;
+    color: #1976D2;
+}
+
+/* Estilos para Tabulator */
+.tabulator {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+.tabulator .tabulator-header {
+    background-color: #f5f7fa;
+    border-bottom: 1px solid #eee;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+    background-color: #f5f7fa;
+    border-right: 1px solid #eee;
+    padding: 10px;
+}
+
+.tabulator .tabulator-header .tabulator-col-content {
+    padding: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.tabulator .tabulator-tableHolder {
+    background-color: #fff;
+}
+
+.tabulator .tabulator-row {
+    border-bottom: 1px solid #eee;
+}
+
+.tabulator .tabulator-row .tabulator-cell {
+    padding: 12px 8px;
+}
+
+.tabulator .tabulator-row:hover {
+    background-color: #f9f9f9;
+}
+
+.tabulator-row .tabulator-cell.tabulator-editing {
+    border: 1px solid #1976D2;
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* Estilos para los chips en Tabulator */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.chip-functional {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #388E3C;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.chip-non-functional {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #1976D2;
+    border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+.chip-ambiguous {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #F57C00;
+    border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.chip-non-ambiguous {
+    background-color: rgba(158, 158, 158, 0.1);
+    color: #616161;
+    border: 1px solid rgba(158, 158, 158, 0.3);
+}
+
+/* Estilos para acciones en Tabulator */
+.requirements-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.action-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f1f1;
+    color: #555;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.action-button:hover {
+    background-color: #e0e0e0;
+}
+
+.edit-button:hover {
+    color: #1976D2;
+}
+
+.delete-button:hover {
+    color: #e53935;
+}
+
+/* Indicador de carga */
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(25, 118, 210, 0.2);
+    border-radius: 50%;
+    border-top-color: #1976D2;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-message {
+    color: #555;
+    font-weight: 500;
+}
+
+/* Estilos para el paso 3 (confirmación) */
+.summary-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+}
+
+.summary-item {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.summary-label {
+    width: 180px;
+    font-weight: 500;
+    color: #555;
+}
+
+.summary-value {
+    flex: 1;
+    color: #333;
+}
+
+.requirements-summary {
+    margin-top: 20px;
+}
+
+.requirements-count {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.requirements-distribution {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.distribution-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.distribution-item span:last-child {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Botón para abrir el generador en la interfaz principal */
+.generate-ai-button {
+    background-color: #8551C9;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.generate-ai-button:hover {
+    background-color: #7040BA;
+    box-shadow: 0 3px 8px rgba(133, 81, 201, 0.3);
+}
+
+.generate-ai-button i {
+    margin-right: 5px;
+}
+
+/* Estilos responsive */
+@media (max-width: 768px) {
+    .modal-container {
+        flex-direction: column;
+    }
+
+    .stepper-container {
+        width: 100%;
+        padding: 20px 15px;
+        border-right: none;
+        border-bottom: 1px solid #e0e6ed;
+    }
+
+    .stepper-steps {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .step-item {
+        margin-bottom: 0;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+    }
+
+    .step-item:not(:last-child)::after {
+        top: 16px;
+        left: calc(50% + 17px);
+        width: calc(100% - 34px);
+        height: 2px;
+    }
+
+    .step-circle {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+
+    .step-label {
+        font-size: 12px;
+    }
+
+    .step-description {
+        display: none;
+    }
+
+    .step-content-container {
+        padding: 20px 15px;
+    }
+
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .radio-option {
+        width: 100%;
+    }
+
+    .actions-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .actions-container button {
+        width: 100%;
+    }
+
+    .requirements-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .summary-item {
+        flex-direction: column;
+    }
+
+    .summary-label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}

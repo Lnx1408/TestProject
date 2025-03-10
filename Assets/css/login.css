@@ -1,0 +1,124 @@
+.material-half-bg .backgorund-login{
+  background-image: linear-gradient(to bottom, #2C9AFF, #53F3FD);
+  height: 100vh;
+}
+
+
+.logo-img-login {
+  width: 30vh;
+}
+
+.input-group-text {
+  width: 40px;  /* Ajusta el tamaño del span según sea necesario */
+  height: 40px; /* Hace el span cuadrado para que se vea circular */
+  display: flex; /* Alineación centrada */
+  justify-content: center; /* Alineación centrada */
+  align-items: center; /* Alineación centrada */
+}
+
+.input-group-text i {
+  margin: 0; /* Elimina margen adicional en el ícono */
+}
+
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .login-content .logo {
+    margin-bottom: 40px;
+    font-family: "Niconne";
+    color: #fff;
+  }
+  
+  .login-content .logo h1 {
+    font-size: 52px;
+    font-weight: 400;
+  }
+  
+  .login-content .login-box {
+    border-radius: 30px;
+    position: relative;
+    min-width: 350px;
+    background-color: #fff;
+    box-shadow: 0px 29px 147.5px 102.5px rgba(0, 0, 0, 0.05), 0px 29px 95px 0px rgba(0, 0, 0, 0.16);
+    perspective: 800px;
+    width: 100%;
+    max-width: 450px;
+    transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1), all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    height: auto;
+    overflow: hidden;
+  }
+  
+  
+  .login-content .login-box .login-head {
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .login-content .login-box label {
+    color: #666;
+    font-weight: 700;
+  }
+  
+  .login-content .login-box .utility {
+    display: flex;
+    padding: 1px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .login-content .login-box .btn-container {
+    margin-bottom: 0;
+  }
+  
+  .login-content .login-box .form-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 40px;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    visibility: hidden;
+    min-height: 100%;
+  }
+  
+  .login-content .login-box .form-section.active {
+    position: relative;
+    transform: rotateY(0);
+    opacity: 1;
+    visibility: visible;
+    animation: formShow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @keyframes formShow {
+    0% {
+      opacity: 0;
+      transform: rotateY(180deg) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: rotateY(0) scale(1);
+    }
+  }
+  
+  @media (max-width: 351px) {
+    .login-content .login-box {
+      min-width: 100%;
+    }
+    
+    .login-content .login-box .form-section {
+      padding: 20px;
+    }
+  }

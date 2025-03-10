@@ -1,0 +1,240 @@
+/* Estilos para el dashboard del jugador */
+.player-dashboard {
+    grid-template-columns: minmax(240px, 40%) minmax(240px, 60%) !important;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.player-profile,
+.player-stats {
+    padding: 0.5rem !important;
+}
+
+.player-profile {
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-profile .player-info {
+    padding: 0;
+}
+
+.player-profile .avatar-circle {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-size: 1.5rem;
+}
+
+.player-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.player-details .player-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--title-color);
+}
+
+.player-details .player-email {
+    color: var(--text-color);
+    font-size: 0.875rem;
+    font-weight: 630;
+}
+
+
+.player-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 100%;
+}
+
+.player-stats .card-item {
+    min-width: 0;
+    /* Esto ayuda a prevenir desbordamiento */
+}
+
+
+/* Ajustes responsivos */
+@media screen and (max-width: 768px) {
+    .player-dashboard {
+        grid-template-columns: 1fr !important;
+    }
+
+    .player-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .player-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Estilos para el modal de detalles */
+.attempt-details-modal {
+    /*font-family: 'Poppins', sans-serif;*/
+    --modal-bg: var(--body-color);
+    /*--modal-text: var(--color-text-primary);*/
+}
+
+.attempt-details-popup {
+    width: 70vw !important;
+    /* vw = viewport width */
+    max-width: 1200px !important;
+    /* Un máximo para pantallas muy grandes */
+    min-width: 320px !important;
+    /* Un mínimo para pantallas muy pequeñas */
+    background: var(--modal-bg) !important;
+
+}
+
+.attempt-details-content {
+    padding: 0 1.5rem;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-gap: 24px;
+    margin-top: 0.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.stats-container .stat-item {
+    padding: 1rem;
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 2px 24px var(--shadow-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+}
+
+.stats-container .stat-item:hover {
+    transform: translateY(-2px);
+    /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+    box-shadow: var(--box-shadow);
+}
+
+/* Sección de requisitos */
+
+.requirements-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.requirements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.requirement-item {
+    padding: 1rem;
+    border-radius: var(--border-radius-1);
+    transition: all 0.3s ease;
+}
+
+.requirement-item:hover {
+    transform: translateX(4px);
+}
+
+.requirement-correct {
+    background: var(--light-success);
+    border-left: 5px solid var(--success);
+}
+
+.requirement-correct .requirement-header .requirement-description {
+    color: var(--success);
+}
+
+.requirement-incorrect {
+    background: var(--light-danger);
+    border-left: 5px solid var(--danger);
+}
+
+.requirement-incorrect .requirement-header .requirement-description {
+    color: var(--danger);
+}
+
+
+.requirement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.requirement-description {
+    font-weight: 500;
+    margin-right: 1rem;
+}
+
+.requirement-correct .bx-check {
+    color: var(--success);
+    font-size: 1.5rem;
+}
+
+.requirement-incorrect .bx-x {
+    color: var(--danger);
+    font-size: 1.5rem;
+}
+
+.requirement-feedback {
+    margin-top: 0.5rem;
+}
+
+.requirement-moves {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+
+/* Personalización de los colores según tus variables CSS */
+.text-primary {
+    color: var(--primary);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
+.bg-success-light {
+    background-color: var(--light-success);
+}
+
+.bg-danger-light {
+    background-color: var(--light-danger);
+}
+
+
+.info-icon {
+    font-size: 1.1rem !important;
+    vertical-align: middle;
+    margin-left: 4px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.info-icon:hover {
+    opacity: 1;
+    color: var(--primary) !important;
+}
+
+/* Ajuste para el padding de las columnas */
+.dataTables_wrapper .dataTable thead th {
+    padding-right: 8px !important;
+}

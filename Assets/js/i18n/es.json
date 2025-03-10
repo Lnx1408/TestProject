@@ -1,0 +1,1350 @@
+{
+    "nav": {
+        "home": "Inicio",
+        "dashboard": "Inicio",
+        "game": "Juego",
+        "levels": "Niveles",
+        "profile": "Perfil",
+        "analytics": "Estadísticas",
+        "analyticsStudent": "Análisis",
+        "settings": "Ajustes",
+        "theme": "Tema",
+        "language": "Idioma",
+        "logout": "Cerrar Sesión"
+    },
+    "dashboard_welcome": {
+        "student": {
+            "welcome": "👋🏼 Bienvenido a",
+            "phrase1": "Estamos encantados de tenerte aquí. Tu viaje de aprendizaje y crecimiento comienza ahora.",
+            "phrase2": "Te espera un espacio dedicado al aprendizaje."
+        },
+        "teacher": {
+            "welcome": "👨🏼‍🏫 Bienvenido a",
+            "phrase1": "Gracias por ser parte integrante de nuestra comunidad educativa.",
+            "phrase2": "Su espacio dedicado a la enseñanza está listo para usted."
+        }
+    },
+    "error_404": {
+        "phrase1": "Error 404",
+        "phrase2": "Página no encontrada"
+    },
+    "game_welcome": {
+        "title": "Mejora tus habilidades en Requisitos",
+        "description": "Cada partida es una oportunidad para mejorar tu capacidad de análisis y especificación de requisitos. ¿Listo para el siguiente desafío? Ingresa el código de la partida y comienza a jugar.",
+        "start_button": "Ingresar a Partida",
+        "modal": {
+            "title": "Código de Partida",
+            "input_placeholder": "Ingresa el código de la partida",
+            "submit_button": "Comenzar",
+            "cancel_button": "Cancelar",
+            "invalid_code": "Código de partida inválido",
+            "error_message": "Ha ocurrido un error al verificar el código",
+            "loading": "Verificando código..."
+        }
+    },
+    "levels_welcome": {
+        "title": "Crea Desafíos de Aprendizaje",
+        "description": "Como docente, tienes la oportunidad de crear experiencias de aprendizaje significativas. Diseña partidas que ayuden a tus estudiantes a desarrollar habilidades en la especificación de requisitos a través de ejercicios prácticos de clasificación y construcción.",
+        "start_button": "Crear Nueva Partida",
+        "modal": {
+            "title": "Seleccionar Tipo de Partida",
+            "subtitle": "¿Qué tipo de partida deseas crear?",
+            "classification": {
+                "title": "Clasificación de Requisitos",
+                "description": "Los estudiantes aprenderán a identificar y clasificar requisitos ambiguos y no ambiguos."
+            },
+            "construction": {
+                "title": "Construcción de Requisitos",
+                "description": "Los estudiantes practicarán la construcción correcta de requisitos a partir de fragmentos."
+            },
+            "cancel_button": "Cancelar"
+        }
+    },
+    "create_classification": {
+        "title": "Crear Partida de Clasificación",
+        "counter": {
+            "title": "Requisitos Seleccionados",
+            "minimum": "Mínimo requerido: 5"
+        },
+        "messages": {
+            "input_placeholder": "Ingresa los datos necesarios",
+            "error_message": "Ha ocurrido un error al crear el requisito",
+            "loading": "Registrando...",
+            "confirm_remove": "¿Está seguro de eliminar este requisito?",
+            "requirement_created": "Requisito creado exitosamente",
+            "requirement_deleted": "Requisito eliminado exitosamente",
+            "min_requirements": "Debe seleccionar al menos 5 requisitos para crear la partida",
+            "max_requirements": "Ha alcanzado el límite máximo de requisitos permitidos",
+            "error": "Error",
+            "error_creating": "Error al crear el requisito",
+            "error_deleting": "Error al eliminar el requisito",
+            "error_loading": "Error al cargar los requisitos",
+            "game_created": "¡Partida creada exitosamente!",
+            "game_code": "Código de la partida",
+            "confirm_exit": "¿Está seguro que desea salir? Los cambios no guardados se perderán",
+            "confirm_create": "¿Está seguro que desea crear la partida con los requisitos seleccionados?",
+            "loading_requirements": "Cargando requisitos...",
+            "processing": "Procesando solicitud...",
+            "no_requirements_selected": "No ha seleccionado ningún requisito"
+        },
+        "buttons": {
+            "select_existing": "Seleccionar Requisitos Existentes",
+            "create_new": "Crear Nuevo Requisito",
+            "create_game": "Crear Partida",
+            "accept": "Aceptar",
+            "continue": "Continuar",
+            "yes": "Sí",
+            "no": "No",
+            "export": "Exportar",
+            "import": "Importar Requisitos"
+        },
+        "main_table": {
+            "title": "Requisitos de la Partida",
+            "columns": {
+                "description": "Descripción",
+                "type": "Tipo",
+                "is_ambiguous": "Es Ambiguo",
+                "feedback": "Retroalimentación",
+                "actions": "Acciones"
+            },
+            "empty": "No hay requisitos seleccionados"
+        },
+        "select_modal": {
+            "title": "Seleccionar Requisitos Existentes",
+            "confirm": "Agregar Seleccionados",
+            "cancel": "Cancelar"
+        },
+        "create_modal": {
+            "title": "Crear Nuevo Requisito",
+            "game_code_info": {
+                "title": "Código de Partida",
+                "description": "El código de partida es un identificador único que permite a los estudiantes unirse a la partida que has creado.",
+                "point1": "Comparte este código con tus estudiantes para que puedan acceder a la partida.",
+                "point2": "El código es único y no puede ser modificado.",
+                "point3": "Los estudiantes necesitarán este código para acceder a la actividad desde la sección 'Juego'."
+            },
+            "form": {
+                "description": "Descripción del Requisito",
+                "description_placeholder": "Ingrese la descripción del requisito",
+                "is_ambiguous": "¿Es ambiguo?",
+                "is_functional": "¿Es funcional?",
+                "feedback": "Retroalimentación",
+                "feedback_placeholder": "Ingrese la retroalimentación para este requisito"
+            },
+            "validation": {
+                "description_required": "La descripción del requisito es obligatoria",
+                "description_min_length": "La descripción debe tener al menos 10 caracteres",
+                "description_max_length": "La descripción no puede exceder los 500 caracteres",
+                "feedback_required": "La retroalimentación es obligatoria",
+                "feedback_min_length": "La retroalimentación debe tener al menos 10 caracteres",
+                "feedback_max_length": "La retroalimentación no puede exceder los 500 caracteres",
+                "invalid_format": "El formato de los datos ingresados no es válido",
+                "duplicate_description": "Ya existe un requisito con esta descripción"
+            },
+            "buttons": {
+                "create": "Crear y Agregar",
+                "cancel": "Cancelar"
+            }
+        },
+        "import_modal": {
+            "title": "Importar Requisitos",
+            "instructions": "Selecciona un archivo CSV con los requisitos a importar. Asegúrate de que el archivo siga el formato correcto.",
+            "format_info": "El archivo debe ser un CSV con las columnas: descripcion, es_ambiguo, es_funcional, retroalimentacion",
+            "columns_info": "Los valores para es_ambiguo y es_funcional deben ser 0 o 1",
+            "download_template": "Descargar Plantilla",
+            "select_file": "Seleccionar Archivo",
+            "preview_title": "Vista Previa",
+            "import": "Importar",
+            "cancel": "Cancelar",
+            "success": "Requisitos importados exitosamente",
+            "errors": {
+                "invalid_extension": "El archivo debe ser CSV",
+                "file_too_large": "El archivo es demasiado grande. Máximo 1MB",
+                "invalid_format": "El formato del archivo no es válido",
+                "missing_columns": "Faltan columnas requeridas",
+                "invalid_data": "Los datos no son válidos"
+            }
+        },
+        "errors": {
+            "server_error": "Error en el servidor",
+            "connection_error": "Error de conexión",
+            "invalid_data": "Datos inválidos",
+            "session_expired": "La sesión ha expirado",
+            "unauthorized": "No tiene permisos para realizar esta acción",
+            "general": "Ha ocurrido un error, lamentamos las molestias"
+        }
+    },
+    "create_construction": {
+        "title": "Crear Partida de Construcción",
+        "counter": {
+            "title": "Requisitos Seleccionados",
+            "minimum": "Mínimo requerido: 5"
+        },
+        "buttons": {
+            "select_existing": "Seleccionar Requisitos Existentes",
+            "create_new": "Crear Nuevo Requisito",
+            "create_game": "Crear Partida",
+            "generate_fragments": "Generar Fragmentos",
+            "create_manually": "Crear Manualmente",
+            "add_decoy": "Agregar Señuelo",
+            "save": "Guardar",
+            "cancel": "Cancelar",
+            "continue": "Continuar",
+            "yes": "Sí",
+            "no": "No",
+            "export": "Exportar",
+            "import": "Importar Requisitos"
+        },
+        "main_table": {
+            "title": "Requisitos de la Partida",
+            "columns": {
+                "requirement": "Requisito",
+                "fragments": "Fragmentos",
+                "decoys": "Señuelos",
+                "actions": "Acciones"
+            },
+            "details": {
+                "additional_info": "Detalles adicionales",
+                "main_fragments": "Fragmentos Principales",
+                "decoys": "Señuelos",
+                "position": "Posición"
+            },
+            "empty": "No hay requisitos seleccionados"
+        },
+        "select_modal": {
+            "title": "Seleccionar Requisitos Existentes",
+            "confirm": "Agregar Seleccionados",
+            "cancel": "Cancelar",
+            "preview": "Vista Previa de Fragmentos"
+        },
+        "create_modal": {
+            "title": "Crear Nuevo Requisito",
+            "sections": {
+                "requirement": "Requisito Completo",
+                "fragments": "Fragmentos del Requisito",
+                "decoys": "Señuelos"
+            },
+            "form": {
+                "requirement": {
+                    "label": "Requisito Completo",
+                    "placeholder": "Ingrese el requisito completo"
+                },
+                "fragments": {
+                    "title": "Fragmentos",
+                    "auto_generation": "Generación Automática",
+                    "manual_creation": "Creación Manual",
+                    "fragment_text": "Texto del Fragmento",
+                    "position": "Posición",
+                    "add": "Agregar Fragmento"
+                },
+                "decoys": {
+                    "title": "Señuelos",
+                    "text": "Texto del Señuelo",
+                    "add": "Agregar Señuelo"
+                }
+            },
+            "validation": {
+                "requirement_required": "El requisito completo es obligatorio",
+                "requirement_min_length": "El requisito debe tener al menos 10 caracteres",
+                "fragments_required": "Debe agregar al menos un fragmento",
+                "fragments_match": "Los fragmentos deben coincidir con el requisito completo",
+                "fragment_text_required": "El texto del fragmento es obligatorio",
+                "position_required": "La posición es obligatoria",
+                "position_duplicate": "Ya existe un fragmento en esta posición",
+                "decoy_text_required": "El texto del señuelo es obligatorio",
+                "decoys_required": "Debe agregar al menos un señuelo"
+            }
+        },
+        "import_modal": {
+            "title": "Importar Requisitos de Construcción",
+            "instructions": "Selecciona un archivo CSV con los requisitos a importar. Asegúrate de que el archivo siga el formato correcto.",
+            "format_info": "El archivo debe ser un CSV con las columnas: requisito_completo, fragmentos",
+            "columns_info": "Los fragmentos deben tener el formato: texto|posición|es_señuelo, separados por ¬",
+            "download_template": "Descargar Plantilla",
+            "select_file": "Seleccionar Archivo",
+            "preview_title": "Vista Previa",
+            "import": "Importar",
+            "cancel": "Cancelar",
+            "success": "Requisitos importados exitosamente",
+            "errors": {
+                "invalid_extension": "El archivo debe ser CSV",
+                "file_too_large": "El archivo es demasiado grande. Máximo 1MB",
+                "invalid_format": "El formato del archivo no es válido",
+                "missing_columns": "Faltan columnas requeridas",
+                "missing_fragments": "Debe haber al menos un fragmento principal y un señuelo",
+                "invalid_fragment_format": "Formato de fragmentos inválido"
+            }
+        },
+        "messages": {
+            "requirement_created": "Requisito creado exitosamente",
+            "requirement_deleted": "Requisito eliminado exitosamente",
+            "confirm_remove": "¿Está seguro de eliminar este requisito?",
+            "min_requirements": "Debe seleccionar al menos 5 requisitos para crear la partida",
+            "game_created": "¡Partida creada exitosamente!",
+            "game_code": "Código de la partida",
+            "generating_fragments": "Generando fragmentos...",
+            "fragments_generated": "Fragmentos generados exitosamente",
+            "error_generating": "Error al generar los fragmentos",
+            "no_requirements_selected": "No ha seleccionado ningún requisito",
+            "import_success": "Requisitos importados exitosamente",
+            "generating_preview": "Generando vista previa...",
+            "error_generating_preview": "Error al generar vista previa"
+        },
+        "errors": {
+            "server_error": "Error en el servidor",
+            "connection_error": "Error de conexión",
+            "invalid_data": "Datos inválidos",
+            "validation_error": "Error de validación",
+            "creation_error": "Error al crear el requisito",
+            "deletion_error": "Error al eliminar el requisito",
+            "modal_error": "Ocurrio un error",
+            "game_creation_error": "Error al crear la partida"
+        },
+        "modals": {
+            "game_code_info": {
+                "title": "Código de Partida",
+                "description": "El código de partida es un identificador único que permite a los estudiantes unirse a la partida que has creado.",
+                "point1": "Comparte este código con tus estudiantes para que puedan acceder a la partida.",
+                "point2": "El código es único y no puede ser modificado.",
+                "point3": "Los estudiantes necesitarán este código para acceder a la actividad desde la sección 'Juego'."
+            }
+        }
+    },
+    "my_games": {
+        "title": "Mis Partidas",
+        "stats": {
+            "classification": "Partidas de Clasificación",
+            "construction": "Partidas de Construcción"
+        },
+        "search": {
+            "placeholder": "Buscar partidas por código..."
+        },
+        "sections": {
+            "classification": "Partidas de Clasificación",
+            "construction": "Partidas de Construcción"
+        },
+        "buttons": {
+            "load_more": "Ver más",
+            "load_less": "Ver menos",
+            "view": "Ver Detalles",
+            "cancel": "Cancelar"
+        },
+        "cards": {
+            "students": "estudiantes",
+            "created": "Creado el"
+        },
+        "modals": {
+            "view_details": {
+                "title": "Ver Detalles",
+                "message": "¿Deseas ver los detalles de la partida {code}?"
+            }
+        },
+        "messages": {
+            "no_games": "No hay partidas disponibles",
+            "loading": "Cargando partidas...",
+            "search_no_results": "No se encontraron partidas con ese código"
+        },
+        "errors": {
+            "title": "Error",
+            "initialization": "Error al inicializar las partidas",
+            "loading": "Error al cargar las partidas",
+            "loading_more": "Error al cargar más partidas",
+            "search": "Error al buscar partidas"
+        }
+    },
+    "game_classification": {
+        "header": {
+            "match": "Partida",
+            "attempts": "Intentos",
+            "time": "Tiempo",
+            "moves": "Movimientos"
+        },
+        "panels": {
+            "ambiguous": "Requisitos Ambiguos",
+            "to_classify": "Requisitos por Clasificar",
+            "non_ambiguous": "Requisitos No Ambiguos"
+        },
+        "placeholders": {
+            "drag_requirements": "Arrastra los requisitos aquí"
+        },
+        "buttons": {
+            "validate": "Validar Clasificación",
+            "continue": "Continuar",
+            "accept": "Aceptar"
+        },
+        "modals": {
+            "validation_result": "Resultado de la Validación",
+            "attempt_result": "Resultado del Intento",
+            "game_unavailable": "Juego no disponible",
+            "metrics": {
+                "time_spent": "Tiempo de este intento",
+                "moves_made": "Movimientos en este intento",
+                "correct_req": "Requisitos correctos",
+                "incorrect_req": "Requisitos incorrectos",
+                "accuracy": "Precisión"
+            },
+            "feedback": {
+                "reclassify_title": "Requisitos que necesitan ser reclasificados",
+                "success_title": "¡Felicitaciones!",
+                "success_message": "Has clasificado correctamente todos los requisitos.",
+                "classify_all": "Por favor, clasifica todos los requisitos antes de validar.",
+                "game_unavailable": "El código de la partida no es válido o el juego ya ha sido completado. Intenta con otro código."
+            },
+            "game_completed": {
+                "title": "¡Juego Completado!",
+                "stats_title": "Estadísticas Finales",
+                "total_attempts": "Intentos totales",
+                "total_moves": "Movimientos totales",
+                "total_time": "Tiempo total"
+            }
+        }
+    },
+    "requirements_generator": {
+        "steps": {
+            "configuration": {
+                "title": "Configuración",
+                "description": "Parámetros para la generación",
+                "header": "Configurar generación de requisitos",
+                "subheader": "Defina los parámetros para la generación automática de requisitos con inteligencia artificial."
+            },
+            "visualization": {
+                "title": "Visualización",
+                "description": "Revisar y editar resultados",
+                "header": "Requisitos generados",
+                "subheader": "Revise los requisitos generados y edítelos si es necesario."
+            },
+            "confirmation": {
+                "title": "Confirmación",
+                "description": "Guardar requisitos generados",
+                "header": "Confirmar y guardar",
+                "subheader": "Revise el resumen y guarde los requisitos generados."
+            }
+        },
+        "form": {
+            "provider": {
+                "label": "Seleccione el proveedor IA",
+                "openai_sublabel": "Recomendado",
+                "gemini_sublabel": "Google AI"
+            },
+            "language": {
+                "label": "Idioma de los requisitos",
+                "es_sublabel": "Castellano",
+                "en_sublabel": "Inglés"
+            },
+            "context": {
+                "label": "Contexto del proyecto",
+                "placeholder": "Describe brevemente el contexto o dominio del proyecto para el que necesitas generar requisitos."
+            },
+            "num_requirements": {
+                "label": "Número de requisitos a generar",
+                "hint": "Mínimo: 5, Máximo: 20"
+            }
+        },
+        "buttons": {
+            "generate": "Generar requisitos",
+            "regenerate": "Regenerar",
+            "back": "Volver",
+            "continue": "Continuar",
+            "save": "Guardar requisitos"
+        },
+        "table": {
+            "count_label": "requisitos generados",
+            "columns": {
+                "description": "Descripción",
+                "type": "Tipo",
+                "ambiguous": "Ambigüedad",
+                "feedback": "Retroalimentación",
+                "actions": "Acciones"
+            }
+        },
+        "loading": {
+            "message": "Generando requisitos, por favor espere..."
+        },
+        "summary": {
+            "provider": "Proveedor IA",
+            "language": "Idioma",
+            "context": "Contexto",
+            "functional": "Funcionales",
+            "non_functional": "No Funcionales",
+            "ambiguous": "Ambiguos",
+            "non_ambiguous": "No Ambiguos"
+        },
+        "validation": {
+            "context_required": "Por favor, ingrese el contexto del proyecto",
+            "no_requirements": "No hay requisitos para guardar"
+        },
+        "regenerate": {
+            "title": "Regenerar requisitos",
+            "confirmation": "¿Está seguro de que desea regenerar los requisitos? Los requisitos actuales serán reemplazados.",
+            "confirm": "Regenerar",
+            "cancel": "Cancelar"
+        },
+        "delete": {
+            "title": "Eliminar requisito",
+            "confirmation": "¿Está seguro de que desea eliminar este requisito?",
+            "confirm": "Eliminar",
+            "cancel": "Cancelar"
+        },
+        "edit": {
+            "title": "Editar requisito",
+            "form": {
+                "description": "Descripción",
+                "type": "Tipo de requisito",
+                "functional": "Funcional",
+                "non_functional": "No Funcional",
+                "ambiguous": "¿Es ambiguo?",
+                "yes": "Sí",
+                "no": "No",
+                "feedback": "Retroalimentación"
+            },
+            "save": "Guardar",
+            "cancel": "Cancelar",
+            "validation": {
+                "description_required": "La descripción es requerida",
+                "feedback_required": "La retroalimentación es requerida"
+            }
+        },
+        "saving": {
+            "title": "Guardando requisitos",
+            "message": "Por favor espere...",
+            "success_title": "Requisitos guardados",
+            "success_message": "Los requisitos han sido guardados exitosamente",
+            "success_button": "Aceptar"
+        },
+        "errors": {
+            "title": "Error",
+            "button": "Aceptar",
+            "generation_failed": "Error al generar requisitos",
+            "save_failed": "Error al guardar requisitos",
+            "ai_generator_not_loaded": "El generador de IA no está disponible"
+        },
+        "messages": {
+            "ai_requirements_added": "{count} requisitos añadidos correctamente"
+        }
+    },
+    "game_construction": {
+        "header": {
+            "match": "Partida",
+            "requirements": "Requisito",
+            "of": "de",
+            "attempts": "Intento",
+            "time": "Tiempo"
+        },
+        "sections": {
+            "construction_area": "Área de Construcción",
+            "available_fragments": "Fragmentos Disponibles"
+        },
+        "buttons": {
+            "validate": "Validar Construcción",
+            "reset": "Reiniciar Fragmentos",
+            "continue": "Continuar",
+            "ok": "Aceptar",
+            "yes": "Sí",
+            "no": "No",
+            "back_to_dashboard": "Volver al Dashboard"
+        },
+        "messages": {
+            "game_completed": "¡Juego Completado!",
+            "congratulations": "¡Felicitaciones! Has completado todos los requisitos de esta partida.",
+            "confirm_reset": {
+                "title": "¿Reiniciar Fragmentos?",
+                "text": "¿Estás seguro de que deseas reiniciar todos los fragmentos a su posición inicial?"
+            },
+            "validation": {
+                "empty": {
+                    "title": "Construcción Vacía",
+                    "text": "Por favor, coloca fragmentos en el área de construcción antes de validar."
+                },
+                "loading": "Validando construcción..."
+            },
+            "feedback": {
+                "success_title": "¡Correcto!",
+                "try_again_title": "Casi lo logras",
+                "accuracy": "Precisión",
+                "correct_fragments": "Fragmentos correctos",
+                "of": "de",
+                "attempt": "Intento",
+                "hint": "Revisa el orden de los fragmentos e intenta nuevamente"
+            }
+        },
+        "errors": {
+            "title": "Error",
+            "validation": "Error al validar la construcción. Por favor, intenta nuevamente.",
+            "load_game": "Error al cargar los datos del juego.",
+            "save_progress": "Error al guardar el progreso."
+        },
+        "tooltips": {
+            "drag_fragment": "Arrastra este fragmento",
+            "drag_fragments": "Arrastra los fragmentos aquí para construir el requisito",
+            "drop_here": "Suelta el fragmento aquí",
+            "validate_button": "Validar la construcción actual",
+            "reset_button": "Reiniciar todos los fragmentos"
+        }
+    },
+    "game_analytics_construction": {
+        "cards": {
+            "average": {
+                "title": "Promedio",
+                "subtitle": "Precisión",
+                "info": {
+                    "title": "Precisión Promedio",
+                    "description": "Representa el porcentaje promedio de precisión alcanzado por todos los jugadores en la construcción de requisitos."
+                }
+            },
+            "time": {
+                "title": "Tiempo Promedio",
+                "info": {
+                    "title": "Tiempo Promedio",
+                    "description": "Tiempo promedio que los jugadores han dedicado a completar los requisitos."
+                }
+            },
+            "players": {
+                "title": "Total Jugadores",
+                "info": {
+                    "title": "Total de Jugadores",
+                    "description": "Número total de jugadores que han participado en esta partida."
+                }
+            },
+            "attempts": {
+                "title": "Promedio Intentos",
+                "info": {
+                    "title": "Promedio de Intentos",
+                    "description": "Número promedio de intentos necesarios para completar los requisitos."
+                }
+            },
+            "min_attempts": {
+                "title": "Mínimo Intentos",
+                "info": {
+                    "title": "Mínimo de Intentos",
+                    "description": "Menor número de intentos que un jugador ha necesitado para completar un requisito."
+                }
+            },
+            "max_attempts": {
+                "title": "Máximo Intentos",
+                "info": {
+                    "title": "Máximo de Intentos",
+                    "description": "Mayor número de intentos que un jugador ha necesitado para completar un requisito."
+                }
+            }
+        },
+        "buttons": {
+            "show_more": "Ver más",
+            "show_less": "Ver menos"
+        },
+        "table": {
+            "title": "Jugadores",
+            "columns": {
+                "player": "Jugador",
+                "time": "Tiempo",
+                "attempts": "Intentos",
+                "last_attempt": "Último Intento",
+                "progress": "Avance",
+                "status": "Estado",
+                "actions": "Acciones"
+            },
+            "info": {
+                "player": {
+                    "title": "Información del Jugador",
+                    "description": "Muestra el nombre completo del jugador participante."
+                },
+                "time": {
+                    "title": "Tiempo Total",
+                    "description": "Tiempo total que el jugador ha dedicado en todos sus intentos."
+                },
+                "attempts": {
+                    "title": "Número de Intentos",
+                    "description": "Total de intentos realizados por el jugador en esta partida."
+                },
+                "last_attempt": {
+                    "title": "Último Intento",
+                    "description": "Fecha y hora del último intento realizado."
+                },
+                "progress": {
+                    "title": "Porcentaje de Avance",
+                    "description": "Porcentaje de requisitos completados correctamente."
+                },
+                "status": {
+                    "title": "Estado de la Partida",
+                    "description": "Estado actual del jugador en la partida: completado, en progreso o pendiente."
+                }
+            }
+        },
+        "messages": {
+            "no_data": "No hay datos disponibles",
+            "loading": "Cargando datos..."
+        },
+        "modals": {
+            "view_details": {
+                "title": "¿Desea ver los detalles?",
+                "message": "Visualizar detalles de",
+                "confirm": "Sí, ver detalles",
+                "cancel": "No, cancelar"
+            }
+        }
+    },
+    "game_analytics_classification": {
+        "cards": {
+            "first_attempt": {
+                "title": "Promedio Primer Intento",
+                "subtitle": "Aciertos",
+                "info": {
+                    "title": "Promedio del Primer Intento",
+                    "description": "Representa el porcentaje promedio de aciertos que los jugadores obtienen en su primer intento de clasificación."
+                }
+            },
+            "time": {
+                "title": "Tiempo Promedio",
+                "info": {
+                    "title": "Tiempo Promedio",
+                    "description": "Tiempo promedio que los jugadores han dedicado a completar la clasificación de requisitos."
+                }
+            },
+            "players": {
+                "title": "Total Jugadores",
+                "info": {
+                    "title": "Total de Jugadores",
+                    "description": "Número total de jugadores que han participado en esta partida de clasificación."
+                }
+            },
+            "attempts": {
+                "title": "Promedio Intentos",
+                "info": {
+                    "title": "Promedio de Intentos",
+                    "description": "Número promedio de intentos necesarios para completar la clasificación."
+                }
+            },
+            "one_attempt": {
+                "title": "Usaron 1 Intento",
+                "info": {
+                    "title": "Jugadores con 1 Intento",
+                    "description": "Porcentaje de jugadores que completaron la clasificación en su primer intento."
+                }
+            },
+            "two_three_attempts": {
+                "title": "Usaron 2 a 3 Intentos",
+                "info": {
+                    "title": "Jugadores con 2-3 Intentos",
+                    "description": "Porcentaje de jugadores que necesitaron entre 2 y 3 intentos para completar la clasificación."
+                }
+            },
+            "more_attempts": {
+                "title": "Usaron +3 Intentos",
+                "info": {
+                    "title": "Jugadores con más de 3 Intentos",
+                    "description": "Porcentaje de jugadores que necesitaron más de 3 intentos para completar la clasificación."
+                }
+            }
+        },
+        "buttons": {
+            "show_more": "Ver más",
+            "show_less": "Ver menos"
+        },
+        "table": {
+            "title": "Jugadores",
+            "columns": {
+                "player": "Jugador",
+                "time": "Tiempo",
+                "attempts": "Intentos",
+                "last_attempt": "Fecha",
+                "progress": "Avance",
+                "status": "Estado",
+                "actions": "Acciones"
+            },
+            "info": {
+                "player": {
+                    "title": "Información del Jugador",
+                    "description": "Muestra el nombre completo del jugador participante en la clasificación."
+                },
+                "time": {
+                    "title": "Tiempo Total",
+                    "description": "Tiempo total que el jugador ha dedicado en todos sus intentos de clasificación."
+                },
+                "attempts": {
+                    "title": "Número de Intentos",
+                    "description": "Total de intentos realizados por el jugador en esta partida de clasificación."
+                },
+                "last_attempt": {
+                    "title": "Fecha Registro",
+                    "description": "Fecha y hora del registro al juego de clasificación."
+                },
+                "progress": {
+                    "title": "Porcentaje de Avance",
+                    "description": "Porcentaje de requisitos clasificados correctamente."
+                },
+                "status": {
+                    "title": "Estado de la Partida",
+                    "description": "Estado actual del jugador en la partida de clasificación: completado, en progreso o pendiente."
+                }
+            }
+        },
+        "modals": {
+            "view_details": {
+                "title": "¿Desea ver los detalles?",
+                "message": "Visualizar detalles de",
+                "confirm": "Sí, ver detalles",
+                "cancel": "No, cancelar"
+            }
+        },
+        "messages": {
+            "no_data": "No hay datos disponibles",
+            "loading": "Cargando datos..."
+        }
+    },
+    "details_construction": {
+        "stats": {
+            "time": {
+                "title": "Tiempo Total",
+                "description": "Tiempo total acumulado que el jugador ha dedicado a la construcción de requisitos en todos sus intentos."
+            },
+            "attempts": {
+                "title": "Número de Intentos",
+                "description": "Cantidad total de intentos que el jugador ha realizado para construir todos los requisitos."
+            }
+        },
+        "table": {
+            "title": "Intentos",
+            "attempt": {
+                "title": "Intento",
+                "title_modal": "Número de Intento",
+                "description": "Indica el orden secuencial de los intentos realizados por el usuario en la construcción del requisito."
+            },
+            "requirement_id": {
+                "title": "ID del Requisito",
+                "title_modal": "ID del Requisito",
+                "description": "Identificador único del requisito que se está construyendo."
+            },
+            "time": {
+                "title": "Tiempo",
+                "title_modal": "Tiempo del Intento",
+                "description": "Duración total que tomó el usuario en completar este intento específico."
+            },
+            "movements": {
+                "title": "Movimientos",
+                "title_modal": "Cantidad de Movimientos",
+                "description": "Número total de veces que se movieron los fragmentos durante este intento."
+            },
+            "correct_fragments": {
+                "title": "Fragmentos Correctos",
+                "title_modal": "Fragmentos Correctos",
+                "description": "Cantidad de fragmentos colocados en la posición correcta."
+            },
+            "incorrect_fragments": {
+                "title": "Fragmentos Incorrectos",
+                "title_modal": "Fragmentos Incorrectos",
+                "description": "Cantidad de fragmentos colocados en una posición incorrecta."
+            },
+            "decoys_used": {
+                "title": "Señuelos Usados",
+                "title_modal": "Señuelos Usados",
+                "description": "Cantidad de fragmentos distractores que fueron utilizados en el intento."
+            },
+            "progressive_accuracy": {
+                "title": "Precisión Progresiva",
+                "title_modal": "Precisión Progresiva",
+                "description": "Porcentaje que indica la precisión acumulada en la construcción del requisito."
+            },
+            "date": {
+                "title": "Fecha",
+                "title_modal": "Fecha del Intento",
+                "description": "Fecha y hora en que se realizó el intento."
+            }
+        },
+        "modal": {
+            "loading": "Cargando detalles...",
+            "title": "Detalles del Intento",
+            "constructed_requirement": "Requisito Construido",
+            "user_construction": "Construcción del Usuario",
+            "decoys_used": "Señuelos Usados",
+            "unused_fragments": "Fragmentos No Utilizados",
+            "correct_fragments": "Fragmentos Correctos",
+            "total_time": "Tiempo Total",
+            "total_movements": "Movimientos",
+            "see_details": "Ver Detalles",
+            "movements": "movimientos",
+            "position": "Posición",
+            "close": "Cerrar"
+        },
+        "buttons": {
+            "generate_report": "Generar Reporte",
+            "cancel": "Cancelar",
+            "accept": "Aceptar"
+        }
+    },
+    "details_classification": {
+        "stats": {
+            "time": {
+                "title": "Tiempo",
+                "info": {
+                    "title": "Tiempo Total",
+                    "description": "Tiempo total acumulado en todos los intentos de clasificación."
+                }
+            },
+            "attempts": {
+                "title": "Número Intentos",
+                "info": {
+                    "title": "Número de Intentos",
+                    "description": "Total de intentos realizados en la clasificación de requisitos."
+                }
+            }
+        },
+        "buttons": {
+            "generate_report": "Generar Reporte"
+        },
+        "table": {
+            "title": "Intentos",
+            "columns": {
+                "attempt": "Intento",
+                "time": "Tiempo",
+                "movements": "Num. Movimientos",
+                "requirements": "Requisitos",
+                "correct": "Correctos",
+                "incorrect": "Incorrectos",
+                "success_precision": "Precisión Aciertos",
+                "error_precision": "Precisión Errores",
+                "progressive_precision": "Precisión Progresiva",
+                "date": "Fecha",
+                "actions": "Acciones"
+            },
+            "info": {
+                "attempt": {
+                    "title": "Número de Intento",
+                    "description": "Número secuencial que indica el orden del intento en la clasificación."
+                },
+                "time": {
+                    "title": "Tiempo del Intento",
+                    "description": "Duración total de este intento específico de clasificación."
+                },
+                "movements": {
+                    "title": "Número de Movimientos",
+                    "description": "Cantidad total de movimientos realizados durante este intento."
+                },
+                "requirements": {
+                    "title": "Requisitos",
+                    "description": "Número total de requisitos evaluados en este intento."
+                },
+                "correct": {
+                    "title": "Requisitos Correctos",
+                    "description": "Cantidad de requisitos clasificados correctamente en este intento."
+                },
+                "incorrect": {
+                    "title": "Requisitos Incorrectos",
+                    "description": "Cantidad de requisitos clasificados incorrectamente en este intento."
+                },
+                "success_precision": {
+                    "title": "Precisión de Aciertos",
+                    "description": "Porcentaje de precisión en los requisitos clasificados correctamente."
+                },
+                "error_precision": {
+                    "title": "Precisión de Errores",
+                    "description": "Porcentaje de imprecisión en los requisitos clasificados incorrectamente."
+                },
+                "progressive_precision": {
+                    "title": "Precisión Progresiva",
+                    "description": "Porcentaje acumulado de precisión considerando todos los intentos realizados."
+                },
+                "date": {
+                    "title": "Fecha del Intento",
+                    "description": "Fecha y hora en que se realizó este intento de clasificación."
+                }
+            }
+        },
+        "modals": {
+            "attempt_details": {
+                "loading": "Cargando detalles...",
+                "title": "Detalles del Intento",
+                "headers": {
+                    "time": "Tiempo",
+                    "success": "Aciertos",
+                    "errors": "Errores"
+                },
+                "requirements": {
+                    "title": "Requisitos Evaluados",
+                    "feedback": "Retroalimentación",
+                    "movements": "Movimientos"
+                },
+                "close": "Cerrar"
+            },
+            "report": {
+                "title": "Generar Reporte",
+                "message": "Seleccione una opción",
+                "preview": "Vista previa",
+                "print": "Imprimir",
+                "cancel": "Cancelar"
+            }
+        }
+    },
+    "analytics": {
+        "report": {
+            "modal": {
+                "title": "Generar Reporte",
+                "select_option": "¿Qué deseas hacer con el reporte?",
+                "preview": "Previsualizar",
+                "print": "Imprimir",
+                "cancel": "Cancelar"
+            }
+        }
+    },
+    "report": {
+        "title": {
+            "line1": "REPORTE",
+            "line2": "DESCRIPTIVO"
+        },
+        "game_code": {
+            "label": "Código del juego"
+        },
+        "sections": {
+            "game_details": "Desglose de la partida",
+            "attempt_details": "Desglose de intentos",
+            "summary": "Resumen",
+            "analysis": "Análisis de Desempeño",
+            "recommendations": "Recomendaciones",
+            "progression": "Curva de Aprendizaje",
+            "attempts_description": "Descripción Detallada de Intentos",
+            "requirements_analysis": "Análisis por Requisito"
+        },
+        "stats": {
+            "time": "Tiempo",
+            "attempts": "Intentos",
+            "precision": "Precisión",
+            "average_correct": "Promedio Requisitos Correctos",
+            "consistency": "Consistencia",
+            "total_requirements": "Total de Requisitos",
+            "average_attempts": "Promedio de Intentos por Requisito"
+        },
+        "metrics_explanation": {
+            "average_title": "Promedio de Requisitos Correctos",
+            "average_description": "Representa la media de requisitos clasificados correctamente por intento. Se calcula:",
+            "average_formula": "Promedio = (Total de requisitos correctos) / (Número total de intentos)",
+            "average_interpretation": "Un valor más alto indica mejor precisión en la clasificación de requisitos.",
+            "consistency_title": "Índice de Consistencia",
+            "consistency_description": "Medida combinada que evalúa tanto la estabilidad del desempeño como la tendencia de mejora. Se compone de dos factores:",
+            "stability_formula": "Estabilidad = 100 × (1 - σ/σ_max)",
+            "improvement_formula": "Mejora = Promedio de incrementos positivos entre intentos consecutivos",
+            "consistency_formula": "Consistencia Final = (0.7 × Estabilidad) + (0.3 × Mejora)",
+            "consistency_interpretation": "Un valor más alto (100%) indica un desempeño perfectamente estable con mejora constante. Se considera:",
+            "consistency_levels": [
+                "Alto (≥75%): Desempeño muy estable con tendencia positiva",
+                "Medio (≥50%): Desempeño moderadamente estable",
+                "Bajo (<50%): Desempeño variable o sin mejora clara"
+            ]
+        },
+        "table": {
+            "columns": {
+                "attempt": "Intento",
+                "time": "Tiempo",
+                "movements": "Movimientos",
+                "requirements": "Requisitos",
+                "correct": "Correctos",
+                "incorrect": "Incorrectos",
+                "precision_success": "Precisión Aciertos",
+                "precision_errors": "Precisión Errores",
+                "precision_progressive": "Precisión Progresiva"
+            },
+            "explanation": {
+                "title": "Descripción de las columnas",
+                "attempt": "Número secuencial que indica el orden de cada intento realizado.",
+                "time": "Duración total empleada en completar el intento.",
+                "movements": "Número total de acciones de clasificación realizadas durante el intento.",
+                "requirements": "Total de requisitos disponibles para clasificar en el intento.",
+                "correct": "Cantidad de requisitos clasificados correctamente.",
+                "incorrect": "Cantidad de requisitos clasificados de manera incorrecta.",
+                "precision_success": "Porcentaje que representa la precisión en las clasificaciones correctas, calculado como (Correctos/Total) × 100",
+                "precision_errors": "Porcentaje que representa la tasa de error en las clasificaciones, calculado como (Incorrectos/Total) × 100",
+                "precision_progressive": "Medida que refleja la mejora acumulativa en la precisión del estudiante a lo largo de sus intentos."
+            }
+        },
+        "summary": {
+            "player_prefix": "El jugador",
+            "progress_record": "ha registrado su progreso en el juego, acumulando un tiempo total jugado de",
+            "minutes": "minutos",
+            "seconds": "segundos",
+            "distributed_in": "distribuidos en",
+            "attempts": "intentos",
+            "game_identified": "La partida está identificada bajo el código único",
+            "last_attempt_prefix": "y su último intento fue realizado el"
+        },
+        "attempts_narrative": {
+            "title": "Descripción Detallada de Intentos",
+            "improvement": "aumento",
+            "decline": "descenso",
+            "during_attempt": "Durante el intento",
+            "spent": "empleó",
+            "minutes": "minutos",
+            "seconds": "segundos",
+            "and_made": "y realizó",
+            "movements": "movimientos",
+            "to_classify": "para clasificar los",
+            "available_requirements": "requisitos que tenía disponibles",
+            "managed_to_classify": "Logró clasificar correctamente",
+            "requirements": "requisitos",
+            "leaving": "dejando",
+            "incorrect": "incorrectos",
+            "resulting_in": "lo que resultó en una precisión del",
+            "and_a": "y un",
+            "increase": "aumento",
+            "decrease": "descenso",
+            "of": "del",
+            "in_precision": "en la precisión",
+            "compared_to_previous": "con respecto al intento anterior",
+            "classified_requirements": "Requisitos Clasificados",
+            "total_moves": "Total Movimientos",
+            "to_ambiguous": "A Ambiguo",
+            "to_non_ambiguous": "A No Ambiguo"
+        },
+        "recommendations": {
+            "title": "Recomendaciones de Mejora",
+            "attempts": "Gestión de Intentos",
+            "efficiency": "Eficiencia",
+            "consistency": "Consistencia"
+        },
+        "chart": {
+            "title": "Progresión del Aprendizaje",
+            "y_axis": "Precisión (%)",
+            "attempt_label": "Intento",
+            "precision_label": "Precisión Progresiva"
+        },
+        "analysis": {
+            "title": "Análisis Detallado",
+            "performance_subtitle": "Rendimiento General",
+            "progression_subtitle": "Progresión del Aprendizaje"
+        },
+        "footer": {
+            "generated_by": "Reporte generado por"
+        }
+    },
+    "report_general": {
+        "title": {
+            "line1": "REPORTE",
+            "line2": "GENERAL"
+        },
+        "game_info": {
+            "code": "Código de Partida",
+            "requirements": "Total de Requisitos: ",
+            "creator": "Creado por: ",
+            "date": "Fecha de Creación"
+        },
+        "construction": {
+            "summary": {
+                "title": "Resumen General",
+                "metrics": {
+                    "players": "Total Jugadores",
+                    "accuracy": "Precisión Promedio",
+                    "time": "Tiempo Promedio",
+                    "completion": "Tasa de Finalización",
+                    "per_requirement": "por partida"
+                },
+                "progress": {
+                    "title": "Estado de Avance",
+                    "completed": "Completado",
+                    "in_progress": "En Progreso",
+                    "not_started": "Sin Iniciar"
+                }
+            },
+            "metrics_explanation": {
+                "title": "Explicación de Métricas",
+                "average_accuracy": {
+                    "title": "Precisión Promedio",
+                    "description": "Representa el promedio general de las precisiones promedio alcanzadas por cada jugador. La precisión de cada jugador se calcula promediando las precisiones obtenidas en todos sus intentos por requisito.",
+                    "formula": {
+                        "step1": "1. Precisión por intento = (Fragmentos correctamente colocados / Total de fragmentos) × 100",
+                        "step2": "2. Precisión promedio del jugador = Suma de precisiones de todos los intentos / Total de intentos",
+                        "step3": "3. Precisión promedio general = Suma de precisiones promedio de jugadores / Total de jugadores"
+                    },
+                    "interpretation": "Esta métrica refleja la precisión global del juego, considerando todos los intentos de cada jugador en cada requisito. Un valor más alto indica una mejor capacidad general de los jugadores para construir los requisitos correctamente."
+                },
+                "average_game_time": {
+                    "title": "Tiempo Promedio de Partida",
+                    "description": "Representa el tiempo promedio que toma completar toda la partida, calculado a partir del tiempo total de cada jugador.",
+                    "formula": {
+                        "step1": "1. Tiempo total del jugador = Suma de tiempos empleados en todos los requisitos",
+                        "step2": "2. Tiempo promedio de partida = Suma de tiempos totales de todos los jugadores / Total de jugadores"
+                    },
+                    "interpretation": "Esta métrica proporciona una visión general del tiempo necesario para completar todos los requisitos del juego."
+                },
+                "average_time": {
+                    "title": "Tiempo Promedio por Requisito",
+                    "description": "Representa el tiempo promedio que les toma a los jugadores completar correctamente cada requisito, considerando todos sus intentos hasta lograrlo.",
+                    "formula": {
+                        "step1": "1. Tiempo total por requisito del jugador = Suma de tiempos de todos los intentos en el requisito",
+                        "step2": "2. Tiempo promedio por requisito = Suma de tiempos totales de todos los jugadores / Total de jugadores"
+                    },
+                    "interpretation": "Esta métrica ayuda a identificar qué requisitos toman más tiempo en ser construidos correctamente, lo que puede indicar su nivel de complejidad."
+                },
+                "average_attempts": {
+                    "title": "Intentos Promedio",
+                    "description": "Indica el número promedio de intentos que necesitan los jugadores para construir correctamente cada requisito.",
+                    "formula": {
+                        "step1": "1. Intentos por requisito = Número de intentos hasta completar correctamente el requisito",
+                        "step2": "2. Promedio de intentos por requisito = Suma de intentos de todos los jugadores / Total de jugadores"
+                    },
+                    "interpretation": "Un mayor número de intentos promedio sugiere que el requisito es más desafiante o complejo de construir correctamente."
+                },
+                "completion_rate": {
+                    "title": "Tasa de Finalización",
+                    "description": "Indica el porcentaje de jugadores que han completado todos los requisitos del juego.",
+                    "formula": "Tasa de Finalización = (Jugadores que completaron / Total de jugadores) × 100",
+                    "interpretation": "Una tasa del 66.67% indica que dos tercios de los jugadores han completado exitosamente todos los requisitos."
+                },
+                "difficulty_index": {
+                    "title": "Índice de Dificultad",
+                    "description": "Usa el promedio de intentos para determinar qué requisitos son más desafiantes.",
+                    "formula": "Promedio de Intentos = Total de intentos por requisito / Número de jugadores",
+                    "interpretation": "Un promedio más alto de intentos indica mayor dificultad en la construcción del requisito."
+                }
+            },
+            "resume_players": {
+                "table": {
+                    "title": "Resumen Jugadores",
+                    "columns": {
+                        "player": "Jugador",
+                        "time": "Tiempo",
+                        "attempts": "Intentos",
+                        "last_attempt": "Último Intento",
+                        "progress": "Avance"
+                    }
+                }
+            },
+            "time": {
+                "title": "Análisis de Tiempo",
+                "metrics": {
+                    "average": "Tiempo Promedio",
+                    "best": "Mejor Tiempo",
+                    "total": "Tiempo Total Invertido",
+                    "per_requirement": "por requisito",
+                    "all_players": "todos los jugadores"
+                },
+                "distribution": {
+                    "title": "Distribución del Tiempo",
+                    "y_axis": "Número de Estudiantes",
+                    "x_axis": "Rango de Tiempo"
+                },
+                "requirements": {
+                    "title": "Tiempo por Requisito",
+                    "columns": {
+                        "requirement": "Requisito",
+                        "avg_time": "Tiempo Promedio",
+                        "completion_rate": "Promedio de Finalización",
+                        "attempts": "Intentos Promedio"
+                    }
+                },
+                "insights": {
+                    "title": "Conclusiones",
+                    "recommendations": "Recomendaciones"
+                }
+            },
+            "difficulty": {
+                "title": "Análisis de Dificultad",
+                "challenging_requirements": {
+                    "title": "Requisitos Más Desafiantes",
+                    "subtitle": "Top 3 requisitos que requirieron más intentos",
+                    "metrics": {
+                        "avg_attempts": "Promedio de Intentos",
+                        "rank": "Posición"
+                    }
+                },
+                "attempts_stats": {
+                    "title": "Estadísticas de Intentos",
+                    "metrics": {
+                        "min_attempts": "Mínimo de Intentos",
+                        "max_attempts": "Máximo de Intentos",
+                        "by": "por"
+                    }
+                }
+            }
+        },
+        "classification": {
+            "summary": {
+                "title": "Resumen General",
+                "metrics": {
+                    "players": "Total Jugadores",
+                    "first_attempt": "Precisión Promedio Primer Intento",
+                    "avg_time": "Tiempo Promedio"
+                },
+                "distribution": {
+                    "title": "Distribución de Intentos",
+                    "playerlabel": "Jugadores",
+                    "one_attempt": "1 Intento",
+                    "two_three_attempts": "2-3 Intentos",
+                    "more_attempts": "Más de 3 Intentos"
+                },
+                "progress": {
+                    "title": "Estado de Avance",
+                    "completed": "Completado",
+                    "in_progress": "En Progreso",
+                    "not_started": "Sin Iniciar"
+                }
+            },
+            "metrics_explanation": {
+                "title": "Explicación de Métricas",
+                "first_attempt_accuracy": {
+                    "title": "Precisión del Primer Intento",
+                    "description": "Representa el porcentaje de requisitos que fueron clasificados correctamente en el primer intento por los jugadores.",
+                    "formula": "Precisión = (Requisitos correctamente clasificados en primer intento / Total de requisitos) × 100",
+                    "interpretation": "Un valor más alto indica una mejor comprensión inicial de la diferencia entre requisitos ambiguos y no ambiguos. Este es un indicador importante de la claridad de los conceptos de ambigüedad en requisitos."
+                },
+                "error_rate": {
+                    "title": "Tasa de Error por Requisito",
+                    "description": "Indica el porcentaje de jugadores que clasificaron incorrectamente un requisito específico. Esta métrica ayuda a identificar los requisitos más desafiantes.",
+                    "formula": "Tasa de Error = (Jugadores que clasificaron incorrectamente / Total de jugadores) × 100",
+                    "interpretation": "Una tasa alta puede indicar que el requisito es particularmente desafiante o puede necesitar clarificación en su redacción. Es útil para identificar áreas de mejora en el diseño de los requisitos."
+                },
+                "average_movements": {
+                    "title": "Movimientos Promedio",
+                    "description": "Representa la cantidad media de veces que los jugadores movieron cada requisito durante el proceso de clasificación.",
+                    "formula": "Movimientos Promedio = Total de movimientos de clasificación / Número de intentos",
+                    "interpretation": "Un número mayor de movimientos puede indicar indecisión o dificultad en la clasificación. Esto puede señalar la necesidad de reforzar los criterios de clasificación."
+                },
+                "progress_percentage": {
+                    "title": "Porcentaje de Avance",
+                    "description": "Mide el progreso general de los jugadores en la clasificación de todos los requisitos del juego.",
+                    "formula": "Porcentaje de Avance = (Requisitos correctamente clasificados / Total de requisitos) × 100",
+                    "interpretation": "Representa el nivel de completitud del juego para cada jugador. Un 100% indica que todos los requisitos han sido clasificados correctamente."
+                }
+            },
+            "requirements": {
+                "title": "Análisis de Requisitos",
+                "distribution": {
+                    "ambiguous": "Ambiguos",
+                    "non_ambiguous": "No Ambiguos"
+                },
+                "table": {
+                    "requirement": "Requisito",
+                    "avg_time": "Tiempo Promedio",
+                    "avg_moves": "Movimientos Promedio",
+                    "correct_rate": "Tasa de Clasificación",
+                    "challenging": "Requisitos Más Desafiantes",
+                    "error_pattern": "Patrón de Error"
+                }
+            },
+            "time": {
+                "title": "Análisis de Tiempo",
+                "metrics": {
+                    "average": "Tiempo Promedio",
+                    "subaverage": "por Partida",
+                    "best": "Mejor Tiempo",
+                    "worst": "Peor Tiempo"
+                },
+                "distribution": {
+                    "title": "Distribución de Tiempo",
+                    "students": "Número de estudiantes",
+                    "time_range": "Rango de tiempo"
+                }
+            }
+        },
+        "footer": {
+            "generated_by": "Reporte generado por"
+        }
+    },
+    "logout": {
+        "confirmation": {
+            "title": "Cerrar Sesión",
+            "message": "¿Está seguro que desea cerrar la sesión?",
+            "confirm": "Sí, cerrar sesión",
+            "cancel": "Cancelar"
+        },
+        "errors": {
+            "title": "Error",
+            "message": "Ocurrió un error al cerrar la sesión. Por favor, intente nuevamente."
+        }
+    }
+}

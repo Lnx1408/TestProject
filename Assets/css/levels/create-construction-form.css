@@ -1,0 +1,238 @@
+/* Estilos para el formulario de creación */
+.requirement-form {
+    padding: 1rem;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.form-section h3 {
+    color: var(--title-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-1);
+    background: var(--body-color);
+    color: var(--text-color);
+    resize: vertical;
+}
+
+.generation-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.fragments-container,
+.decoys-container {
+    margin-top: 1rem;
+}
+
+/* Estilos para los fragmentos y señuelos */
+.fragment-item,
+.decoy-item {
+    background: var(--light-primary);
+    padding: 0.75rem;
+    border-radius: var(--border-radius-1);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.decoy-item {
+    background: var(--light-warning);
+}
+
+.fragment-handle,
+.decoy-handle {
+    cursor: move;
+    color: var(--text-color);
+}
+
+.fragment-delete,
+.decoy-delete {
+    cursor: pointer;
+    color: var(--danger);
+    margin-left: auto;
+}
+
+/* Botones */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+/* Validación */
+.is-invalid {
+    border-color: var(--danger);
+}
+
+.invalid-feedback {
+    color: var(--danger);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Estilos para la generación de fragmentos */
+.loading-fragments {
+    text-align: center;
+    padding: 2rem;
+}
+
+.loading-fragments i {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.manual-creation {
+    margin-top: 1rem;
+}
+
+.add-fragment-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.add-fragment-form .form-group {
+    flex: 1;
+}
+
+.manual-fragments-list {
+    margin-top: 1rem;
+}
+
+.position-badge {
+    background: var(--primary);
+    color: var(--light);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-1);
+    min-width: 2rem;
+    text-align: center;
+}
+
+/* Animaciones */
+@keyframes bx-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.bx-spin {
+    animation: bx-spin 1s linear infinite;
+}
+
+
+/* Estilos para Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.toast-notification {
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease;
+}
+
+.toast-notification.error {
+    background: var(--light-danger);
+    color: var(--danger);
+    border-left: 4px solid var(--danger);
+}
+
+.toast-notification.warning {
+    background: var(--light-warning);
+    color: var(--warning);
+    border-left: 4px solid var(--warning);
+}
+
+.toast-notification i {
+    font-size: 1.2rem;
+}
+
+/* Estilos para secciones con error */
+.form-section.has-error {
+    border: 2px solid var(--danger);
+    border-radius: var(--border-radius-1);
+    padding: 1rem;
+    position: relative;
+}
+
+.form-section.has-error::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    width: calc(100% - 2rem);
+    height: 2px;
+    background: var(--danger);
+}
+
+.input-error {
+    border: 1px solid;
+    border-color: var(--danger) !important;
+    background-color: var(--light-danger) !important;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+    from { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+@keyframes fadeOut {
+    from { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+    to { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}

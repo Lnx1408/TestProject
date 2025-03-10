@@ -1,0 +1,123 @@
+.attempt-details-container {
+    padding: 1rem;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--title-color);
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--title-color);
+    margin: 1rem 0;
+}
+
+.final-requirement {
+    background: var(--light-primary);
+    padding: 1rem;
+    border-radius: var(--border-radius-1);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.stats-overview {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+}
+
+.stat-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--body-color);
+    border-radius: var(--border-radius-1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box i {
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.fragments-section {
+    margin-bottom: 2rem;
+}
+
+.fragments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.fragment-detail {
+    background: var(--body-color);
+    border-radius: var(--border-radius-1);
+    padding: 1rem;
+    border-left: 4px solid var(--grey);
+}
+
+.correct .bx-check {
+    color: var(--success);
+    font-size: 1.5rem;
+}
+
+.incorrect .bx-x {
+    color: var(--danger);
+    font-size: 1.5rem;
+}
+
+.correct .fragment-content .fragment-text {
+    color: var(--success);
+}
+
+.incorrect .fragment-content .fragment-text {
+    color: var(--danger);
+}
+
+.fragment-detail.correct {
+    border-left-color: var(--success);
+    background-color: #D0FFE1EB;
+}
+
+.fragment-detail.incorrect {
+    border-left-color: var(--danger);
+    background-color: #ffd9d0eb;
+}
+
+.fragment-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.fragment-text {
+    font-weight: 500;
+}
+
+.fragment-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    justify-content: center;
+}
+
+.stat-item i {
+    font-size: 1rem;
+}

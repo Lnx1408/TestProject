@@ -1,0 +1,77 @@
+{
+    "general": {
+        "classification": {
+            "summary_narrative_templates": {
+                "high_completion": "The game shows a high completion rate with {completed_percentage}% of players having finished all requirements. {in_progress_count} players are currently working through the challenges.",
+                "medium_completion": "Progress is steady with {completed_percentage}% completion rate. A significant number of players ({in_progress_count}) are actively engaged.",
+                "low_completion": "The game is in early stages with {completed_percentage}% completion. Most players ({in_progress_count}) are still working through the requirements."
+            },
+            "time_narrative_templates": {
+                "fast_completion": "Students demonstrate efficient completion times, meeting requirements in an average time of {avg_time}. This indicates a good understanding of the process of recognizing Ambiguous and Non-Ambiguous requirements.",
+                "moderate_completion": "The average completion time of {avg_time} suggests a reasonable pace, though there might be room for improvement in certain areas.",
+                "slow_completion": "The average completion time of {avg_time} indicates that students might be facing challenges that need to be addressed."
+            }
+        },
+        "construction": {
+            "summary_narrative_templates": {
+                "high_completion": "The game shows a high completion rate with {completed_percentage}% of players having finished all requirements. {in_progress_count} players are currently working through the challenges.",
+                "medium_completion": "Progress is steady with {completed_percentage}% completion rate. A significant number of players ({in_progress_count}) are actively engaged.",
+                "low_completion": "The game is in early stages with {completed_percentage}% completion. Most players ({in_progress_count}) are still working through the requirements."
+            },
+            "time_narrative_templates": {
+                "fast_completion": "Students demonstrate efficient completion times, meeting requirements in an average time of {avg_time}. This indicates a good understanding of the construction process.",
+                "moderate_completion": "The average completion time per requirement of {avg_time} suggests a reasonable pace, though there might be room for improvement in certain areas.",
+                "slow_completion": "The average completion time per requirement of {avg_time} indicates that students might be facing challenges that need to be addressed."
+            },
+            "difficulty_narrative_templates": {
+                "high_difficulty": "Students faced greater difficulty with '{top_requirement}', requiring an average of {avg_attempts} attempts. The performance variation is significant, ranging from {min_attempts} to {max_attempts} attempts to complete the task.",
+                "medium_difficulty": "Moderate difficulty was observed, with '{top_requirement}' standing out at an average of {avg_attempts} attempts. Students completed the task within a range of {min_attempts} to {max_attempts} attempts.",
+                "low_difficulty": "Requirements presented manageable difficulty, with '{top_requirement}' requiring an average of {avg_attempts} attempts. Students needed between {min_attempts} and {max_attempts} attempts to complete the task."
+            }
+        }
+    },
+    "classification": {
+        "narrativeTemplates": {
+            "startingPhrase": {
+                "good": "The student began by correctly solving {correctos_inicial} out of {total_requisitos} requirements in their first attempt, showing good initial understanding.",
+                "average": "In their first attempt, they managed to correctly classify {correctos_inicial} out of {total_requisitos} requirements, establishing a moderate baseline.",
+                "poor": "The first attempt resulted in {correctos_inicial} correct requirements out of {total_requisitos}, indicating a need to strengthen basic concepts."
+            },
+            "progressionPhrase": {
+                "efficient": "Completed the classification in just {total_intentos} attempts, demonstrating quick and effective understanding.",
+                "steady": "Progressed steadily through {total_intentos} attempts until completing the classification, maintaining a stable pace.",
+                "gradual": "Required {total_intentos} attempts to complete the classification, showing gradual improvement in understanding."
+            },
+            "efficiencyPhrase": {
+                "high": "Showed high efficiency, correctly classifying an average of {promedio_correctos} requirements per attempt.",
+                "medium": "Maintained moderate efficiency with with an average of {promedio_correctos} correct requirements per attempt.",
+                "low": "On average, correctly classified {promedio_correctos} requirements per attempt, suggesting areas for improvement."
+            }
+        },
+        "recommendationTemplates": {
+            "attempts": {
+                "few": "Excellent classification ability, completing the task in few attempts.",
+                "moderate": "Good progress, although there is room to improve initial accuracy.",
+                "many": "It is recommended to reinforce basic concepts to reduce the number of attempts needed."
+            },
+            "efficiency": {
+                "high": "Maintains an excellent success rate per attempt.",
+                "medium": "Consider carefully reviewing each requirement before classifying.",
+                "low": "A more detailed analysis of classification criteria is suggested."
+            },
+            "consistency": {
+                "high": "Demonstrates stable understanding of concepts.",
+                "medium": "Try to maintain a more consistent approach to classification.",
+                "low": "It is suggested to review the classification methodology for more consistent results."
+            }
+        }
+    },
+    "construction": {
+        "requirement_summary": {
+            "base": "For requirement '{requisito_texto}', it took {total_intentos} attempts and a total time of {tiempo_minutos} minutes {tiempo_segundos} seconds. The initial precision was {precision_inicial}%, finally reaching a precision of {precision_final}%.",
+            "improvement": "This represents an improvement of {porcentaje_mejora}% from the first attempt.",
+            "decoys": "Throughout the process, the decoys were interacted with {total_señuelos} times."
+        },
+        "attempt_detail": "During attempt {numero_intento}, {tiempo_minutos} minutes {tiempo_segundos} seconds were spent and {total_movimientos} movements were made to construct the requirement. Successfully positioned {fragmentos_correctos} fragments correctly and {fragmentos_incorrectos} incorrectly. Additionally, there was interaction with {señuelos_usados} decoys, resulting in a precision of {precision}%."
+    }
+}

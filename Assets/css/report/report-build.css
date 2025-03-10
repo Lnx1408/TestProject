@@ -1,0 +1,110 @@
+.fragments-container {
+    display: flex;
+    flex-direction: row; /* Cambiado a row para disposición horizontal */
+    flex-wrap: wrap; /* Permite que los fragmentos fluyan a la siguiente línea si no hay espacio */
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.fragment-card {
+    flex: 1; /* Permite que los fragmentos crezcan equitativamente */
+    min-width: 200px; /* Ancho mínimo para mantener la legibilidad */
+    max-width: calc(33.333% - 1rem); /* Máximo 3 fragmentos por fila */
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 4px solid #ddd;
+}
+
+.fragment-content {
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.fragment-text {
+    font-size: 1rem;
+    color: var(--text-color-dark, #333);
+    line-height: 1.4;
+}
+
+.fragment-card.correct {
+    border-left-color: var(--success, #4CAF50);
+    background-color: var(--light-success, #BBF7D0);
+}
+
+.fragment-card.incorrect {
+    border-left-color: var(--danger, #f44336);
+    background-color: var(--light-danger);
+}
+
+.fragment-metrics {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #62d2e0a6;
+    justify-content: center;
+}
+
+.metric {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-color-secondary, #666);
+}
+
+.metric i {
+    font-size: 1rem;
+    color: var(--primary-color, #1976D2);
+}
+
+/* Estilos para los señuelos */
+.decoys-used {
+    margin-top: 1.5rem;
+}
+
+.decoys-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.decoy {
+    background: var(--light-warning, #f5f5f5);
+    border-radius: 6px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.decoy-text {
+    font-size: 0.9rem;
+    color: var(--text-color-dark, #333);
+}
+
+.decoy-moves {
+    font-size: 0.8rem;
+    color: var(--text-color-secondary, #666);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+
+/* Ajustar el responsive */
+@media (max-width: 1200px) {
+    .fragment-card {
+        max-width: calc(50% - 1rem); /* 2 fragmentos por fila en pantallas medianas */
+    }
+}
+
+@media (max-width: 768px) {
+    .fragment-card {
+        max-width: 100%; /* 1 fragmento por fila en móviles */
+    }
+}

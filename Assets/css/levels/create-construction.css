@@ -1,0 +1,140 @@
+/* Estilos para la tabla y los fragmentos */
+.fragments-preview {
+    padding: 1rem;
+    background: var(--body-color);
+    border-radius: var(--border-radius-1);
+    margin: 0.5rem 0;
+}
+
+.fragments-section {
+    margin-bottom: 1rem;
+}
+
+.fragments-section h4 {
+    color: var(--title-color);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.fragments-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.fragment-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem;
+    background: var(--light-primary);
+    border-radius: var(--border-radius-1);
+    font-size: 0.9rem;
+}
+
+.fragment-item.decoy {
+    background: var(--light-warning);
+}
+
+.position-badge {
+    background: var(--primary);
+    color: var(--light);
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.fragment-text {
+    color: var(--text-color);
+}
+
+/* Estilos para el checkbox */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.req-checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+/* Estilos para filas seleccionadas */
+.selected-requirement {
+    background-color: var(--light-primary) !important;
+}
+
+/* Estilos para el control de expansión */
+td.dt-control {
+    position: relative;
+    cursor: pointer;
+}
+
+td.dt-control:before {
+    content: '+';
+    background-color: var(--primary);
+    color: var(--light);
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+tr.shown td.dt-control:before {
+    content: '-';
+}
+
+
+
+/* Estilos para la tabla principal */
+.table-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.table-actions button {
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-1);
+    transition: all 0.3s ease;
+}
+
+.table-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: var(--light);
+}
+
+.btn-danger:hover {
+    background-color: var(--dark-danger);
+}
+
+/* Estilos para los contadores */
+.fragments-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-primary);
+    color: var(--primary);
+    border-radius: var(--border-radius-1);
+    padding: 0.25rem 0.75rem;
+    font-weight: 500;
+}
+
+.decoys-count {
+    background: var(--light-warning);
+    color: var(--warning);
+}
