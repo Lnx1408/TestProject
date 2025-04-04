@@ -697,7 +697,7 @@ class RequirementsGenerator {
             });
 
         } catch (error) {
-            console.error('Error al guardar requisitos XD:', error);
+            console.error('Error al guardar requisitos:', error);
             Swal.fire({
                 title: this.translations.get('errors.title') || 'Error',
                 text: (this.translations.get('errors.save_failed') || 'Error al guardar requisitos') + ': ' + error.message,
