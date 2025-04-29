@@ -685,14 +685,15 @@ class RequirementsGenerator {
                 icon: 'success',
                 confirmButtonText: this.translations.get('saving.success_button') || 'Aceptar'
             }).then(() => {
-                Swal.close(); // Cerrar el modal del generador
+                // Añadir los requisitos a la tabla principal si existen IDs insertados
+                if (decryptedResponse.insertedIds && decryptedResponse.insertedIds.length > 0) {
+                    this.addRequirementsToMainTable(requirements, decryptedResponse.insertedIds);
+                }
 
-                // Refrescar la página o actualizar la tabla principal de requisitos
-                if (typeof createClassificationGame !== 'undefined' && createClassificationGame.loadRequirements) {
-                    createClassificationGame.loadRequirements();
+                if (this.modal) {
+                    this.modal.close(); // Cerrar el modal del generador
                 } else {
-                    // Alternativa si no podemos recargar dinámicamente
-                    window.location.reload();
+                    Swal.close(); // Alternativa si no se usa el modal personalizado
                 }
             });
 
@@ -718,6 +719,30 @@ class RequirementsGenerator {
             icon: 'error',
             confirmButtonText: this.translations.get('errors.button') || 'Aceptar'
         });
+    }
+
+    /**
+     * Añade los requisitos generados a la tabla principal
+     * @param {Array} requirements - Lista de requisitos generados
+     * @param {Array} insertedIds - Lista de IDs asignados por el servidor
+     */
+    addRequirementsToMainTable(requirements, insertedIds) {
+        // Verificar que existe la instancia de createClassificationGame
+        if (typeof createClassificationGame !== 'undefined' && createClassificationGame.addGeneratedRequirements) {
+            // Mapear los requisitos con sus nuevos IDs
+            const requirementsWithIds = requirements.map((req, index) => {
+                return {
+                    id: insertedIds[index],
+                    description: req.description,
+                    is_ambiguous: req.is_ambiguous,
+                    is_functional: req.is_functional,
+                    feedback: req.feedback
+                };
+            });
+
+            // Llamar al método en createClassificationGame para añadir los requisitos
+            createClassificationGame.addGeneratedRequirements(requirementsWithIds);
+        }
     }
 }
 

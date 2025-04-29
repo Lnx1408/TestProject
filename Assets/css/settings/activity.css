@@ -1,0 +1,327 @@
+/* Estilos para la página de historial de actividad */
+
+.activity-container {
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.activity-header {
+    margin-bottom: 1.5rem;
+}
+
+.activity-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.activity-description {
+    color: var(--text-color-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.activity-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.filter-selector {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-light);
+    border-radius: 0.5rem;
+}
+
+.filter-selector i {
+    color: var(--text-color-secondary);
+    margin-right: 0.5rem;
+}
+
+.period-selector {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.btn-export {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-export:hover {
+    background-color: var(--primary-dark);
+}
+
+.activity-info-message {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--color-info-light);
+    border: 1px solid var(--color-info-border);
+    border-radius: 0.5rem;
+    color: var(--color-info-text);
+    margin-bottom: 1.5rem;
+}
+
+.activity-info-message i {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+}
+
+.activity-list {
+    margin-bottom: 2rem;
+}
+
+.day-group {
+    margin-bottom: 2rem;
+}
+
+.date-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.date-badge {
+    background-color: var(--color-light);
+    padding: 0.35rem 1rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.date-header .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--border-color);
+    margin-left: 1rem;
+}
+
+.event-list {
+    padding-left: 1rem;
+}
+
+.event-item {
+    display: flex;
+    border-left: 4px solid;
+    padding: 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    margin-bottom: 1rem;
+}
+
+.event-item.login {
+    border-color: var(--success);
+    background-color: var(--color-success-light);
+}
+
+.event-item.logout {
+    border-color: var(--danger);
+    background-color: var(--color-danger-light);
+}
+
+.event-item.failed {
+    border-color: var(--warning);
+    background-color: var(--color-warning-light);
+}
+
+.event-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.event-icon i {
+    font-size: 1.25rem;
+}
+
+.event-item.login .event-icon i {
+    color: var(--success);
+}
+
+.event-item.logout .event-icon i {
+    color: var(--danger);
+}
+
+.event-item.failed .event-icon i {
+    color: var(--warning);
+}
+
+.event-details {
+    flex-grow: 1;
+}
+
+.event-details h3 {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.event-status-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+}
+
+.event-status-badge.failed {
+    background-color: var(--color-warning);
+    color: var(--color-warning-text);
+}
+
+.event-timestamp {
+    font-family: monospace;
+    background-color: var(--transparent-thow-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.event-user {
+    color: var(--primary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-metadata {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.metadata-item {
+    display: flex;
+    align-items: center;
+}
+
+.metadata-item i {
+    color: var(--text-color-secondary);
+    margin-right: 0.25rem;
+}
+
+.metadata-item b {
+    font-weight: 500;
+}
+
+.event-alert {
+    margin-top: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--color-warning-light);
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--color-warning-text);
+    display: flex;
+    align-items: center;
+}
+
+.event-alert i {
+    margin-right: 0.5rem;
+}
+
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.btn-load-more {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-light);
+    color: var(--primary);
+    border: 1px solid var(--primary-light);
+    border-radius: 1.5rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-load-more:hover {
+    background-color: var(--color-light-hover);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-color-secondary);
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
+.spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spinner 0.8s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .activity-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .event-metadata {
+        grid-template-columns: 1fr;
+    }
+}

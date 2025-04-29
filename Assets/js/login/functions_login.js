@@ -3,11 +3,13 @@ class LoginModule {
         this.config = {
             endpoints: {
                 login: `${base_url}/Login/loginUser`,
-                register: `${base_url}/Login/registerUser`
+                register: `${base_url}/Login/registerUser`,
+                reset: `${base_url}/Login/requestReset`
             },
             forms: {
                 login: '#formLogin',
-                register: '#formRegister'
+                register: '#formRegister',
+                reset: '#formRecetPass'
             },
             selectors: {
                 loginBox: '.login-box',
@@ -16,11 +18,11 @@ class LoginModule {
             minHeight: '15vh',
             maxHeight: '90vh'
         };
-        
+
         this.state = {
             activeForm: 'login'
         };
-        
+
         this.init();
     }
 
@@ -52,7 +54,7 @@ class LoginModule {
         const loginBox = document.querySelector(this.config.selectors.loginBox);
 
         forms.forEach(form => form.classList.remove('active'));
-        
+
         const targetForm = document.querySelector(`[data-form="${targetFormId}"]`);
         if (targetForm) {
             targetForm.classList.add('active');
@@ -67,6 +69,7 @@ class LoginModule {
     initializeFormSubmissions() {
         const formLogin = document.querySelector(this.config.forms.login);
         const formRegister = document.querySelector(this.config.forms.register);
+        const formResetPass = document.querySelector(this.config.forms.reset);
 
         if (formRegister) {
             formRegister.onsubmit = (e) => this.handleRegistration(e);
@@ -74,6 +77,10 @@ class LoginModule {
 
         if (formLogin) {
             formLogin.onsubmit = (e) => this.handleLogin(e);
+        }
+
+        if (formResetPass) {
+            formResetPass.onsubmit = (e) => this.handlePasswordReset(e);
         }
     }
 
@@ -123,6 +130,21 @@ class LoginModule {
 
         const formData = new FormData(e.target);
         await this.sendLogin(formData);
+    }
+
+    async handlePasswordReset(e) {
+        e.preventDefault();
+        const email = document.querySelector('#txtEmailReset').value.trim();
+        if (!email) {
+            this.showAlert("info", "Oops...", "Por favor ingresa tu correo electrónico.");
+            return;
+        }
+        // Validar formato de email
+        if (!this.validateEmail(email)) {
+            this.showAlert("info", "Oops...", "Por favor ingresa un correo electrónico válido.");
+            return;
+        }
+        await this.sendResetPassword(email);
     }
 
     validateFormFields(fields) {
@@ -208,8 +230,53 @@ class LoginModule {
         }
     }
 
+    async sendResetPassword(email) {
+        try {
+            // Mostrar loading
+            Swal.fire({
+                title: "Procesando",
+                text: "Estamos procesando tu solicitud...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            const response = await fetch(this.config.endpoints.reset, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    encryptedData: CryptoModule.encrypt({ email })
+                })
+            });
+            const result = await response.json();
+            const decryptedResult = CryptoModule.decrypt(result.data);
+
+            if (decryptedResult.status) {
+                await this.showAlert("success", "¡Solicitud enviada!", decryptedResult.msg);
+                document.querySelector('#txtEmailReset').value = '';
+                this.switchForm('login');
+            } else {
+                this.showAlert("error", "Error", decryptedResult.msg || "Ocurrió un error al procesar la solicitud.");
+            }
+        } catch (error) {
+            console.error('Error en login:', error);
+            this.showAlert("error", "Error", "Error al procesar la solicitud");
+        }
+    }
+
     showAlert(icon, title, text) {
         return Swal.fire({ icon, title, text });
+    }
+
+    /**
+    * Valida un formato de email
+    */
+    validateEmail(email) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     }
 }
 

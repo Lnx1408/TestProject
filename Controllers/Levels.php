@@ -264,7 +264,7 @@ class Levels extends AuthController
 				'requirements' => $requirements
 			];
 
-			$response = $this->model->importRequirementsClasification($data, $idUsuario);
+			$response = $this->model->importRequirementsClasification($data, $idUsuario, true);
 
 			// Preparar y enviar respuesta
 			$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -440,6 +440,38 @@ class Levels extends AuthController
 		$encryptedResponse = encryptResponse($jsonResponse);
 		echo json_encode([
 			'data' => $encryptedResponse // Tu función de encriptación
+		]);
+		die();
+	}
+
+	public function update_requirement_clasification()
+	{
+		try {
+			$idJugador = $this->getUserData('id');
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+
+			if (!isset($postData['encryptedData'])) {
+				throw new Exception('Datos no recibidos');
+			}
+
+			$response = $this->model->updateRequirementClasification($postData, $idJugador);
+		} catch (Error $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al actualizar el requisito: ' . $e->getMessage()
+			];
+		} catch (Exception $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al actualizar el requisito: ' . $e->getMessage()
+			];
+		}
+
+		$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse
 		]);
 		die();
 	}

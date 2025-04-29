@@ -1,10 +1,5 @@
 <?php 
-	
 	const BASE_URL = "http://localhost/TestProject";
-
-	//Zona horaria
-	date_default_timezone_set('America/Guatemala');
-
 	//Datos de conexión a Base de Datos
 	const DB_HOST = "localhost";
 	const DB_NAME = "reqscapetest_db";
@@ -24,7 +19,4 @@
 	const EMAIL_REMITENTE = "no-reply@reqscape.com";
 	const NOMBRE_EMPESA = "ReqScape Videogames";
 	const WEB_EMPRESA = "www.ReqScape.com";
-	
-
-
  ?>

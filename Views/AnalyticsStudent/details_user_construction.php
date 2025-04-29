@@ -11,8 +11,8 @@
                         <span class="initials">AC</span>
                     </div>
                     <div class="player-details">
-                        <span class="player-name">Alexander Castro</span>
-                        <span class="player-email">alexander@mail.com</span>
+                        <span class="player-name">Yermin Lino</span>
+                        <span class="player-email">ylino@mail.com</span>
                     </div>
                 </div>
             </div>

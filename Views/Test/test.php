@@ -136,18 +136,18 @@
                         <tr>
                             <td>
                                 <img src="images/profile-1.jpg">
-                                <p>Alexander Castro</p>
+                                <p>Yermin Lino</p>
                             </td>
-                            <td>14-08-2023</td>
+                            <td>14-08-2024</td>
                             <td><span class="status pending">Pending</span></td>
                             <td>5H</td>
                         </tr>
                         <tr>
                             <td>
                                 <img src="images/profile-1.jpg">
-                                <p>Stefan Salvatore</p>
+                                <p>Cristopher Silva</p>
                             </td>
-                            <td>14-08-2023</td>
+                            <td>14-08-2024</td>
                             <td><span class="status process">Processing</span></td>
                             <td>5H</td>
                         </tr>

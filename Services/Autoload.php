@@ -1,6 +1,6 @@
 <?php
 // Services/Autoload.php
-
+/*
 spl_autoload_register(function($class) {
     // Verificar si la clase está en el namespace Services
     if (strpos($class, 'Services\\') === 0) {
@@ -15,3 +15,4 @@ spl_autoload_register(function($class) {
     }
     return false;
 });
+*/

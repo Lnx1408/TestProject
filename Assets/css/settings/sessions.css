@@ -1,0 +1,234 @@
+/* Estilos para la página de historial de sesiones */
+.sessions-container {
+    max-width: 98%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Estilos para la cabecera */
+.sessions-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.sessions-title {
+    color: var(--title-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.sessions-description {
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+/* Estilos para el contenido de sesiones */
+.sessions-content {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+/* Estilos para la acción global */
+.global-action {
+    margin-bottom: 2rem;
+    text-align: right;
+}
+
+.btn-danger {
+    color: var(--primary);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    color: var(--text-color);
+}
+
+/* Estilos para la lista de sesiones */
+.sessions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Estilos para las tarjetas de sesión */
+.session-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid var(--light-primary);
+}
+
+.session-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.session-card.current {
+    border: 2px solid var(--primary);
+    background-color: rgba(25, 118, 210, 0.05);
+}
+
+.session-card.current::before {
+    content: 'Sesión actual';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--primary);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.device-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.session-info {
+    margin-bottom: 1.5rem;
+}
+
+.session-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--title-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.info-item {
+    display: flex;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.info-label {
+    width: 90px;
+    color: var(--title-color);
+    font-weight: 500;
+}
+
+.info-value {
+    flex: 1;
+    color: var(--text-color);
+}
+
+.session-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.btn-outline-danger {
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    background-color: transparent;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--light-danger);
+}
+
+.btn-outline-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estilos para el estado de la sesión */
+.session-status {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.status-active {
+    background-color: var(--light-success);
+    color: var(--success);
+}
+
+.status-inactive {
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+}
+
+/* Estilos para el estado de carga */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    grid-column: 1 / -1;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    color: var(--title-color);
+    margin-bottom: 1rem;
+}
+
+.empty-state-message {
+    color: var(--title-color);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .sessions-content {
+        padding: 1.5rem;
+    }
+    
+    .sessions-list {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .global-action {
+        text-align: center;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 require_once("Infraestructure/LevelsInfraestructure.php");
-require_once('Services/AI/AiServiceFactory.php');
+//require_once('Services/AI/AiServiceFactory.php');
 require_once('Entity/GameConfigEntity.php');
 
 class LevelsModel extends LevelsInfraestructure
@@ -30,6 +30,42 @@ class LevelsModel extends LevelsInfraestructure
                 $data['description'] ?? '', // Descripción, se asegura de no ser nula
                 $es_ambiguo,
                 $data['feedback'] ?? '',    // Feedback, se asegura de no ser nulo
+                $es_funcional
+            );
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+            ];
+        }
+    }
+
+    public function updateRequirementClasification($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            // Validar y procesar los datos
+            $es_ambiguo = isset($data['isAmbiguous']) && $data['isAmbiguous'] ? 1 : 0;
+            $es_funcional = isset($data['isFunctional']) && $data['isFunctional'] ? 1 : 0;
+            $id_requisito = $data['id'] ?? 0;
+
+            // Verificar que el requisito exista y pertenezca al profesor
+            if (!$id_requisito) {
+                return [
+                    'success' => false,
+                    'message' => 'ID de requisito no válido',
+                ];
+            }
+
+            // Llamar a la función de base de datos con los datos procesados
+            return $this->updateRequirementClasificationBD(
+                $idJugador,
+                $id_requisito,
+                $data['description'] ?? '',
+                $es_ambiguo,
+                $data['feedback'] ?? '',
                 $es_funcional
             );
         } else {
@@ -98,7 +134,7 @@ class LevelsModel extends LevelsInfraestructure
     }
 
 
-    public function importRequirementsClasification($data, int $idJugador)
+    public function importRequirementsClasification($data, int $idJugador, bool $returnIds = false)
     {
         if (!isset($data['requirements']) || !is_array($data['requirements'])) {
             return [
@@ -116,7 +152,7 @@ class LevelsModel extends LevelsInfraestructure
                 ];
             }
         }
-        return $this->importRequirementsClasificationBD($idJugador, $data['requirements']);
+        return $this->importRequirementsClasificationBD($idJugador, $data['requirements'], $returnIds);
     }
 
     private function validateRequirementStructure($requirement)

@@ -46,7 +46,8 @@ class SessionManager
         return $this->sessionState;
     }
 
-    public function initSession($userData) {
+    public function initSession($userData)
+    {
         if (!$this->isLoggedIn()) {
             $this->startSession();
             $_SESSION['user'] = [
@@ -56,6 +57,8 @@ class SessionManager
                 'firstName' => $userData['nombres'],
                 'lastName' => $userData['apellidos'],
                 'email' => $userData['correo'],
+                'session_id' => $userData['session_id'],
+                'token' => $userData['token'],
                 'isLoggedIn' => true,
                 'lastActivity' => time()
             ];
@@ -63,21 +66,25 @@ class SessionManager
         }
     }
 
-    public function setLanguage($lang) {
+    public function setLanguage($lang)
+    {
         $_SESSION['language'] = $lang;
     }
 
-    public function getLanguage() {
+    public function getLanguage()
+    {
         return $_SESSION['language'] ?? 'es';
     }
 
-    public function isLoggedIn() {
-        return isset($_SESSION['user']) && 
-               isset($_SESSION['user']['isLoggedIn']) && 
-               $_SESSION['user']['isLoggedIn'] === true;
+    public function isLoggedIn()
+    {
+        return isset($_SESSION['user']) &&
+            isset($_SESSION['user']['isLoggedIn']) &&
+            $_SESSION['user']['isLoggedIn'] === true;
     }
 
-    public function getUserData($key = null) {
+    public function getUserData($key = null)
+    {
         $this->startSession(); // Asegurar que la sesión está iniciada
         if ($key && isset($_SESSION['user'][$key])) {
             return $_SESSION['user'][$key];
@@ -92,6 +99,79 @@ class SessionManager
         }
         return self::ROLE_NAMES[$role] ?? 'Usuario';
     }
+
+    /**
+     * Obtiene el ID de sesión actual
+     * 
+     * @return string|null ID de sesión o null si no hay sesión
+     */
+    public function getSessionId()
+    {
+        return $this->getUserData('session_id');
+    }
+
+    /**
+     * Obtiene el token JWT actual
+     * 
+     * @return string|null Token JWT o null si no hay sesión
+     */
+    public function getToken()
+    {
+        return $this->getUserData('token');
+    }
+
+    /**
+     * Verifica si un token es válido
+     * 
+     * @param string $token Token JWT a validar
+     * @return bool Resultado de la validación
+     */
+    public function validateToken($token)
+    {
+        $jwtHandler = new \Libraries\Security\JwtHandler();
+        $decoded = $jwtHandler->validateToken($token);
+
+        if (!$decoded || !isset($decoded['data'])) {
+            return false;
+        }
+
+        // Verificar si la sesión sigue activa en la base de datos
+        $db = new \Mysql();
+        $sessionId = $decoded['data']['session_id'];
+
+        $result = $db->executeProcedureWithParametersOut(
+            'sp_verificar_sesion_activa',
+            [$sessionId],
+            ['codigo', 'mensaje', 'activa']
+        );
+
+        return !empty($result) && $result['outParams']['codigo'] == 1 && $result['outParams']['activa'] == 1;
+    }
+
+    /**
+     * Actualiza los datos de la sesión actual
+     * 
+     * @param array $sessionData Nuevos datos de sesión
+     * @return bool Resultado de la operación
+     */
+    public function updateSessionData($sessionData)
+    {
+        if (!$this->isLoggedIn()) {
+            return false;
+        }
+
+        foreach ($sessionData as $key => $value) {
+            if (isset($_SESSION['user'][$key])) {
+                $_SESSION['user'][$key] = $value;
+            }
+        }
+
+        // Actualizar timestamp de última actividad
+        $_SESSION['user']['lastActivity'] = time();
+
+        return true;
+    }
+
 
     public function hasRole($roles)
     {
@@ -117,14 +197,16 @@ class SessionManager
         }
     }
 
-    public function refreshSession() {
+    public function refreshSession()
+    {
         if ($this->isLoggedIn()) {
             $this->startSession();
             $_SESSION['user']['lastActivity'] = time();
         }
     }
 
-    public function destroySession() {
+    public function destroySession()
+    {
         $this->startSession();
         if ($this->sessionState == self::SESSION_STARTED) {
             unset($_SESSION['user']);
@@ -140,7 +222,8 @@ class SessionManager
     private function __clone() {}
 
     // Evitar la deserialización
-    public function __wakeup() {
+    public function __wakeup()
+    {
         throw new Exception("Cannot unserialize singleton");
     }
 }

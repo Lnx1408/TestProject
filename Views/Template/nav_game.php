@@ -6,10 +6,20 @@ $userType = $userData ? $userData['type'] : null;
 // Función para obtener iniciales
 function getInitials($firstName, $lastName)
 {
+   // Si ambos están vacíos, devolver '--'
+   if (empty($firstName) && empty($lastName)) {
+      return '--';
+   }
+   // Si solo hay un nombre (sin apellido)
+   if (empty($lastName)) {
+      return strtoupper(substr($firstName, 0, 2));
+   }
+   // Si hay nombre y apellido
    return strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1));
 }
 
-function normalizeText($text) {
+function normalizeText($text)
+{
    return ucwords(strtolower(trim($text)));
 }
 
@@ -18,6 +28,7 @@ $firstName = normalizeText(explode(' ', $userData['firstName'])[0] ?? '');
 $lastName = normalizeText(explode(' ', $userData['lastName'])[0] ?? '');
 $initials = getInitials($firstName, $lastName);
 $fullName = $firstName . ' ' . $lastName;
+$fullNameComplete = ($userData['firstName'] ?? '') . ' ' . ($userData['lastName'] ?? '');
 $email = $userData['email'] ?? '';
 
 // Definir menú según rol
@@ -48,13 +59,20 @@ $menuItems = [
       'roles' => [SessionManager::ROLE_STUDENT]
    ]
 ];
+$settingsItems = [
+   'settings' => [
+      'icon' => 'ri-settings-3-fill',
+      'text' => 'Ajustes',
+      'roles' => [SessionManager::ROLE_STUDENT, SessionManager::ROLE_TEACHER]
+   ],
+];
 ?>
 
 <!--=============== SIDEBAR ===============-->
 <nav class="sidebar" id="sidebar">
    <div class="sidebar__container">
       <div class="sidebar__user">
-         <div class="sidebar__img">
+         <div class="sidebar__img" id="avatar-info" data-username="<?= htmlspecialchars($fullNameComplete, ENT_QUOTES, 'UTF-8') ?>">
             <!--<img src="assets/img/perfil.png" alt="image">-->
             <span class="initials"><?= $initials ?></span>
          </div>
@@ -70,31 +88,8 @@ $menuItems = [
       <div class="sidebar__content">
          <div>
             <h3 class="sidebar__title">GESTION</h3>
-            <!--
+            <!-- EXAMPLE AFTHER RESULT
             <div class="sidebar__list">
-               <a href="<?= base_url(); ?>/dashboard"
-                  class="sidebar__link <?= isActiveRoute($data['current_section'], 'dashboard') ?>">
-                  <i class="ri-home-2-fill"></i>
-                  <span data-i18n="nav.home">Inicio</span>
-               </a>
-
-               <a href="<?= base_url(); ?>/game"
-                  class="sidebar__link <?= isActiveRoute($data['current_section'], 'game') ?>">
-                  <i class="ri-gamepad-fill"></i>
-                  <span data-i18n="nav.game">Juego</span>
-               </a>
-
-               <a href="<?= base_url(); ?>/levels"
-                  class="sidebar__link <?= isActiveRoute($data['current_section'], 'levels') ?>">
-                  <i class="ri-stairs-fill"></i>
-                  <span data-i18n="nav.levels">Niveles</span>
-               </a>
-
-               <a href="#" class="sidebar__link">
-                  <i class="ri-shield-user-fill"></i>
-                  <span data-i18n="nav.profile">Perfil</span>
-               </a>
-
                <a href="<?= base_url(); ?>/analytics"
                   class="sidebar__link <?= isActiveRoute($data['current_section'], 'analytics') ?>">
                   <i class="ri-bar-chart-box-fill"></i>
@@ -105,7 +100,7 @@ $menuItems = [
             <div class="sidebar__list">
                <?php foreach ($menuItems as $route => $item): ?>
                   <?php if (in_array($userType, $item['roles'])): ?>
-                     <a href="<?= base_url(); ?>/<?= $route ?>" 
+                     <a href="<?= base_url(); ?>/<?= $route ?>"
                         class="sidebar__link <?= isActiveRoute($data['current_section'], $route) ?>">
                         <i class="ri <?= $item['icon'] ?>"></i>
                         <span data-i18n="nav.<?= $route ?>"><?= $item['text'] ?></span>
@@ -117,12 +112,16 @@ $menuItems = [
 
          <div>
             <h3 class="sidebar__title">AJUSTES</h3>
-
             <div class="sidebar__list">
-               <a href="#" class="sidebar__link">
-                  <i class="ri-settings-3-fill"></i>
-                  <span data-i18n="nav.settings">Settings</span>
-               </a>
+               <?php foreach ($settingsItems as $route => $item): ?>
+                  <?php if (in_array($userType, $item['roles'])): ?>
+                     <a href="<?= base_url(); ?>/<?= $route ?>"
+                        class="sidebar__link <?= isActiveRoute($data['current_section'], $route) ?>">
+                        <i class="ri <?= $item['icon'] ?>"></i>
+                        <span data-i18n="nav.<?= $route ?>"><?= $item['text'] ?></span>
+                     </a>
+                  <?php endif; ?>
+               <?php endforeach; ?>
             </div>
          </div>
       </div>
