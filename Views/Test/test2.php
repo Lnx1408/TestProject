@@ -42,7 +42,7 @@
             </div>
             <div class="player-info">
                 <div>
-                    <h2 class="player-name">STEFAN SALVATORE</h2>
+                    <h2 class="player-name">Blade Owl</h2>
                 </div>
                 <div>
                     <div class="game-code-container">

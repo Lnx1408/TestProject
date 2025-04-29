@@ -3,6 +3,8 @@
 class Login extends Controllers
 {
 	private $sessionManager;
+	private $authService;
+
 
 	public function __construct()
 	{
@@ -12,6 +14,7 @@ class Login extends Controllers
             header('Location: ' . base_url() . '/dashboard');
             exit();
         }
+		$this->authService = new Services\Auth\AuthService();
 		parent::__construct();
 	}
 
@@ -20,10 +23,18 @@ class Login extends Controllers
 		$data['page_tag'] = "Login - " . name_project();
 		$data['page_title'] = name_project();
 		$data['page_name'] = "login";
-		//$data['page_functions_js'] = "functions_login.js";
+		$data['page_css'] =  array(
+			'main.css',
+			'login.css',
+			'style.css'
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/sweetalert2.min.css'
+		);
 		$data['page_functions_js'] = array(
 			'CryptoModule.js',
-			'login/functions_login.js',
+			'plugins/sweetalert2.all.min.js',
+			'login/functions_login.js'
 		);
 		$this->views->getView($this, "login", $data);
 	}
@@ -81,151 +92,116 @@ class Login extends Controllers
 	}
 
 	public function loginUser()
-	{
-		try {
-			$inputJSON = file_get_contents("php://input");
-			$postData = json_decode($inputJSON, true);
-			$arrResponse = $this->model->login_user($postData);
-		} catch (Exception $e) {
-			// Manejo de excepciones con respuesta de error cifrada
-			$arrResponse = array('status' => false, 'msg' => $e->getMessage());
-		}
-		$jsonResponse = json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-		$encryptedResponse = encryptResponse($jsonResponse);
-		$this->sessionManager; 
-		echo json_encode([
-			'data' => $encryptedResponse
-		]);
-		//echo $encryptedResponse;
-		die();
-	}
+    {
+        try {
+            $inputJSON = file_get_contents("php://input");
+            $postData = json_decode($inputJSON, true);
+            
+            if (isset($postData['encryptedData'])) {
+                $decryptedData = decryptData($postData['encryptedData']);
+                $data = json_decode($decryptedData, true);
+                
+                if (!$data || empty($data['txtEmail']) || empty($data['txtPassword'])) {
+                    throw new Exception('Datos incompletos');
+                }
+                
+                $email = strClean($data['txtEmail']);
+                $password = $data['txtPassword'];
+                
+                // Utilizar el servicio de autenticación
+                $arrResponse = $this->authService->login($email, $password);
+                
+                // Incluir token en la respuesta si la autenticación fue exitosa
+                if ($arrResponse['status']) {
+                    $arrResponse['token'] = $arrResponse['token'];
+                    $arrResponse['session_id'] = $arrResponse['session_id'];
+                }
+            } else {
+                $arrResponse = array('status' => false, 'msg' => 'Datos no recibidos');
+            }
+        } catch (Exception $e) {
+            $arrResponse = array('status' => false, 'msg' => $e->getMessage());
+        }
+        
+        $jsonResponse = json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        $encryptedResponse = encryptResponse($jsonResponse);
+        echo json_encode([
+            'data' => $encryptedResponse
+        ]);
+        die();
+    }
 
-	public function resetPass()
-	{
-		if ($_POST) {
-			error_reporting(0);
-
-			if (empty($_POST['txtEmailReset'])) {
-				$arrResponse = array('status' => false, 'msg' => 'Error de datos');
-			} else {
-				$token = token();
-				$strEmail  =  strtolower(strClean($_POST['txtEmailReset']));
-				$arrData = $this->model->getUserEmail($strEmail);
-
-				if (empty($arrData)) {
-					$arrResponse = array('status' => false, 'msg' => 'Usuario no existente.');
-				} else {
-					$idpersona = $arrData['idpersona'];
-					$nombreUsuario = $arrData['nombres'] . ' ' . $arrData['apellidos'];
-
-					$url_recovery = base_url() . '/login/confirmUser/' . $strEmail . '/' . $token;
-					$requestUpdate = $this->model->setTokenUser($idpersona, $token);
-
-					$dataUsuario = array(
-						'nombreUsuario' => $nombreUsuario,
-						'email' => $strEmail,
-						'asunto' => 'Recuperar cuenta - ' . NOMBRE_REMITENTE,
-						'url_recovery' => $url_recovery
-					);
-					if ($requestUpdate) {
-						$sendEmail = sendEmail($dataUsuario, 'email_cambioPassword');
-
-						if ($sendEmail) {
-							$arrResponse = array(
-								'status' => true,
-								'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.'
-							);
-						} else {
-							$arrResponse = array(
-								'status' => false,
-								'msg' => 'No es posible realizar el proceso, intenta más tarde.'
-							);
-						}
-					} else {
-						$arrResponse = array(
-							'status' => false,
-							'msg' => 'No es posible realizar el proceso, intenta más tarde.'
-						);
-					}
-				}
-			}
-			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-		}
-		die();
-	}
-
-	public function confirmUser(string $params)
-	{
-		if (empty($params)) {
-			header('Location: ' . base_url());
-		} else {
-			$arrParams = explode(',', $params);
-			$strEmail = strClean($arrParams[0]);
-			$strToken = strClean($arrParams[1]);
-			$arrResponse = $this->model->getUsuario($strEmail, $strToken);
-			if (empty($arrResponse)) {
-				header("Location: " . base_url());
-			} else {
-				$data['page_tag'] = "Cambiar contraseña";
-				$data['page_name'] = "cambiar_contrasenia";
-				$data['page_title'] = "Cambiar Contraseña";
-				$data['email'] = $strEmail;
-				$data['token'] = $strToken;
-				$data['idpersona'] = $arrResponse['idpersona'];
-				$data['page_functions_js'] = "functions_login.js";
-				$this->views->getView($this, "cambiar_password", $data);
-			}
-		}
-		die();
-	}
-
-	public function setPassword()
-	{
-
-		if (empty($_POST['idUsuario']) || empty($_POST['txtEmail']) || empty($_POST['txtToken']) || empty($_POST['txtPassword']) || empty($_POST['txtPasswordConfirm'])) {
-
-			$arrResponse = array(
-				'status' => false,
-				'msg' => 'Error de datos'
-			);
-		} else {
-			$intIdpersona = intval($_POST['idUsuario']);
-			$strPassword = $_POST['txtPassword'];
-			$strPasswordConfirm = $_POST['txtPasswordConfirm'];
-			$strEmail = strClean($_POST['txtEmail']);
-			$strToken = strClean($_POST['txtToken']);
-
-			if ($strPassword != $strPasswordConfirm) {
-				$arrResponse = array(
-					'status' => false,
-					'msg' => 'Las contraseñas no son iguales.'
-				);
-			} else {
-				$arrResponseUser = $this->model->getUsuario($strEmail, $strToken);
-				if (empty($arrResponseUser)) {
-					$arrResponse = array(
-						'status' => false,
-						'msg' => 'Erro de datos.'
-					);
-				} else {
-					$strPassword = hash("SHA256", $strPassword);
-					$requestPass = $this->model->insertPassword($intIdpersona, $strPassword);
-
-					if ($requestPass) {
-						$arrResponse = array(
-							'status' => true,
-							'msg' => 'Contraseña actualizada con éxito.'
-						);
-					} else {
-						$arrResponse = array(
-							'status' => false,
-							'msg' => 'No es posible realizar el proceso, intente más tarde.'
-						);
-					}
-				}
-			}
-		}
-		echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-		die();
-	}
+	public function resetPassword() {
+        // Maneja la vista para recuperación de contraseña
+        $data['page_tag'] = "Recuperar Contraseña - " . name_project();
+        $data['page_title'] = name_project();
+        $data['page_name'] = "reset_password";
+        $data['page_functions_js'] = array(
+            'CryptoModule.js',
+            'login/functions_reset.js',
+        );
+        $this->views->getView($this, "reset_password", $data);
+    }
+    
+    public function requestReset() {
+        try {
+            $inputJSON = file_get_contents("php://input");
+            $postData = json_decode($inputJSON, true);
+            
+            if (isset($postData['encryptedData'])) {
+                $decryptedData = decryptData($postData['encryptedData']);
+                $data = json_decode($decryptedData, true);
+                
+                if (!$data || empty($data['email'])) {
+                    throw new Exception('Email no proporcionado');
+                }
+                
+                $email = strClean($data['email']);
+                $arrResponse = $this->authService->requestPasswordReset($email);
+            } else {
+                $arrResponse = array('status' => false, 'msg' => 'Datos no recibidos');
+            }
+        } catch (Exception $e) {
+            $arrResponse = array('status' => false, 'msg' => $e->getMessage());
+        }
+        
+        $jsonResponse = json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        $encryptedResponse = encryptResponse($jsonResponse);
+        echo json_encode([
+            'data' => $encryptedResponse
+        ]);
+        die();
+    }
+    
+    public function changePassword() {
+        try {
+            $inputJSON = file_get_contents("php://input");
+            $postData = json_decode($inputJSON, true);
+            
+            if (isset($postData['encryptedData'])) {
+                $decryptedData = decryptData($postData['encryptedData']);
+                $data = json_decode($decryptedData, true);
+                
+                if (!$data || empty($data['token']) || empty($data['password'])) {
+                    throw new Exception('Datos incompletos');
+                }
+                
+                $token = strClean($data['token']);
+                $password = $data['password'];
+                
+                $arrResponse = $this->authService->resetPassword($token, $password);
+            } else {
+                $arrResponse = array('status' => false, 'msg' => 'Datos no recibidos');
+            }
+        } catch (Exception $e) {
+            $arrResponse = array('status' => false, 'msg' => $e->getMessage());
+        }
+        
+        $jsonResponse = json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        $encryptedResponse = encryptResponse($jsonResponse);
+        echo json_encode([
+            'data' => $encryptedResponse
+        ]);
+        die();
+    }
 }

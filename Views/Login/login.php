@@ -9,16 +9,23 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Abel OSH">
+  <meta name="author" content="Yermin Lino">
   <meta name="theme-color" content="#009688">
   <link rel="shortcut icon" href="<?= media(); ?>/images/favicon.ico">
   <!-- Main CSS-->
-  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
-  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/login.css">
-  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
-  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/plugins/sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
+  <?php
+   if (!empty($data['page_libraries_css'])) {
+      foreach ($data['page_libraries_css'] as $css) {
+         echo '<link rel="stylesheet" href="' . media() . '/css/' . $css . '">';
+      }
+   }
+   if (!empty($data['page_css'])) {
+      foreach ($data['page_css'] as $css) {
+         echo '<link rel="stylesheet" href="' . media() . '/css/' . $css . '">';
+      }
+   }
+   ?>
   <title><?= $data['page_tag']; ?></title>
 </head>
 
@@ -183,8 +190,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
   <!-- The javascript plugin to display page loading on top-->
   <script src="<?= media(); ?>/js/plugins/pace.min.js"></script>
-  <!--<script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script>-->
-  <script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert2.all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <?php
   if (!empty($data['page_functions_js'])) {

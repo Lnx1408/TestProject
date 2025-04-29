@@ -1,0 +1,265 @@
+.settings-confirmation-popup {
+    background-color: var(--body-color);
+}
+
+/* Estilos para secciones del formulario */
+.form-section {
+    margin-bottom: 2rem;
+}
+
+/* Estilos para grupos de formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--title-color);
+    font-weight: 500;
+}
+
+/* Estilos generales para el módulo de Ajustes */
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background-color: var(--first-color);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.settings-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.settings-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.settings-title {
+    color: var(--title-color);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.settings-description {
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+/* Estilos para el menú de ajustes */
+.settings-menu {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.settings-section {
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+}
+
+.op-section-header {
+    display: flex;
+}
+
+.section-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Distribuir espacio entre los elementos */
+    padding: 1.25rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.section-header:hover {
+    background-color: var(--transparent-theme-color);
+}
+
+.section-header.active {
+    background-color: var(--transparent-theme-color);
+}
+
+.header-icon {
+    color: var(--title-color);
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.header-icon i {
+    font-size: 1.5rem;
+}
+
+.header-text {
+    flex-grow: 1;
+    /* Usar flex-grow en lugar de flex shorthand */
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--title-color);
+    margin-right: 10px;
+    /* Añadir margen derecho para dejar espacio para el ícono */
+}
+
+.header-chevron {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    /* Evitar que el icono se encoja */
+    min-width: 24px;
+    /* Ancho mínimo para el ícono */
+}
+
+.header-chevron i {
+    font-size: 1.5rem;
+    color: var(--text-color-secondary);
+    transition: transform 0.2s ease;
+    display: block;
+    /* Asegurar que el icono sea visible */
+}
+
+.section-header.active .header-chevron i {
+    transform: rotate(180deg);
+}
+
+.section-content {
+    display: none;
+    padding: 0;
+}
+
+.section-content.active {
+    display: block;
+}
+
+/* Estilos para las opciones de menú */
+.menu-option {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem 1.25rem 3.75rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--light-gray);
+    transition: background-color 0.2s ease;
+}
+
+.menu-option:last-child {
+    border-bottom: none;
+}
+
+.menu-option:hover {
+    background-color: var(--transparent-theme-color);
+}
+
+.option-info {
+    flex: 1;
+}
+
+.option-info h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--title-color);
+}
+
+.option-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+.option-chevron {
+    display: flex;
+    align-items: center;
+}
+
+.option-chevron i {
+    font-size: 1.5rem;
+    color: var(--text-color-secondary);
+    transition: transform 0.2s ease;
+}
+
+.menu-option:hover .option-chevron i {
+    transform: translateX(5px);
+    color: var(--primary);
+}
+
+/* Estilos para las migas de pan (breadcrumbs) - Se usarán en las vistas dedicadas */
+.breadcrumbs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    flex-wrap: wrap;
+}
+
+.breadcrumbs li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+    content: '/';
+    margin: 0 0.5rem;
+    color: var(--gray);
+}
+
+.breadcrumbs a {
+    color: var(--text-color-secondary);
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    color: var(--primary);
+}
+
+.breadcrumbs li:last-child a {
+    color: var(--primary);
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .settings-title {
+        font-size: 1.8rem;
+    }
+
+    .accordion-button {
+        font-size: 1rem;
+        padding: 1rem 1.25rem;
+    }
+
+    .option-info h3 {
+        font-size: 1rem;
+    }
+
+    .option-info p {
+        font-size: 0.8rem;
+    }
+}

@@ -9,6 +9,41 @@ DROP DATABASE IF EXISTS reqscapetest_db;
 create DATABASE reqscapetest_db; 
 use reqscapetest_db;
 
+CREATE TABLE `email_config` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100) NOT NULL COMMENT 'Nombre descriptivo de la configuración',
+  `host` VARCHAR(255) NOT NULL COMMENT 'Servidor SMTP',
+  `port` INT NOT NULL COMMENT 'Puerto SMTP',
+  `secure` VARCHAR(10) NOT NULL COMMENT 'Tipo de seguridad (tls, ssl, ninguna)',
+  `from_email` VARCHAR(255) NOT NULL COMMENT 'Correo remitente',
+  `from_name` VARCHAR(255) NOT NULL COMMENT 'Nombre del remitente',
+  `username` VARCHAR(255) NOT NULL COMMENT 'Usuario SMTP',
+  `password` VARCHAR(255) NOT NULL COMMENT 'Contraseña SMTP (preferiblemente encriptada)',
+  `is_default` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Indica si es la configuración por defecto',
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'Estado activo/inactivo',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY `uq_name` (`name`)
+);
+
+CREATE TABLE `email_queue` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `to_email` VARCHAR(255) NOT NULL,
+  `subject` VARCHAR(255) NOT NULL,
+  `body` TEXT NOT NULL,
+  `options` TEXT DEFAULT NULL COMMENT 'JSON con opciones (cc, bcc, etc.)',
+  `template` VARCHAR(100) DEFAULT NULL COMMENT 'Nombre de la plantilla (si aplica)',
+  `template_data` TEXT DEFAULT NULL COMMENT 'JSON con datos para la plantilla',
+  `status` ENUM('pending', 'processing', 'sent', 'failed') NOT NULL DEFAULT 'pending',
+  `attempts` INT NOT NULL DEFAULT 0,
+  `max_attempts` INT NOT NULL DEFAULT 3,
+  `error` TEXT DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `sent_at` TIMESTAMP NULL DEFAULT NULL,
+  `next_attempt_at` TIMESTAMP NULL DEFAULT NULL,
+  `priority` TINYINT NOT NULL DEFAULT 5 COMMENT '1 (más alta) a 10 (más baja)'
+);
+
 -- Tabla para los tipos de modalidad
 CREATE TABLE modalidades (
     id_modalidad INT PRIMARY KEY AUTO_INCREMENT,
@@ -34,7 +69,25 @@ CREATE TABLE jugadores (
 	password varchar(255) NOT NULL,
 	id_tipo INT NOT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion TIMESTAMP NULL,
+    ultimo_cambio_password TIMESTAMP NULL,
+    reset_token VARCHAR(255) NULL,
+    reset_token_expires TIMESTAMP NULL,
+    max_sesiones INT DEFAULT 0,
+    estado ENUM('activo', 'inactivo', 'bloqueado') DEFAULT 'activo',
 	FOREIGN KEY (id_tipo) REFERENCES tipo_usuario(id_tipo)
+);
+
+CREATE TABLE sesiones (
+    id_sesion VARCHAR(36) PRIMARY KEY,
+    id_jugador INT NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_expiracion TIMESTAMP NOT NULL,
+    ultima_actividad TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ip_direccion VARCHAR(45) NULL,
+    info_dispositivo TEXT NULL,
+    activa BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (id_jugador) REFERENCES jugadores(id_jugador) ON DELETE CASCADE
 );
 
 -- Tabla para las partidas con modalidad
@@ -56,8 +109,9 @@ CREATE TABLE requisitos (
     descripcion TEXT NOT NULL,
     es_ambiguo BOOLEAN NOT NULL,
     retroalimentacion TEXT,
-    tipo_requisito VARCHAR(50),
-	id_usuario_creador INT NULL
+    es_funcional BOOLEAN NOT NULL,
+	id_usuario_creador INT NULL, 
+    codigo_lote_referencia VARCHAR(36) NULL
 );
 
 CREATE TABLE requisitos_clasificacion_partida (

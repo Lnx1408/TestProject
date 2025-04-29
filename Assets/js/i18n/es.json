@@ -146,6 +146,13 @@
                 "cancel": "Cancelar"
             }
         },
+        "edit_modal": {
+            "title": "Editar Requisito",
+            "buttons": {
+                "create": "Guardar Cambios",
+                "cancel": "Cancelar"
+            }
+        },
         "import_modal": {
             "title": "Importar Requisitos",
             "instructions": "Selecciona un archivo CSV con los requisitos a importar. Asegúrate de que el archivo siga el formato correcto.",
@@ -1333,6 +1340,282 @@
         },
         "footer": {
             "generated_by": "Reporte generado por"
+        }
+    },
+    "settings": {
+        "title": "Ajustes",
+        "description": "Administra tu cuenta y preferencias",
+        "sections": {
+            "personal_info": "Información Personal",
+            "security": "Actividad y Seguridad",
+            "account": "Configuración de Cuenta"
+        },
+        "options": {
+            "profile": {
+                "title": "Información del Perfil",
+                "description": "Gestiona tu información personal"
+            },
+            "sessions": {
+                "title": "Historial de inicios de sesión",
+                "description": "Revisa y gestiona tus sesiones activas"
+            },
+            "activity": {
+                "title": "Historial de actividad",
+                "description": "Consulta tu historial detallado de inicios y cierres de sesión"
+            },
+            "password": {
+                "title": "Cambiar contraseña",
+                "description": "Actualiza tu contraseña de acceso"
+            },
+            "email": {
+                "title": "Cambiar correo",
+                "description": "Actualiza tu dirección de correo electrónico"
+            }
+        },
+        "activity": {
+            "title": "Historial de Actividad",
+            "description": "Consulta tu historial detallado de inicios y cierres de sesión",
+            "filters": {
+                "last_7_days": "Últimos 7 días",
+                "last_30_days": "Últimos 30 días",
+                "last_90_days": "Últimos 90 días",
+                "last_year": "Último año"
+            },
+            "buttons": {
+                "export": "Exportar",
+                "load_more": "Ver más antiguas",
+                "loading": "Cargando..."
+            },
+            "messages": {
+                "info": "Este historial muestra todos tus inicios y cierres de sesión del período seleccionado.",
+                "export_success": "Historial exportado correctamente",
+                "export_error": "Error al exportar el historial",
+                "no_data_export": "No hay datos para exportar"
+            },
+            "events": {
+                "login": "Inicio de sesión",
+                "logout": "Cierre de sesión"
+            },
+            "fields": {
+                "date": "Fecha",
+                "time": "Hora",
+                "ip_address": "Dirección IP",
+                "device": "Dispositivo"
+            },
+            "status": {
+                "success": "Exitoso",
+                "failed": "Fallido"
+            },
+            "alerts": {
+                "failed_login": "Intento fallido de inicio de sesión. Si no fuiste tú, considera cambiar tu contraseña."
+            },
+            "empty_state": {
+                "title": "No hay actividad registrada",
+                "message": "No se encontró ningún registro de inicios o cierres de sesión en el período seleccionado."
+            },
+            "error_state": {
+                "title": "Error al cargar el historial",
+                "message": "No se pudo cargar tu historial de actividad. Por favor, intenta nuevamente más tarde."
+            },
+            "loading": "Cargando historial...",
+            "csv": {
+                "date": "Fecha",
+                "time": "Hora",
+                "event_type": "Tipo de Evento",
+                "status": "Estado",
+                "ip_address": "Dirección IP",
+                "device": "Dispositivo"
+            }
+        },
+        "profile": {
+            "title": "Información del Perfil",
+            "description": "Actualiza tu información personal",
+            "avatar_info": "Avatar generado a partir de tus iniciales",
+            "personal_data": "Datos Personales",
+            "first_name": "Nombres",
+            "last_name": "Apellidos",
+            "username": "Usuario",
+            "email": "Correo electrónico",
+            "user_type": "Tipo de usuario",
+            "registration_date": "Fecha de registro",
+            "buttons": {
+                "save": "Guardar cambios",
+                "cancel": "Cancelar"
+            },
+            "date_unavailable": "No disponible",
+            "update_success": "Perfil actualizado correctamente",
+            "changes_canceled": "Cambios cancelados",
+            "errors": {
+                "no_data": "No se recibieron datos del servidor",
+                "update_failed": "Error al actualizar el perfil",
+                "load_failed": "Error al cargar la información del perfil"
+            },
+            "notifications": {
+                "success_title": "¡Éxito!",
+                "error_title": "Error",
+                "info_title": "Información"
+            }
+        },
+        "email": {
+            "title": "Cambiar Correo Electrónico",
+            "description": "Actualiza tu dirección de correo electrónico",
+            "current_email": "Correo electrónico actual",
+            "new_email": "Nuevo correo electrónico",
+            "current_password": "Contraseña actual",
+            "password_hint": "Ingresa tu contraseña actual para confirmar el cambio",
+            "info_title": "Sobre tu correo electrónico",
+            "info_description": "Tu correo electrónico es tu principal método de contacto y recuperación de cuenta. Asegúrate de ingresar un correo válido al que tengas acceso.",
+            "submit_button": "Cambiar correo electrónico",
+            "validation": {
+                "invalid_format": "Formato de correo electrónico inválido",
+                "same_as_current": "El nuevo correo debe ser diferente al actual",
+                "valid": "Correo electrónico válido",
+                "valid_email": "Correo electrónico válido"
+            },
+            "errors": {
+                "no_data": "No se recibieron datos del servidor",
+                "load_profile": "Error al cargar datos del perfil",
+                "load_email": "Error al cargar el correo electrónico",
+                "complete_fields": "Por favor, completa todos los campos",
+                "change_email": "Error al cambiar el correo electrónico",
+                "general": "Ha ocurrido un error"
+            },
+            "confirm": {
+                "title": "¿Cambiar correo electrónico?",
+                "message": "¿Estás seguro de cambiar tu correo a {email}?",
+                "yes": "Sí, cambiar",
+                "no": "Cancelar"
+            },
+            "success": {
+                "title": "¡Éxito!",
+                "message": "Correo electrónico actualizado correctamente"
+            },
+            "messages": {
+                "success": "¡Éxito!",
+                "error": "Error"
+            },
+            "buttons": {
+                "processing": "Procesando...",
+                "change_email": "Cambiar correo electrónico"
+            }
+        },
+        "password": {
+            "title": "Cambiar Contraseña",
+            "description": "Actualiza tu contraseña de acceso",
+            "current_password": "Contraseña actual",
+            "new_password": "Nueva contraseña",
+            "confirm_password": "Confirmar nueva contraseña",
+            "strength": {
+                "default": "Fortaleza de contraseña",
+                "weak": "Débil",
+                "medium": "Media",
+                "strong": "Fuerte",
+                "very_strong": "Muy fuerte"
+            },
+            "validation": {
+                "passwords_match": "Las contraseñas coinciden",
+                "passwords_not_match": "Las contraseñas no coinciden"
+            },
+            "errors": {
+                "complete_fields": "Por favor, completa todos los campos",
+                "invalid_password": "La nueva contraseña no cumple con los requisitos",
+                "passwords_not_match": "Las contraseñas no coinciden",
+                "change_password": "Error al cambiar la contraseña",
+                "general": "Ha ocurrido un error"
+            },
+            "success": {
+                "title": "¡Éxito!",
+                "message": "Contraseña actualizada correctamente"
+            },
+            "messages": {
+                "success": "¡Éxito!",
+                "error": "Error"
+            },
+            "buttons": {
+                "processing": "Procesando...",
+                "change_password": "Cambiar contraseña"
+            },
+            "confirm": {
+                "title": "¿Cambiar contraseña?",
+                "message": "¿Estás seguro de que deseas cambiar tu contraseña?",
+                "yes": "Sí, cambiar",
+                "no": "Cancelar"
+            },
+            "passwords_match": "Las contraseñas coinciden",
+            "info_title": "Sobre tu contraseña",
+            "info_description": "Es importante crear una contraseña fuerte y única para proteger tu cuenta. No la compartas con nadie ni uses la misma contraseña para otros servicios.",
+            "requirements": {
+                "length": "Mínimo 8 caracteres",
+                "lowercase": "Al menos una letra minúscula",
+                "uppercase": "Al menos una letra mayúscula",
+                "number": "Al menos un número"
+            }
+        },
+        "sessions": {
+            "title": "Historial de inicios de sesión",
+            "description": "Revisa y gestiona tus sesiones activas",
+            "close_all_button": "Cerrar todas las sesiones excepto esta",
+            "close_session": "Cerrar sesión",
+            "loading": "Cargando sesiones...",
+            "ip": "IP",
+            "start": "Inicio",
+            "activity": "Actividad",
+            "status": {
+                "active": "Activa"
+            },
+            "empty_state": {
+                "title": "No hay otras sesiones activas",
+                "message": "Solo tienes esta sesión actualmente."
+            },
+            "confirm_close": {
+                "title": "¿Cerrar sesión?",
+                "text": "¿Estás seguro de que deseas cerrar esta sesión?",
+                "confirm": "Sí, cerrar",
+                "cancel": "Cancelar"
+            },
+            "confirm_close_all": {
+                "title": "¿Cerrar todas las sesiones?",
+                "text": "¿Estás seguro de que deseas cerrar todas las sesiones excepto la actual?",
+                "confirm": "Sí, cerrar todas",
+                "cancel": "Cancelar"
+            },
+            "close_success": "Sesión cerrada correctamente",
+            "close_all_success_prefix": "Se",
+            "close_all_success_singular": "ha cerrado 1 sesión",
+            "close_all_success_plural_prefix": "han cerrado",
+            "close_all_success_plural_suffix": "sesiones",
+            "close_all_none": "No había otras sesiones activas para cerrar",
+            "close_all_success": "Todas las sesiones han sido cerradas",
+            "errors": {
+                "no_data": "No se recibieron datos del servidor",
+                "load_failed": "Error al cargar las sesiones",
+                "close_failed": "Error al cerrar la sesión",
+                "close_all_failed": "Error al cerrar las sesiones"
+            },
+            "error_state": {
+                "title": "Error al cargar las sesiones",
+                "default_message": "No se pudieron cargar las sesiones activas"
+            },
+            "device_types": {
+                "unknown": "Dispositivo desconocido",
+                "mobile": "Dispositivo móvil",
+                "tablet": "Tablet",
+                "computer": "Computadora"
+            },
+            "date_unavailable": "No disponible",
+            "date_invalid": "Fecha inválida",
+            "date_moments_ago": "Hace un momento",
+            "date_ago_prefix": "Hace",
+            "date_minute": "minuto",
+            "date_minutes": "minutos",
+            "date_hour": "hora",
+            "date_hours": "horas",
+            "date_day": "día",
+            "date_days": "días"
+        },
+        "notifications": {
+            "success_title": "¡Éxito!",
+            "error_title": "Error"
         }
     },
     "logout": {

@@ -7,6 +7,21 @@ abstract class AuthController extends Controllers {
     public function __construct($roles = []) {
         parent::__construct();
         $this->sessionManager = SessionManager::getInstance();
+
+        // Verificar si el usuario está logueado
+        if (!$this->sessionManager->isLoggedIn()) {
+            header('Location: ' . base_url() . '/login');
+            exit();
+        }
+        // Verificar si el token es válido
+        $token = $this->sessionManager->getToken();
+        if (!$token || !$this->sessionManager->validateToken($token)) {
+            // Si el token no es válido, destruir la sesión
+            $this->sessionManager->destroySession();
+            header('Location: ' . base_url() . '/login?error=invalid_session');
+            exit();
+        }
+        
         $this->allowedRoles = $roles;
         $this->checkAuth();
     }

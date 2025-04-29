@@ -8,6 +8,7 @@ class CreateClassificationGame {
             endpoints: {
                 getExisting: `${base_url}/Levels/get_requirements_clasification`,
                 createRequirement: `${base_url}/Levels/create_requirement_clasification`,
+                updateRequirement: `${base_url}/Levels/update_requirement_clasification`, // Nuevo endpoint
                 createGame: `${base_url}/Levels/create_game_clasification`,
                 importMasiveData: `${base_url}/Levels/import_requirements`
             },
@@ -232,6 +233,10 @@ class CreateClassificationGame {
 
     renderActions(row) {
         return `<div class="table-actions">
+                    <button onclick="createClassificationGame.editRequirement('${row.id}')" 
+                            class="btn-action">
+                        <i class='bx bx-edit'></i>
+                    </button>
                     <button onclick="createClassificationGame.removeRequirement('${row.id}')" 
                             class="btn-action">
                         <i class='bx bx-trash'></i>
@@ -266,6 +271,12 @@ class CreateClassificationGame {
 
     createSelectModalContent() {
         return `
+                <div class="select-modal-header">
+                    <button id="selectAllBtn" class="btn btn-secondary">
+                        <i class='bx bx-select-multiple'></i>
+                        ${this.translations.get('select_modal.select_all') || 'Seleccionar todos'}
+                    </button>
+                </div>
                 <table id="existingRequirementsTable" class="table display responsive nowrap">
                     <thead>
                         <tr>
@@ -320,6 +331,34 @@ class CreateClassificationGame {
                 <div class="form-group">
                     <label>${this.translations.get('create_modal.form.feedback')}</label>
                     <textarea id="reqFeedback" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        `;
+    }
+
+    createEditFormModalContent(requirement) {
+        return `
+            <form id="editRequirementForm" class="requirement-form">
+                <input type="hidden" id="reqId" value="${requirement.id}">
+                <div class="form-group">
+                    <label>${this.translations.get('create_modal.form.description') || 'Descripción del Requisito'}</label>
+                    <textarea id="reqDescription" class="form-control" rows="3">${requirement.description}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        ${this.translations.get('create_modal.form.is_ambiguous') || '¿Es ambiguo?'}
+                        <input type="checkbox" id="reqIsAmbiguous" ${requirement.is_ambiguous ? 'checked' : ''}>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        ${this.translations.get('create_modal.form.is_functional') || '¿Es funcional?'}
+                        <input type="checkbox" id="reqIsFunctional" ${requirement.is_functional ? 'checked' : ''}>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>${this.translations.get('create_modal.form.feedback') || 'Retroalimentación'}</label>
+                    <textarea id="reqFeedback" class="form-control" rows="3">${requirement.feedback}</textarea>
                 </div>
             </form>
         `;
@@ -437,6 +476,100 @@ class CreateClassificationGame {
             console.error('DataTables error:', message);
             this.showErrorMessage(this.translations.get('errors.table_error'));
         });
+
+        // Agregar evento para mantener selecciones al cambiar de página
+        table.on('page.dt', () => {
+            // Actualizar estado del botón "Seleccionar todos" al cambiar de página
+            setTimeout(() => {
+                const selectAllBtn = document.getElementById('selectAllBtn');
+                if (selectAllBtn) {
+                    selectAllBtn.innerHTML = `<i class='bx bx-select-multiple'></i> ${this.translations.get('select_modal.select_all') || 'Seleccionar todos'}`;
+                }
+            }, 100);
+        });
+
+        // Agregar evento para mantener selecciones al cambiar el número de registros por página
+        table.on('length.dt', () => {
+            // Similar al evento page.dt, actualizar el botón
+            setTimeout(() => {
+                const selectAllBtn = document.getElementById('selectAllBtn');
+                if (selectAllBtn) {
+                    selectAllBtn.innerHTML = `<i class='bx bx-select-multiple'></i> ${this.translations.get('select_modal.select_all') || 'Seleccionar todos'}`;
+                }
+            }, 100);
+        });
+        document.getElementById('selectAllBtn').addEventListener('click', () => this.toggleSelectAllOnCurrentPage());
+    }
+
+    /**
+     * Activa/desactiva la selección de todos los requisitos de la página actual
+     */
+    toggleSelectAllOnCurrentPage() {
+        // Verificar si hay al menos un requisito seleccionable en esta página
+        const table = this.elements.selectModal;
+        const currentPageData = table.page.info();
+        let allSelected = true;
+        let atLeastOneSelectable = false;
+
+        // Verificar si todos los requisitos seleccionables de la página actual ya están seleccionados
+        table.rows({ page: 'current' }).every((rowIdx) => {
+            const rowData = table.row(rowIdx).data();
+            if (!rowData) return;
+
+            // Verificar si este requisito ya está en el mapa de seleccionados
+            const isAlreadySelected = this.state.selectedRequirements.has(rowData.id);
+            // Verificar si está disponible para selección (no está deshabilitado)
+            const isSelectable = !isAlreadySelected;
+
+            if (isSelectable) {
+                atLeastOneSelectable = true;
+                // Si hay al menos un requisito seleccionable que no está en temporarySelections, no todos están seleccionados
+                if (!this.state.temporarySelections.has(rowData.id)) {
+                    allSelected = false;
+                }
+            }
+        });
+
+        // Si no hay requisitos seleccionables en esta página, no hacemos nada
+        if (!atLeastOneSelectable) return;
+
+        // Si todos están seleccionados, deseleccionamos todos
+        // Si no todos están seleccionados, seleccionamos todos
+        const shouldSelect = !allSelected;
+
+        // Actualizar los checkboxes y las selecciones temporales
+        table.rows({ page: 'current' }).every((rowIdx) => {
+            const rowData = table.row(rowIdx).data();
+            if (!rowData) return;
+
+            // Verificar si ya está en el mapa de seleccionados
+            const isAlreadySelected = this.state.selectedRequirements.has(rowData.id);
+
+            // Solo afectar a requisitos que no estén ya seleccionados permanentemente
+            if (!isAlreadySelected) {
+                const rowNode = table.row(rowIdx).node();
+                const checkbox = rowNode.querySelector('input[type="checkbox"]');
+
+                if (checkbox) {
+                    checkbox.checked = shouldSelect;
+
+                    // Actualizar las selecciones temporales
+                    if (shouldSelect) {
+                        this.state.temporarySelections.add(rowData.id);
+                    } else {
+                        this.state.temporarySelections.delete(rowData.id);
+                    }
+                }
+            }
+        });
+
+        // Actualizar el texto del botón según el estado actual
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        if (selectAllBtn) {
+            selectAllBtn.innerHTML = shouldSelect ?
+                `<i class='bx bx-select-multiple'></i> ${this.translations.get('select_modal.deselect_all') || 'Deseleccionar todos'}` :
+                `<i class='bx bx-select-multiple'></i> ${this.translations.get('select_modal.select_all') || 'Seleccionar todos'}`;
+        }
     }
 
     updateExportButtonState() {
@@ -499,7 +632,7 @@ class CreateClassificationGame {
         return allData.find(row => row.id === parseInt(reqId));
     }
 
-    validateAndGetFormData() {
+    validateAndGetFormData(isEditing = false) {
         const description = document.getElementById('reqDescription').value.trim();
         const feedback = document.getElementById('reqFeedback').value.trim();
         const isAmbiguous = document.getElementById('reqIsAmbiguous').checked;
@@ -515,12 +648,19 @@ class CreateClassificationGame {
             return false;
         }
 
-        return {
+        const data = {
             description,
             feedback,
             isAmbiguous,
             isFunctional
         };
+        
+        // Si estamos editando, añadimos el ID
+        if (isEditing && document.getElementById('reqId')) {
+            data.id = document.getElementById('reqId').value;
+        }
+    
+        return data;
     }
 
     async createNewRequirement(data) {
@@ -788,6 +928,46 @@ class CreateClassificationGame {
         }
     }
 
+    /**
+     * Añade requisitos generados por IA a la tabla principal
+     * @param {Array} requirements - Lista de requisitos con sus IDs
+     */
+    addGeneratedRequirements(requirements) {
+        if (!requirements || !Array.isArray(requirements) || requirements.length === 0) {
+            return;
+        }
+
+        try {
+            // Agregar cada requisito a la tabla principal
+            requirements.forEach(req => {
+                // Verificar que no esté ya en la selección
+                if (!this.state.selectedRequirements.has(req.id)) {
+                    // Convertir valores si es necesario
+                    const requirement = {
+                        id: req.id,
+                        description: req.description,
+                        is_ambiguous: typeof req.is_ambiguous === 'boolean' ? (req.is_ambiguous ? 1 : 0) : req.is_ambiguous,
+                        is_functional: typeof req.is_functional === 'boolean' ? (req.is_functional ? 1 : 0) : req.is_functional,
+                        feedback: req.feedback
+                    };
+
+                    // Añadir a la tabla principal
+                    this.addRequirementToTable(requirement);
+                }
+            });
+
+            // Actualizar la tabla de selección si está abierta
+            if (this.elements.selectModal) {
+                this.elements.selectModal.draw(false);
+            }
+
+            console.log(`Se añadieron ${requirements.length} requisitos generados por IA a la tabla principal`);
+        } catch (error) {
+            console.error('Error al añadir requisitos generados por IA:', error);
+            this.showErrorMessage(this.translations.get('errors.general'));
+        }
+    }
+
     removeRequirement(requirementId) {
         Swal.fire({
             title: this.translations.get('messages.confirm_remove'),
@@ -817,6 +997,76 @@ class CreateClassificationGame {
                 }
             }
         });
+    }
+
+    editRequirement(requirementId) {
+        // Convertir a número para comparaciones
+        const reqId = parseInt(requirementId);
+        // Obtener el requisito del Map de requisitos seleccionados
+        const requirement = this.state.selectedRequirements.get(reqId);
+        
+        if (!requirement) {
+            this.showErrorMessage(this.translations.get('messages.error_loading'));
+            return;
+        }
+        
+        // Mostrar modal de edición con los datos del requisito
+        Swal.fire({
+            title: this.translations.get('edit_modal.title') || 'Editar Requisito',
+            html: this.createEditFormModalContent(requirement),
+            width: '600px',
+            showCancelButton: true,
+            confirmButtonText: this.translations.get('edit_modal.buttons.save') || 'Guardar Cambios',
+            cancelButtonText: this.translations.get('edit_modal.buttons.cancel') || 'Cancelar',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+            preConfirm: () => this.validateAndGetFormData(true)
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.updateRequirement(reqId, result.value);
+            }
+        });
+    }
+
+    async updateRequirement(reqId, data) {
+        try {
+            const response = await fetch(this.config.endpoints.updateRequirement, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    encryptedData: CryptoModule.encrypt(data)
+                })
+            });
+    
+            const resultEncrypt = await response.json();
+            const result = CryptoModule.decrypt(resultEncrypt.data);
+    
+            if (result.success && Array.isArray(result.requirement) && result.requirement.length > 0) {
+                // Actualizar en el Map
+                this.state.selectedRequirements.set(reqId, result.requirement[0]);
+                
+                // Actualizar en la tabla
+                this.elements.selectedTable.rows().every((rowIdx) => {
+                    const rowData = this.elements.selectedTable.row(rowIdx).data();
+                    if (rowData && rowData.id === reqId) {
+                        this.elements.selectedTable.row(rowIdx).data(result.requirement[0]).draw();
+                        return false; // Salir del bucle
+                    }
+                    return true;
+                });
+                
+                this.showSuccessMessage(this.translations.get('messages.requirement_updated') || 'Requisito actualizado exitosamente');
+            } else {
+                throw new Error(result.message || 'Un error desconocido ocurrió.');
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+            this.showErrorMessage(this.translations.get('messages.error_message') || 'Error al actualizar el requisito');
+        }
     }
 
     updateRequirementCount() {

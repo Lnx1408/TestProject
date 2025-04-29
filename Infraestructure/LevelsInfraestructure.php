@@ -88,7 +88,46 @@ class LevelsInfraestructure extends Mysql
 		return $arrResponse;
 	}
 
-	public function importRequirementsClasificationBD(int $idCreador, array $requirements)
+	public function updateRequirementClasificationBD(int $idCreador, int $idRequisito, string $description, string $es_ambiguo, string $retro, string $es_funcional)
+	{
+		try {
+			$response = $this->executeProcedureWithParametersOut(
+				'sp_update_requirements_clasification',
+				[$idCreador, $idRequisito, $description, $es_ambiguo, $retro, $es_funcional],
+				['codigo', 'mensaje', 'requisito_id']  // Parámetro de salida actualizado
+			);
+
+			if (!empty($response) && $response['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'success' => true,
+					'requirement' => $response['results'],
+					'outputs' => [
+						'id_requeriment' => $response['outParams']['requisito_id'],
+					],
+					'message' => $response['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'success' => false,
+					'attemptDetails' => $response['results'],
+					'headerDetails' => [],
+					'message' => $response['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'success' => false,
+				'message' => 'Error al actualizar el requisito: ' . $e->getMessage(),
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
+
+	public function importRequirementsClasificationBD(int $idCreador, array $requirements, bool $returnIds = false)
 	{
 		try {
 			$this->conectar();
@@ -115,11 +154,19 @@ class LevelsInfraestructure extends Mysql
 			);
 
 			if (!empty($response) && $response['outParams']['codigo'] == 1) {
-				return [
+
+				$result = [
 					'success' => true,
 					'message' => $response['outParams']['mensaje'],
 					'totalImported' => $response['outParams']['total_importados']
 				];
+
+				// Solo agregar los IDs a la respuesta si se solicita específicamente
+				if ($returnIds && isset($response['results']) && !empty($response['results'])) {
+					$result['insertedIds'] = array_column($response['results'], 'id');
+				}
+
+				return $result;
 			} else {
 				return [
 					'success' => false,
@@ -302,18 +349,19 @@ class LevelsInfraestructure extends Mysql
 		return $arrResponse;
 	}
 
-	public function importRequirementsConstructionBD(int $idCreador, array $requirements) {
+	public function importRequirementsConstructionBD(int $idCreador, array $requirements)
+	{
 		try {
 			$this->conectar();
-			
+
 			// Convertir array de requisitos a formato string para el SP
-			$reqString = implode('§', array_map(function($req) {
+			$reqString = implode('§', array_map(function ($req) {
 				return implode('|', [
 					$req['requisito_completo'],
-					$req['fragmentos'] 
+					$req['fragmentos']
 				]);
 			}, $requirements));
-	
+
 			$response = $this->executeProcedureWithParametersOut(
 				'sp_import_requirements_construction',
 				[
@@ -322,7 +370,7 @@ class LevelsInfraestructure extends Mysql
 				],
 				['codigo', 'mensaje', 'total_importados']
 			);
-	
+
 			if (!empty($response) && $response['outParams']['codigo'] == 1) {
 				return [
 					'success' => true,
@@ -335,7 +383,6 @@ class LevelsInfraestructure extends Mysql
 					'message' => $response['outParams']['mensaje'] ?? 'Error al importar requisitos'
 				];
 			}
-	
 		} catch (PDOException $e) {
 			error_log("Error en importación de requisitos: " . $e->getMessage());
 			return [
