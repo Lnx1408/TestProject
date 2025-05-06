@@ -8,7 +8,7 @@ class SessionManager
     private $sessionState = self::SESSION_NOT_STARTED;
 
     // Roles/Tipos de usuario usando las letras correspondientes
-    public const ROLE_ADMIN = 'A';
+    public const ROLE_ADMIN = 'A'; // A de Administrador
     public const ROLE_TEACHER = 'D';  // D de Docente
     public const ROLE_STUDENT = 'E';  // E de Estudiante
 
