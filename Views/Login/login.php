@@ -111,11 +111,10 @@
           <!--<p><i class="fa fa-lg fa-fw fa-user-plus"></i>REGISTRO</p>-->
         </h3>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display:none;">
           <div class="input-group">
             <span class="input-group-text"><i class="fa fa-user"></i></span>
             <select id="SelectTypeUser" name="txtTypeUser" class="form-select show-tick" data-width="fit">
-              <option value="D">Docente</option>
               <option value="E">Estudiante</option>
             </select>
           </div>
