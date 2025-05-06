@@ -15,6 +15,28 @@ class LevelsViewFactory {
         ];
     }
 
+    private static function getAdminConfig() {
+        return [
+            'view_template' => 'levels_d',
+            'page_functions_js' => [
+                'jquery-3.7.1.min.js',
+                'plugins/sweetalert2.all.min.js',
+                'CryptoModule.js',
+                'game/gameEntryManager.js'
+            ],
+            'page_libraries_css' => array_merge(
+                self::getCommonConfig()['page_libraries_css'],
+                [
+                    'plugins/datatables/dataTables.dataTables.min.css',
+                    'plugins/datatables/responsive.dataTables.css'
+                ]
+            ),
+            'additional_data' => [
+                'can_create_games' => true,
+                'can_view_analytics' => true
+            ]
+        ];
+    }
     private static function getTeacherConfig() {
         return [
             'view_template' => 'levels_d',
@@ -58,6 +80,10 @@ class LevelsViewFactory {
         $commonConfig = self::getCommonConfig();
         try {
             switch ($userType) {
+                case SessionManager::ROLE_ADMIN:
+                    $specificConfig = self::getAdminConfig();
+                    break;
+
                 case SessionManager::ROLE_TEACHER:
                     $specificConfig = self::getTeacherConfig();
                     break;
