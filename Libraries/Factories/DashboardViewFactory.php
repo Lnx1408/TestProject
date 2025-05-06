@@ -18,7 +18,7 @@ class DashboardViewFactory
     private static function getAdminConfig()
     {
         return [
-            'view_template' => 'welcome_teacher',
+            'view_template' => 'welcome_admin',
             'page_functions_js' => [],
             'page_libraries_css' => array_merge(
                 self::getCommonConfig()['page_libraries_css'],

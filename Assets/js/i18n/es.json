@@ -15,7 +15,11 @@
         "logout": "Cerrar Sesión"
     },
     "dashboard_welcome": {
-        "student": {
+        "admin": {
+            "welcome": "👨🏻‍🏫 Bienvenido a",
+            "phrase1": "Gracias por ser parte integrante de nuestra comunidad educativa.",
+            "phrase2": "Su espacio dedicado a la enseñanza está listo para usted."
+        },"student": {
             "welcome": "👋🏼 Bienvenido a",
             "phrase1": "Estamos encantados de tenerte aquí. Tu viaje de aprendizaje y crecimiento comienza ahora.",
             "phrase2": "Te espera un espacio dedicado al aprendizaje."
