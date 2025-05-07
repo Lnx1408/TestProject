@@ -60,12 +60,12 @@ $menuItems = [
    ]
 ];
 $usersManagement = [
-   'reviewersManagement' => [
+   'reviewers' => [
       'icon' => 'ri-user-search-fill',
       'text' => 'Revisores',
       'roles' => [SessionManager::ROLE_ADMIN, SessionManager::ROLE_TEACHER]
    ],
-   'teachersManagement' => [
+   'teachers' => [
       'icon' => 'ri-group-fill',
       'text' => 'Docentes',
       'roles' => [SessionManager::ROLE_ADMIN]
