@@ -7,7 +7,8 @@ class Analytics extends AuthController
 	{
 		parent::__construct([
 			SessionManager::ROLE_STUDENT,
-			SessionManager::ROLE_TEACHER
+			SessionManager::ROLE_TEACHER,
+			SessionManager::ROLE_ADMIN
 		]);
 	}
 

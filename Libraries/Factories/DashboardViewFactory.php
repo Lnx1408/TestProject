@@ -15,6 +15,19 @@ class DashboardViewFactory
         ];
     }
 
+    private static function getAdminConfig()
+    {
+        return [
+            'view_template' => 'welcome_admin',
+            'page_functions_js' => [],
+            'page_libraries_css' => array_merge(
+                self::getCommonConfig()['page_libraries_css'],
+                [
+                ]
+            )
+        ];
+    }
+
     private static function getTeacherConfig()
     {
         return [
@@ -44,6 +57,10 @@ class DashboardViewFactory
         $commonConfig = self::getCommonConfig();
         try {
             switch ($userType) {
+                case SessionManager::ROLE_ADMIN:
+                    $specificConfig = self::getAdminConfig();
+                    break;
+
                 case SessionManager::ROLE_TEACHER:
                     $specificConfig = self::getTeacherConfig();
                     break;

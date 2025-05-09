@@ -7,13 +7,19 @@
         "profile": "Perfil",
         "analytics": "Estadísticas",
         "analyticsStudent": "Análisis",
+        "reviewers":"Revisores",
+        "teachers":"Docentes",
         "settings": "Ajustes",
         "theme": "Tema",
         "language": "Idioma",
         "logout": "Cerrar Sesión"
     },
     "dashboard_welcome": {
-        "student": {
+        "admin": {
+            "welcome": "👨🏻‍🏫 Bienvenido a",
+            "phrase1": "Gracias por ser parte integrante de nuestra comunidad educativa.",
+            "phrase2": "Su espacio dedicado a la enseñanza está listo para usted."
+        },"student": {
             "welcome": "👋🏼 Bienvenido a",
             "phrase1": "Estamos encantados de tenerte aquí. Tu viaje de aprendizaje y crecimiento comienza ahora.",
             "phrase2": "Te espera un espacio dedicado al aprendizaje."
@@ -1628,6 +1634,32 @@
         "errors": {
             "title": "Error",
             "message": "Ocurrió un error al cerrar la sesión. Por favor, intente nuevamente."
+        }
+    },
+    "teachers":{
+        "title":"Teachers",
+        "description": "Manage your users",
+        "options": {
+            "create": {
+                "title": "Create user",
+                "description": "Add users with \"teacher\" role"
+            }
+        },
+        "teacher": {
+            "title": "Agregar usuario",
+            "description": "Ingresa los datos del docente para crear su usuario",
+            "user": "Usuario",
+            "name": "Nombres",
+            "lastname": "Apellidos",
+            "email": "Correo",
+            "password": "Contraseña",
+            "buttons": {
+                "addTeacher":"REGISTRAR DOCENTE"
+            },
+            "strength": {
+                "default":"Fortaleza de contraseña"
+            }
+
         }
     }
 }

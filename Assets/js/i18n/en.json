@@ -7,13 +7,19 @@
         "profile": "Profile",
         "analytics": "Statistics",
         "analyticsStudent": "Analysis",
+        "reviewers":"Reviewers",
+        "teachers":"Teachers",
         "settings": "Settings",
         "theme": "Theme",
         "language": "Language",
         "logout": "Logout"
     },
     "dashboard_welcome": {
-        "student": {
+        "admin": {
+            "welcome": "👨🏻‍🏫 Welcome to",
+            "phrase1": "Thank you for being an integral part of our educational community.",
+            "phrase2": "Your dedicated teaching space is ready for you."
+        },"student": {
             "welcome": "👋🏼 Welcome to",
             "phrase1": "We're excited to have you here. Your journey to learning and growth begins now.",
             "phrase2": "Your dedicated learning space awaits you."
@@ -1628,6 +1634,32 @@
         "errors": {
             "title": "Error",
             "message": "An error occurred while logging out. Please try again."
+        }
+    },
+    "teachers":{
+        "title":"Teachers",
+        "description": "Manage your users",
+        "options": {
+            "create": {
+                "title": "Create user",
+                "description": "Add users with \"teacher\" role"
+            }
+        },
+        "teacher": {
+            "title": "Add User",
+            "description": "Enter the teacher's details to create their user account",
+            "user": "User",
+            "name": "Names",
+            "lastname": "Last name",
+            "email": "Email",
+            "password": "Password",
+            "buttons": {
+                "addTeacher":"ADD TEACHER"
+            },
+            "strength": {
+                "default":"STRONG OF PASSWORD"
+            }
+
         }
     }
 }

@@ -8,14 +8,16 @@ INSERT INTO modalidades (nombre, codigo,descripcion) VALUES
 ('Construcción', 'MOD-BUILD', 'Construir requisitos ordenando fragmentos correctamente');
 
 INSERT INTO tipo_usuario (nombre_tipo, codigo) VALUES
+('Administrador', 'A'),
 ('Docente', 'D'),
 ('Estudiante', 'E');
 
 -- Insertar un jugador de prueba
 INSERT INTO jugadores (nombres,id_tipo, apellidos, usuario, correo, password) 
 VALUES
-('YERMIN YAIR',1, 'LINO SANCHEZ', 'ylino', 'yls.2000@outlook.es', '97ff0e539828bdfb97b1d0314dd557ebe94233dc0025517e50b4d12e25453e1e'),
-('CRISTOPHER DUSTIN',2, 'SILVA FAJARDO', 'csilva', 'csilva@test.com', '97ff0e539828bdfb97b1d0314dd557ebe94233dc0025517e50b4d12e25453e1e');
+('YERMIN YAIR',1, 'LINO SANCHEZ', 'ylino', 'yls.2000@outlook.es', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'),
+('CRISTOPHER DUSTIN',2, 'SILVA FAJARDO', 'csilva', 'csilva@test.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5');
+('Estudiante',3, 'Prueba', 'est1', 'est1@test.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5');
 
 -- Insertar una partida de prueba
 INSERT INTO partidas (id_modalidad, codigo_partida, id_usuario_creacion, estado, tiempo_limite) VALUES

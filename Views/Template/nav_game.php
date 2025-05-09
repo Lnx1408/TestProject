@@ -41,17 +41,17 @@ $menuItems = [
    'game' => [
       'icon' => 'ri-gamepad-fill',
       'text' => 'Juego',
-      'roles' => [SessionManager::ROLE_STUDENT, SessionManager::ROLE_TEACHER]
+      'roles' => [SessionManager::ROLE_ADMIN, SessionManager::ROLE_STUDENT, SessionManager::ROLE_TEACHER]
    ],
    'levels' => [
       'icon' => 'ri-stairs-fill',
       'text' => 'Niveles',
-      'roles' => [SessionManager::ROLE_TEACHER]
+      'roles' => [SessionManager::ROLE_ADMIN, SessionManager::ROLE_TEACHER]
    ],
    'analytics' => [
       'icon' => 'ri-bar-chart-box-fill',
       'text' => 'Estadisticas',
-      'roles' => [SessionManager::ROLE_TEACHER]
+      'roles' => [SessionManager::ROLE_ADMIN, SessionManager::ROLE_TEACHER]
    ],
    'analyticsStudent' => [
       'icon' => 'ri-bar-chart-box-fill',
@@ -59,11 +59,23 @@ $menuItems = [
       'roles' => [SessionManager::ROLE_STUDENT]
    ]
 ];
+$usersManagement = [
+   'reviewers' => [
+      'icon' => 'ri-user-search-fill',
+      'text' => 'Revisores',
+      'roles' => [SessionManager::ROLE_ADMIN, SessionManager::ROLE_TEACHER]
+   ],
+   'teachers' => [
+      'icon' => 'ri-group-fill',
+      'text' => 'Docentes',
+      'roles' => [SessionManager::ROLE_ADMIN]
+   ]
+];
 $settingsItems = [
    'settings' => [
       'icon' => 'ri-settings-3-fill',
       'text' => 'Ajustes',
-      'roles' => [SessionManager::ROLE_STUDENT, SessionManager::ROLE_TEACHER]
+      'roles' => [SessionManager::ROLE_ADMIN, SessionManager::ROLE_STUDENT, SessionManager::ROLE_TEACHER]
    ],
 ];
 ?>
@@ -87,7 +99,7 @@ $settingsItems = [
 
       <div class="sidebar__content">
          <div>
-            <h3 class="sidebar__title">GESTION</h3>
+            <h3 class="sidebar__title">GESTIÓN</h3>
             <!-- EXAMPLE AFTHER RESULT
             <div class="sidebar__list">
                <a href="<?= base_url(); ?>/analytics"
@@ -124,6 +136,23 @@ $settingsItems = [
                <?php endforeach; ?>
             </div>
          </div>
+
+         <?php if ($userType != SessionManager::ROLE_STUDENT): ?>
+            <div>
+            <h3 class="sidebar__title">ROLES</h3>
+            <div class="sidebar__list">
+               <?php foreach ($usersManagement as $route => $item): ?>
+                  <?php if (in_array($userType, $item['roles'])): ?>
+                     <a href="<?= base_url(); ?>/<?= $route ?>"
+                        class="sidebar__link <?= isActiveRoute($data['current_section'], $route) ?>">
+                        <i class="ri <?= $item['icon'] ?>"></i>
+                        <span data-i18n="nav.<?= $route ?>"><?= $item['text'] ?></span>
+                     </a>
+                  <?php endif; ?>
+               <?php endforeach; ?>
+            </div>
+         </div>         
+         <?php endif; ?>
       </div>
 
       <div class="sidebar__actions">

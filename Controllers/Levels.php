@@ -4,6 +4,7 @@ class Levels extends AuthController
 	public function __construct()
 	{
 		parent::__construct([
+			SessionManager::ROLE_ADMIN,
 			SessionManager::ROLE_STUDENT,
 			SessionManager::ROLE_TEACHER
 		]);
