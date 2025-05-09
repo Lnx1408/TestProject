@@ -1635,5 +1635,31 @@
             "title": "Error",
             "message": "An error occurred while logging out. Please try again."
         }
+    },
+    "teachers":{
+        "title":"Teachers",
+        "description": "Manage your users",
+        "options": {
+            "create": {
+                "title": "Create user",
+                "description": "Add users with \"teacher\" role"
+            }
+        },
+        "teacher": {
+            "title": "Add User",
+            "description": "Enter the teacher's details to create their user account",
+            "user": "User",
+            "name": "Names",
+            "lastname": "Last name",
+            "email": "Email",
+            "password": "Password",
+            "buttons": {
+                "addTeacher":"ADD TEACHER"
+            },
+            "strength": {
+                "default":"STRONG OF PASSWORD"
+            }
+
+        }
     }
 }
