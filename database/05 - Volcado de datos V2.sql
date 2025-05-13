@@ -16,7 +16,7 @@ INSERT INTO tipo_usuario (nombre_tipo, codigo) VALUES
 INSERT INTO jugadores (nombres,id_tipo, apellidos, usuario, correo, password) 
 VALUES
 ('YERMIN YAIR',1, 'LINO SANCHEZ', 'ylino', 'yls.2000@outlook.es', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'),
-('CRISTOPHER DUSTIN',2, 'SILVA FAJARDO', 'csilva', 'csilva@test.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5');
+('CRISTOPHER DUSTIN',2, 'SILVA FAJARDO', 'csilva', 'csilva@test.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'),
 ('Estudiante',3, 'Prueba', 'est1', 'est1@test.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5');
 
 -- Insertar una partida de prueba
