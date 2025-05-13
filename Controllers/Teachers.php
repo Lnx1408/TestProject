@@ -1,11 +1,16 @@
 <?php
 
 class Teachers extends AuthController{
+
+	private $authService;
+
     public function __construct() {
         // Especificar roles permitidos para este controlador
         parent::__construct([
             SessionManager::ROLE_ADMIN
         ]);
+
+		$this->authService = new Services\Auth\AuthService();
     }
 
 	/**
@@ -50,8 +55,7 @@ class Teachers extends AuthController{
 
         $data['page_functions_js'] = array(
             'jquery-3.7.1.min.js',
-            'CryptoModule.js',
-			'plugins/sweetalert2.all.min.js',
+            'plugins/sweetalert2.all.min.js',
             'teachers/teacher.js'
         );
 		
@@ -68,7 +72,7 @@ class Teachers extends AuthController{
 
 	// API - Registrar docente
 
-	public function registerDocente()
+	public function registerTeacher()
 	{
 		$inputJSON = file_get_contents("php://input");
 		$input = json_decode($inputJSON, true);

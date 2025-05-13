@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" id="saveTeacherBtn" class="btn btn-primary" disabled
+                    <button type="submit" id="saveTeacherBtn" class="btn btn-primary"
                         data-i18n="teachers.teacher.buttons.addTeacher">
                         REGISTRAR DOCENTE
                     </button>
