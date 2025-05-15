@@ -158,6 +158,39 @@ class AuthService
     }
 
     /**
+     * Registrar docente
+     * 
+     */
+    public function registerTeacherdb($strTipoUsuario, $strUsuario, $strNombres, $strApellidos,$strCorreo, $strPassword )
+    {
+        try {
+            $result = $this->db->executeProcedureWithParametersOut(
+                'sp_registrar_usuario',  // Nombre del procedimiento almacenado
+				[$strTipoUsuario, $strUsuario, $strNombres, $strApellidos, $strCorreo, $strPassword], // Parámetros de entrada
+				['codigo', 'mensaje']
+            );
+
+            if (empty($result) || $result['outParams']['codigo'] != 1) {
+                return [
+                    'status' => false,
+                    'msg' => $result['outParams']['mensaje'] ?? 'Error al registrar docente'
+                ];
+            }
+
+            return [
+                'status' => true,
+                'msg' => $result['outParams']['mensaje']
+            ];
+        } catch (\Exception $e) {
+            error_log("Error en registerTeacherdb: " . $e->getMessage());
+            return [
+                'status' => false,
+                'msg' => 'Error al registrar docente: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    /**
      * Actualiza información del perfil
      * 
      * @param int $userId ID del usuario
