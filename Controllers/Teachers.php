@@ -3,14 +3,14 @@
 class Teachers extends AuthController{
 
 	private $authService;
-
     public function __construct() {
         // Especificar roles permitidos para este controlador
         parent::__construct([
             SessionManager::ROLE_ADMIN
         ]);
-
+		
 		$this->authService = new Services\Auth\AuthService();
+
     }
 
 	/**

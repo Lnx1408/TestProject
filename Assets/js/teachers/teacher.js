@@ -2,26 +2,20 @@ class teacherManagement {
     constructor() {
         this.config = {
             endpoints: {
-                register: `${base_url}/Teacher/registerTeacher`,
+                register: `${base_url}/Teachers/registerTeacher`,
             },
             forms: {
                 register: '#teacherForm',
             },
             selectors: {
-                loginBox: '.login-box',
                 formSections: '.form-section'
             }
-        };
-
-        this.state = {
-            activeForm: 'teacher'
         };
 
         this.init();
     }
 
     init() {
-        this.initializeFormToggles();
         this.initializeFormSubmissions();
     }
 
@@ -29,8 +23,6 @@ class teacherManagement {
         document.querySelectorAll('[data-toggle="form"]').forEach(trigger => {
             trigger.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetForm = trigger.getAttribute('data-target');
-                this.state.activeForm =targetForm;
             });
         });
     }
@@ -111,13 +103,11 @@ class teacherManagement {
                     text: "Ha sido registrado con éxito",
                     icon: "success"
                 });
-                this.switchForm('login');
             } else {
                 this.showAlert("error", "Error", decryptedResult.msg || "Ocurrió un problema.");
             }
         } catch (error) {
-            console.error('Error en registro:', error);
-            this.showAlert("error", "Error", "Error al procesar la solicitud");
+            this.showAlert("error", "Error", error);
         }
     }
 
