@@ -1637,12 +1637,12 @@
         }
     },
     "teachers":{
-        "title":"Teachers",
-        "description": "Manage your users",
+        "title":"Docentes",
+        "description": "Gestiona tus usuarios",
         "options": {
             "create": {
-                "title": "Create user",
-                "description": "Add users with \"teacher\" role"
+                "title": "Agregar usuario",
+                "description": "Agregar usuario con rol \"docente\""
             }
         },
         "teacher": {
