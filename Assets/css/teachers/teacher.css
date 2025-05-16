@@ -209,7 +209,31 @@
     justify-content: center;
     margin-top: 2rem;
 }
+/* Estilos generales para el módulo de Ajustes */
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.btn-primary {
+    --first-color: hsl(228, 85%, 63%);
+    background-color: var(--first-color);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 /* Estilos responsive */
 @media (max-width: 768px) {
     .teacher-content {

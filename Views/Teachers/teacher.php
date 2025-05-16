@@ -42,7 +42,7 @@
                         <label for="txtUserRegister" data-i18n="teachers.teacher.user">Usuario</label>
                         <div class="teacher-field">
                             <input id="txtUserRegister" name="txtUserRegister" class="form-control" type="text"
-                                placeholder="aperalta" required autocomplete="off">
+                                placeholder="aperalta"  autocomplete="off">
                             <i class='bx bx-user toggle-teacher' data-target="txtUserRegister"></i>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <label for="txtFirstNameRegister" data-i18n="teachers.teacher.name">Nombres</label>
                         <div class="teacher-field">
                             <input id="txtFirstNameRegister" name="txtFirstNameRegister" class="form-control"
-                                type="text" placeholder="Arlette" required autocomplete="off">
+                                type="text" placeholder="Arlette"  autocomplete="off">
                             <i class='bx bx-id-card toggle-teacher' data-target="txtUserRegister"></i>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         <label for="txtLastNameRegister" data-i18n="teachers.teacher.lastname">Apellidos</label>
                         <div class="teacher-field">
                             <input id="txtLastNameRegister" name="txtLastNameRegister" class="form-control" type="text"
-                                placeholder="Peralta" required autocomplete="off">
+                                placeholder="Peralta"  autocomplete="off">
                             <i class='bx bx-id-card toggle-teacher' data-target="txtUserRegister"></i>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <label for="txtEmailRegister" data-i18n="teachers.teacher.email">Correo</label>
                         <div class="teacher-field">
                             <input id="txtEmailRegister" name="txtEmailRegister" class="form-control" type="email"
-                                placeholder="aperalta@example.com" required autocomplete="off">
+                                placeholder="aperalta@example.com"  autocomplete="off">
                             <i class='bx bx-envelope toggle-teacher' data-target="txtUserRegister"></i>
                         </div>
                     </div>
@@ -81,21 +81,14 @@
                     <div class="form-group">
                         <label for="txtPasswordRegister" data-i18n="teachers.teacher.password">Contraseña</label>
                         <div class="teacher-field">
-                            <input id="txtPasswordRegister" name="txtPasswordRegister" class="form-control" type="password" placeholder="Contraseña" required autocomplete="off">
+                            <input id="txtPasswordRegister" name="txtPasswordRegister" class="form-control" type="password" placeholder="Contraseña"  autocomplete="off">
                             <i class='bx bx-lock toggle-teacher' data-target="newPassword"></i>
-                        </div>
-                        <div class="password-strength" id="passwordStrength">
-                            <div class="strength-bar">
-                                <div class="strength-progress"></div>
-                            </div>
-                            <span class="strength-text" data-i18n="teachers.teacher.strength.default">Fortaleza de
-                                contraseña</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" id="saveTeacherBtn" class="btn btn-primary" disabled
+                    <button type="submit" id="saveTeacherBtn" class="btn btn-primary"
                         data-i18n="teachers.teacher.buttons.addTeacher">
                         REGISTRAR DOCENTE
                     </button>

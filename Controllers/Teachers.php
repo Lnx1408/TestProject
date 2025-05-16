@@ -1,11 +1,16 @@
 <?php
 
 class Teachers extends AuthController{
+
+	private $authService;
     public function __construct() {
         // Especificar roles permitidos para este controlador
         parent::__construct([
             SessionManager::ROLE_ADMIN
         ]);
+		
+		$this->authService = new Services\Auth\AuthService();
+
     }
 
 	/**
@@ -50,8 +55,7 @@ class Teachers extends AuthController{
 
         $data['page_functions_js'] = array(
             'jquery-3.7.1.min.js',
-            'CryptoModule.js',
-			'plugins/sweetalert2.all.min.js',
+            'plugins/sweetalert2.all.min.js',
             'teachers/teacher.js'
         );
 		
@@ -67,56 +71,54 @@ class Teachers extends AuthController{
 
 
 	// API - Registrar docente
+    public function registerTeacher()
+    {
+        try {
+            $jsonData = file_get_contents('php://input');
+            $postData = json_decode($jsonData, true);
 
-	public function registerDocente()
-	{
-		$inputJSON = file_get_contents("php://input");
-		$input = json_decode($inputJSON, true);
+            if (!isset($postData['encryptedData'])) {
+                throw new \Exception('Datos no recibidos');
+            }
 
-		if (isset($input['encryptedData'])) {
-			// Descifrar datos
-			$decryptedData = decryptData($input['encryptedData']);
-			$data = json_decode($decryptedData, true);
+            // Desencriptar datos
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
 
-			if ($data) {
-				if (empty($data['txtEmailRegister']) || empty($data['txtPasswordRegister'])) {
-					$arrResponse = array('status' => false, 'msg' => 'Error de datos');
-				} else {
-					$strTipoUsuario  = strtoupper(strClean($data['txtTypeUser']));
-					$strUsuario  = strtolower(strClean($data['txtUserRegister']));
-					$strCorreo  = strtolower(strClean($data['txtEmailRegister']));
-					$strNombres  = strtoupper(strClean($data['txtFirstNameRegister']));
-					$strApellidos  = strtoupper(strClean($data['txtLastNameRegister']));
-					$strPassword = empty($data['txtPasswordRegister']) ? hash("SHA256", passGenerator()) : hash("SHA256", $data['txtPasswordRegister']);
+            if (!$data || !isset($data['txtEmailRegister']) || !isset($data['txtPasswordRegister'])) {
+                throw new \Exception('Datos incompletos');
+            }
 
-					$requestUser = $this->model->executeProcedureWithParametersOut(
-						'sp_registrar_usuario',  // Nombre del procedimiento almacenado
-						[$strTipoUsuario, $strUsuario, $strNombres, $strApellidos, $strCorreo, $strPassword], // Parámetros de entrada
-						['codigo', 'mensaje']  // Parámetros de salida
-					);
-					if (!empty($requestUser) && $requestUser['outParams']['codigo'] == 1) {
-						$arrResponse = array('status' => true, 'msg' => 'Usuario registrado correctamente');
-					}else if(!empty($requestUser) && $requestUser['outParams']['codigo'] == 2){
-						$arrResponse = array('status' => false, 'msg' => 'El correo ya está registrado');
-					}
-					else if(!empty($requestUser) && $requestUser['outParams']['codigo'] == 3){
-						$arrResponse = array('status' => false, 'msg' => 'El Nombre de Usuario no se encuentra disponible, intente con otro nombre de Usuario');
-					}
-					else{
-						$arrResponse = array('status' => false, 'msg' => 'Ocurrio un error al registrar el usuario');
-					}
-				}
-			} else {
-				$arrResponse = (['status' => false, 'msg' => 'Error al descifrar datos']);
-			}
-		} else {
-			$arrResponse = (['status' => false, 'msg' => 'Datos no recibidos']);
-		}
-		$jsonResponse = json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-		$encryptedResponse = encryptResponse($jsonResponse);
-		echo json_encode([
-			'data' => $encryptedResponse
-		]);
-		die();
-	}
+            $strTipoUsuario  = strtoupper(strClean($data['txtTypeUser']));
+			$strUsuario  = strtolower(strClean($data['txtUserRegister']));
+			$strCorreo  = strtolower(strClean($data['txtEmailRegister']));
+			$strNombres  = strtoupper(strClean($data['txtFirstNameRegister']));
+			$strApellidos  = strtoupper(strClean($data['txtLastNameRegister']));
+			$strPassword = empty($data['txtPasswordRegister']) ? hash("SHA256", passGenerator()) : hash("SHA256", $data['txtPasswordRegister']);
+
+
+            // Validaciones adicionales
+            if (empty($strCorreo) || empty($strPassword)) {
+                throw new \Exception('El correo y contraseña no puede estar vacío');
+            }
+
+            $response = $this->authService->registerTeacherdb($strTipoUsuario, $strUsuario, $strNombres, $strApellidos,$strCorreo, $strPassword);
+
+            $jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+            $encryptedResponse = encryptResponse($jsonResponse);
+
+            echo json_encode(['data' => $encryptedResponse]);
+            die();
+        } catch (\Exception $e) {
+            $response = [
+                'status' => false,
+                'msg' => 'Error al registrar docente: ' . $e->getMessage()
+            ];
+
+            echo json_encode([
+                'data' => encryptResponse(json_encode($response))
+            ]);
+            die();
+        }
+    }
 }
