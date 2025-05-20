@@ -1,0 +1,24 @@
+-- Obtener jugadores por rol
+SELECT j.nombres, j.apellidos, j.correo, t.nombre_tipo, j.estado 
+FROM reqscapetest_db.jugadores j 
+inner join reqscapetest_db.tipo_usuario t on j.id_tipo = t.id_tipo 
+where j.id_tipo = 1;
+
+-- Obtener estudiantes general
+SELECT j.nombres, j.apellidos, j.usuario, j.correo, t.nombre_tipo, j.isRevisor
+FROM reqscapetest_db.jugadores j 
+inner join reqscapetest_db.tipo_usuario t on j.id_tipo = t.id_tipo 
+where j.id_tipo = 3;
+
+-- Obtener estudiantes revisores
+SELECT j.id_jugador, j.nombres, j.apellidos, j.usuario, j.correo, t.nombre_tipo, j.isRevisor
+FROM reqscapetest_db.jugadores j 
+inner join reqscapetest_db.tipo_usuario t on j.id_tipo = t.id_tipo 
+where j.id_tipo = 3 and j.isRevisor = true;
+
+-- Obtener sugerencias por revisor
+SELECT j.usuario, j.nombres, j.apellidos, rs.descripcion as suerencia, r.descripcion as original, (SELECT usuario FROM Jugadores where id_jugador = rs.id_usuario_creador) AS Docente 
+FROM reqscapetest_db.requisitos_sugerencias rs 
+INNER JOIN reqscapetest_db.jugadores j ON rs.id_usuario_revisor = j.id_jugador
+INNER JOIN reqscapetest_db.requisitos r ON rs.id_requisito = r.id_requisito
+WHERE rs.id_usuario_revisor = 4;

@@ -68,6 +68,7 @@ CREATE TABLE jugadores (
     correo VARCHAR(255) UNIQUE NOT NULL,
 	password varchar(255) NOT NULL,
 	id_tipo INT NOT NULL,
+    isRevisor BOOLEAN DEFAULT FALSE,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	fecha_modificacion TIMESTAMP NULL,
     ultimo_cambio_password TIMESTAMP NULL,
@@ -111,7 +112,21 @@ CREATE TABLE requisitos (
     retroalimentacion TEXT,
     es_funcional BOOLEAN NOT NULL,
 	id_usuario_creador INT NULL, 
-    codigo_lote_referencia VARCHAR(36) NULL
+    codigo_lote_referencia VARCHAR(36) NULL,
+    medio_creacion VARCHAR(36) NULL /**Empírico - IA**/
+);
+
+CREATE TABLE requisitos_sugerencias (
+    id_requisito_sugerencia INT PRIMARY KEY AUTO_INCREMENT,
+    id_requisito INT NOT NULL,
+    descripcion TEXT NOT NULL,
+    retroalimentacion TEXT,
+    id_usuario_revisor INT NULL, 
+	id_usuario_creador INT NULL, 
+    codigo_lote_referencia VARCHAR(36) NULL,
+    FOREIGN KEY (id_requisito) REFERENCES requisitos(id_requisito),
+    FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador),
+    FOREIGN KEY (id_usuario_creador) REFERENCES jugadores(id_jugador)
 );
 
 CREATE TABLE requisitos_clasificacion_partida (
