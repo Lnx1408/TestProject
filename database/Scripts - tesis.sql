@@ -22,3 +22,8 @@ FROM reqscapetest_db.requisitos_sugerencias rs
 INNER JOIN reqscapetest_db.jugadores j ON rs.id_usuario_revisor = j.id_jugador
 INNER JOIN reqscapetest_db.requisitos r ON rs.id_requisito = r.id_requisito
 WHERE rs.id_usuario_revisor = 4;
+
+-- Obtener retroalimentacion por requisito
+
+-- Obtener requisitos originales por usuario
+Select * From reqscapetest_db.requisitos where id_usuario_creador = 1

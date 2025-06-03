@@ -20,10 +20,9 @@ class Reviewers extends AuthController{
 			'reviewers/reviewers.js'
 		);
 		$data['page_css'] =  array(
-			'game/game-focal.css',
 			'reviewers/reviewers.css'
 		);
-		$data['page_libraries_css'] =  array();
+		
 		$this->addNavInfo($data);
 		$this->views->getView($this, "reviewers", $data);
 	}

@@ -1661,5 +1661,26 @@
             }
 
         }
+    },
+    "reviewers":{
+        "title":"Revisiones",
+        "description": "Gestiona los revisores y revisiones",
+        "options": {
+            "create": {
+                "title": "Agregar usuario",
+                "description": "Agregar usuario con rol \"revisor\""
+            },
+            "reviews": {
+                "title": "Ver revisiones",
+                "description": "Consulta las sugerencias de tus revisores"
+            }
+        },
+        "reviewer": {
+            "title": "Agregar usuario",
+            "description": "Ingresa los datos del docente para crear su usuario",
+            "buttons": {
+                "addReviewer":"REGISTRAR REVISOR"
+            }
+        }
     }
 }
