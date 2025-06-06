@@ -1660,26 +1660,26 @@
       "strength": {
         "default": "STRONG OF PASSWORD"
       }
-    },
-    "reviewers": {
-      "title": "Reviews",
-      "description": "Manage reviewers and reviews",
-      "options": {
-        "create": {
-          "title": "Add user",
-          "description": "Add user with role \"reviewer\""
-        },
-        "reviews": {
-          "title": "View reviews",
-          "description": "Consult the suggestions of your reviewers"
-        }
-      },
-      "reviewer": {
+    }
+  },
+  "reviewers": {
+    "title": "Reviews",
+    "description": "Manage reviewers and reviews",
+    "options": {
+      "create": {
         "title": "Add user",
-        "description": "Enter the teacher's data to create their user",
-        "buttons": {
-          "addReviewer": "REGISTER REVIEWER"
-        }
+        "description": "Add user with role \"reviewer\""
+      },
+      "reviews": {
+        "title": "View reviews",
+        "description": "Consult the suggestions of your reviewers"
+      }
+    },
+    "reviewer": {
+      "title": "Add user",
+      "description": "Enter the teacher's data to create their user",
+      "buttons": {
+        "addReviewer": "REGISTER REVIEWER"
       }
     }
   }

@@ -26,4 +26,40 @@ class Reviewers extends AuthController{
 		$this->addNavInfo($data);
 		$this->views->getView($this, "reviewers", $data);
 	}
+
+	public function add_reviewers()
+	{
+		$data = array();
+		$data['page_tag'] = "New Reviewers - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "New Reviewers";
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'reviewers/add_reviewers.js',
+			'plugins/datatables/dataTables.min.js',
+			'plugins/datatables/dataTables.responsive.js',
+			'plugins/datatables/responsive.dataTables.js',
+			'plugins/papaparse.min.js',
+			'plugins/custom-modal.js',
+			'plugins/tabulator/tabulator.min.js',
+			'levels/tabulator-config.js'
+		);
+		$data['page_css'] =  array(
+			'reviewers/add_reviewers.css',
+			'game/game-focal.css',
+			'levels/requirements-generator.css',
+			'modal-custom.css',
+			'plugins/tabulator/tabulator.min.css',
+			'levels/levels-base.css',
+			'levels/levels-focal.css',
+			'levels/create-clasification.css'
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "add_reviewers", $data);
+	}
 }
