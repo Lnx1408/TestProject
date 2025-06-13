@@ -26,4 +26,30 @@ WHERE rs.id_usuario_revisor = 4;
 -- Obtener retroalimentacion por requisito
 
 -- Obtener requisitos originales por usuario
-Select * From reqscapetest_db.requisitos where id_usuario_creador = 1
+Select * From reqscapetest_db.requisitos where id_usuario_creador = 1;
+
+
+-- SP Obtener lista de estudiantes subscritos a una partida
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_jugadores_por_partida //
+CREATE PROCEDURE sp_get_jugadores_por_partida(
+    IN codigo_partida VARCHAR(10)
+)
+BEGIN
+	SELECT
+		j.id_jugador,
+		j.usuario,
+		concat(j.nombres,' ', j.apellidos) as nombres,
+		j.correo,
+		j.isRevisor
+	FROM
+		reqscapetest_db.partidas AS p
+	JOIN
+		reqscapetest_db.partidas_jugadores AS pj ON p.id_partida = pj.id_partida
+	JOIN
+		reqscapetest_db.jugadores AS j ON pj.id_jugador = j.id_jugador
+	WHERE
+		p.codigo_partida = codigo_partida
+	ORDER BY j.usuario ASC;
+END //
+CALL sp_get_jugadores_por_partida('TEST123');
