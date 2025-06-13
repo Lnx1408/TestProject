@@ -39,9 +39,10 @@ BEGIN
 	SELECT
 		j.id_jugador,
 		j.usuario,
-		concat(j.nombres,' ', j.apellidos) as nombres,
+		j.nombres,
+        j.apellidos,
 		j.correo,
-        j.estado
+        j.estado,
 		j.isRevisor
 	FROM
 		reqscapetest_db.partidas AS p
