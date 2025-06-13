@@ -17,7 +17,7 @@
                 <!-- Sección: Agregar Revisor -->
                 <div class="teachers-section">
                     <div id="personalInfo" class="section-content">
-                        <a href="<?= base_url(); ?>/reviewers/add_reviewers" class="menu-option">
+                        <a href="<?= base_url(); ?>/reviewers/list_reviewers" class="menu-option">
                             <div class="header-icon">
                                 <i class='bx bx-user-plus'></i>
                             </div>    
@@ -34,7 +34,7 @@
                 <!-- Sección: Ver revisiones -->
                 <div class="teachers-section">
                     <div id="personalInfo" class="section-content">
-                        <a href="<?= base_url(); ?>/revierwer/reviews" class="menu-option">
+                        <a href="<?= base_url(); ?>/reviewers/reviews" class="menu-option">
                             <div class="header-icon">
                                 <i class='bx bx-check-square'></i>
                             </div>    

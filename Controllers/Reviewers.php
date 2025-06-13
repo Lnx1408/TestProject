@@ -62,4 +62,50 @@ class Reviewers extends AuthController{
 		$this->addNavInfo($data);
 		$this->views->getView($this, "add_reviewers", $data);
 	}
+
+	public function reviews()
+	{
+		$data = array();
+		$data['page_tag'] = "Reviews - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "Reviews";
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'reviewers/reviews.js',
+		);
+		$data['page_css'] =  array(
+			'reviewers/add_reviews.css',
+			'analytics/games.css'
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "reviews", $data);
+	}
+	public function list_reviewers()
+	{
+		$data = array();
+		$data['page_tag'] = "New Reviewers - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "New Reviewers";
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'reviewers/list_reviewers.js',
+			
+		);
+		$data['page_css'] =  array(
+			'reviewers/list_reviewers.css',
+			'analytics/games.css'
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "list_reviewers", $data);
+	}
 }

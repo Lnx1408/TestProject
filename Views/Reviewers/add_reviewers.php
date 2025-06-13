@@ -8,7 +8,7 @@
         <div class="create-game-container">
             <!-- Header con título y contador -->
             <div class="header-section">
-                <h1 class="page-title">Asignar estudiantes revisores</h1>
+                <h1 class="page-title">Asignar Usuarios Revisores</h1>
             </div>
 
             <!-- Tabla principal -->
@@ -16,24 +16,18 @@
                 <div class="data-info container-table">
                     <div class="header-table">
                         <i class='bx ri-user-community-fill'></i>
-                        <h2>Estudiantes registrados</h2>
+                        <h2 >Estudiantes Subscritos</h2>
                     </div>
-                    <!-- 
-                    <div class="bottom-actions">
-                        <button id="exportSelectedBtn" class="btn btn-aux btn-outline-primary" disabled>
-                            <i class='bx bx-export'></i>
-                            <span data-i18n="create_classification.buttons.export">Exportar Requisitos</span>
-                        </button>
-                    </div>
-                    -->
-                    <table id="selectedRequirementsTable" class="nowrap">
+                    
+                    
+                    <table id="userReviewerTable" class="nowrap">
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Descripción</th>
-                                <th >Tipo</th>
-                                <th >Es Ambiguo</th>
-                                <th >Retroalimentación</th>
+                                <th >Usuario</th>
+                                <th >Nombres</th> 
+                                <th >Correo</th>
+                                <th >Es Revisor</th>
                                 <th >Acciones</th>
                             </tr>
                         </thead>
