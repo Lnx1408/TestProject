@@ -35,18 +35,15 @@ class Reviewers extends AuthController{
 		$data['page_name'] = "New Reviewers";
 		$data['page_functions_js'] = array(
 			'jquery-3.7.1.min.js',
-			'reviewers/add_reviewers.js',
 			'plugins/datatables/dataTables.min.js',
 			'plugins/datatables/dataTables.responsive.js',
 			'plugins/datatables/responsive.dataTables.js',
-			'plugins/papaparse.min.js',
-			'plugins/custom-modal.js',
-			'plugins/tabulator/tabulator.min.js',
-			'levels/tabulator-config.js'
+			'analytics/general_clasifications.js'
 		);
 		$data['page_css'] =  array(
 			'reviewers/add_reviewers.css',
 			'game/game-focal.css',
+			'analytics/base.css',
 			'levels/requirements-generator.css',
 			'modal-custom.css',
 			'plugins/tabulator/tabulator.min.css',
@@ -107,5 +104,20 @@ class Reviewers extends AuthController{
 		
 		$this->addNavInfo($data);
 		$this->views->getView($this, "list_reviewers", $data);
+	}
+
+	public function get_analiticas_jugadores_partida()
+	{
+		$jsonData = file_get_contents('php://input');
+		$postData = json_decode($jsonData, true);
+		$idJugador = $this->getUserData('id');
+
+		$analytics = $this->model->get_analiticas_jugadores_partida($postData, $idJugador);
+		$jsonResponse = json_encode($analytics, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse // Tu función de encriptación
+		]);
+		exit();
 	}
 }

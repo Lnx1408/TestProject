@@ -41,6 +41,7 @@ BEGIN
 		j.usuario,
 		concat(j.nombres,' ', j.apellidos) as nombres,
 		j.correo,
+        j.estado
 		j.isRevisor
 	FROM
 		reqscapetest_db.partidas AS p
