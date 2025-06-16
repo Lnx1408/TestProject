@@ -7,7 +7,7 @@ const TableModule = {
             tableId: '#tableJugadores',
             // ... otros selectores ...
         },
-        endpoint: `${base_url}/Reviewers/get_analiticas_jugadores_partida`,
+        endpoint: `${base_url}/Reviewers/get_reviewers_partida_clasificacion`,
         params: {
             id: null, // Parámetro que necesitamos enviar
             gameCode: null
@@ -198,6 +198,28 @@ const TableModule = {
             }
         });
     },
+    updateToReviewer(nombres, apellidos, id_jugador) {
+        Swal.fire({
+            title: "Ascender a Revisor",
+            html: `Desea ascender al estudiante <b>${nombres} ${apellidos}</b> al rol de revisor?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#1976D2',
+            cancelButtonColor: '#D32F2F',
+            confirmButtonText: this.translations.get('modals.view_details.confirm'),
+            cancelButtonText: this.translations.get('modals.view_details.cancel'),
+            customClass: {
+                container: 'analytics-type-modal',
+                popup: 'analytics-modal-popup',
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la página de detalles
+                //window.location.href = `${base_url}/Analytics/details_user_clasification?gamecode=${encodeURIComponent(this.config.params.gameCode)}&Jugador=${encodeURIComponent(id_jugador)}`;
+            }
+        });
+    },
+
 
     columnDefs: {
         // Definiciones detalladas de columnas
@@ -210,7 +232,7 @@ const TableModule = {
                 data: null,
                 className: "dt-center",
                 title: "Jugador",
-                title: `<span data-i18n="game_analytics_classification.table.columns.player">Jugador</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("player"); event.stopPropagation();'></i>`,
+                title: `<span >Estudiante</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("player"); event.stopPropagation();'></i>`,
                 //width: "50%",
                 responsivePriority: 1, // Alta prioridad - siempre visible
                 render: function (data, type, row) {
@@ -232,43 +254,43 @@ const TableModule = {
                 }.bind(this)
             },
             {
-                data: 'tiempo_empleado',
-                title: `<span data-i18n="game_analytics_classification.table.columns.time">Tiempo</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("time"); event.stopPropagation();'></i>`,
+                data: 'usuario',
+                title: `<span>Nombre Usuario</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("time"); event.stopPropagation();'></i>`,
                 className: "dt-center",
-                responsivePriority: 2,
+                responsivePriority: 3,
                 width: "15%",
             },
             {
-                data: 'intentos',
-                title: `<span data-i18n="game_analytics_classification.table.columns.attempts">Intentos</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("attempts"); event.stopPropagation();'></i>`,
+                data: 'correo',
+                title: `<span>Correo</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("attempts"); event.stopPropagation();'></i>`,
                 className: "dt-center",
-                width: "10%",
-                responsivePriority: 2,
-                type: 'string',
-            },
-            {
-                data: 'fecha',
-                title: `<span data-i18n="game_analytics_classification.table.columns.last_attempt">Fecha</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("last_attempt"); event.stopPropagation();'></i>`,
-                className: "dt-center",
-                width: "15%",
+                width: "20%",
                 responsivePriority: 3,
                 type: 'string',
             },
             {
-                data: 'porcentaje',
-                title: `<span data-i18n="game_analytics_classification.table.columns.progress">Avance</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("progress"); event.stopPropagation();'></i>`,
+                data: 'fecha',
+                title: `<span>Fecha Subscripción</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("last_attempt"); event.stopPropagation();'></i>`,
                 className: "dt-center",
                 width: "15%",
-                responsivePriority: 2,
+                responsivePriority: 4,
+                type: 'string',
+            },
+            {
+                data: 'porcentaje',
+                title: `<span>Precisió en Juegos</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("progress"); event.stopPropagation();'></i>`,
+                className: "dt-center",
+                width: "15%",
+                responsivePriority: 3,
                 type: 'string',
                 render: data => `${data}%`
             },
             {
                 data: null,
-                title: `<span data-i18n="game_analytics_classification.table.columns.status">Estado</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("status"); event.stopPropagation();'></i>`,
+                title: `<span>Estado</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("status"); event.stopPropagation();'></i>`,
                 className: "dt-center",
-                width: "25%",
-                responsivePriority: 3,
+                width: "15%",
+                responsivePriority: 2,
                 render: function (data, type, row) {
                     return `<span class="status ${row.estado.class}">${row.estado.text}</span>`;
                 }
@@ -287,6 +309,10 @@ const TableModule = {
                         <button class="btn btn-info btn-sm"
                             onclick="TableModule.viewDetails('${row.nombres}', '${row.apellidos}', '${row.id_jugador}'); event.stopPropagation();">
                             <i class='bx bx-info-circle'></i>
+                        </button>
+                        <button class="btn btn-info btn-sm"
+                            onclick="TableModule.updateToReviewer('${row.nombres}', '${row.apellidos}', '${row.id_jugador}'); event.stopPropagation();">
+                            <i class='bx bx-user-check'></i>
                         </button>
                     </div>
                 `;
@@ -349,11 +375,11 @@ const TableModule = {
                     return decryptedResponse.analytics.map(item => ({
                         nombres: item.nombres,     // Guardamos nombres completos
                         apellidos: item.apellidos, // Guardamos apellidos completos
-                        tiempo_empleado: this.utils.formatTime(item.tiempo_total_jugador),
+                        usuario: item.usuario,
                         estado: this.utils.getStatusInfo(item.estado, item.estado_texto),
-                        intentos: item.intentos,
+                        correo: item.correo,
                         porcentaje: item.porcentaje_avance_alt,
-                        fecha: this.utils.formatDate(item.ultimo_intento),
+                        fecha: item.fecha_registro,
                         id_jugador: item.id_jugador
                     }));
                 }
@@ -436,138 +462,6 @@ const TableModule = {
             // Remover event listeners
             window.removeEventListener('resize', this.debounceResize);
         }
-    }
-};
-
-const AnalyticsModule = {
-    config: {
-        endpoint: `${base_url}/Analytics/get_analiticas_generales_partida`,
-        selectors: {
-            precisionIntento: '#precision-primer-intento',
-            tiempoPromedio: '#tiempo-promedio',
-            totalJugadores: '#total-jugadores',
-            promedioIntentos: '#promedio-intentos',
-            primerIntento: '#primer-intento',
-            procentajePrimerIntento: '#procentaje-primer-intento',
-            dosATresIntentos: '#dos-tres-intentos',
-            procentajedosATresIntentos: '#porcentaje-dos-tres-intentos',
-            masTresIntentos: '#mas-tres-intentos',
-            procentajemasTresIntentos: '#porcentaje-mas-tres-intentos'
-        }
-    },
-
-    async fetchAnalytics(gameCode) {
-        try {
-            const requestData = {
-                gamecode: gameCode
-            };
-
-            const response = await fetch(this.config.endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    encryptedData: CryptoModule.encrypt(requestData)
-                })
-            });
-
-            const data = await response.json();
-            const decryptedData = CryptoModule.decrypt(data.data);
-
-            if (decryptedData.status) {
-                this.updateDashboard(decryptedData);
-            } else {
-                console.error('Error en la respuesta:', decryptedData.message);
-            }
-        } catch (error) {
-            console.error('Error obteniendo analytics:', error);
-        }
-    },
-
-    updateDashboard(data) {
-        if (!data || !data.analytics || !data.analytics[0]) return;
-        
-        const stats = data.analytics[0];
-        
-        // Función auxiliar para actualizar elementos
-        const updateElement = (selector, value) => {
-            const element = document.querySelector(selector);
-            if (element) element.textContent = value;
-        };
-
-        // Actualizamos cada valor
-        updateElement(
-            this.config.selectors.precisionIntento, 
-            `+${parseFloat(stats.porcentaje_promedio_aciertos_primer_intento).toFixed(1)}%`
-        );
-        
-        updateElement(
-            this.config.selectors.tiempoPromedio,
-            this.formatTime(stats.tiempo_promedio_total_segundos)
-        );
-
-        updateElement(
-            this.config.selectors.totalJugadores,
-            stats.total_jugadores
-        );
-
-        updateElement(
-            this.config.selectors.promedioIntentos,
-            this.formatNumber(stats.promedio_intentos_necesarios)
-        );
-
-        updateElement(
-            this.config.selectors.primerIntento, 
-            this.formatNumber(stats.completaron_primer_intento)
-        );
-
-        updateElement(
-            this.config.selectors.procentajePrimerIntento, 
-            `${parseFloat(stats.porcentaje_completaron_primer_intento).toFixed(1)}%`
-        );
-
-        updateElement(
-            this.config.selectors.dosATresIntentos, 
-            this.formatNumber(stats.completaron_2_3_intentos)
-        );
-
-        updateElement(
-            this.config.selectors.procentajedosATresIntentos, 
-            `${parseFloat(stats.porcentaje_completaron_2_3_intentos).toFixed(1)}%`
-        );
-
-        updateElement(
-            this.config.selectors.masTresIntentos, 
-            this.formatNumber(stats.necesitaron_mas_3_intentos)
-        );
-
-        updateElement(
-            this.config.selectors.procentajemasTresIntentos, 
-            `${parseFloat(stats.porcentaje_necesitaron_mas_3_intentos).toFixed(1)}%`
-        );
-
-    },
-
-    formatTime(seconds) {
-        const totalSeconds = parseInt(seconds);
-        if(totalSeconds < 60){
-            return `${totalSeconds} seg`;
-        }else{
-            const minutes = Math.floor(totalSeconds / 60);
-            //const remainingSeconds = totalSeconds % 60;
-            //return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-            return `${minutes} min`;
-        }
-    },
-
-    formatNumber(value) {
-        const number = parseFloat(value);
-        return number % 1 === 0 ? number.toString() : number.toFixed(2);
-    },
-
-    init(gameCode) {
-        this.fetchAnalytics(gameCode);
     }
 };
 

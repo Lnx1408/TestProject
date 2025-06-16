@@ -1,5 +1,5 @@
 <?php
-
+require_once("Libraries/Reports/ReportAnalyzer.php");
 class Reviewers extends AuthController{
     public function __construct() {
         // Especificar roles permitidos para este controlador
@@ -38,7 +38,7 @@ class Reviewers extends AuthController{
 			'plugins/datatables/dataTables.min.js',
 			'plugins/datatables/dataTables.responsive.js',
 			'plugins/datatables/responsive.dataTables.js',
-			'analytics/general_clasifications.js'
+			'reviewers/add_reviewers.js'
 		);
 		$data['page_css'] =  array(
 			'reviewers/add_reviewers.css',
@@ -106,13 +106,13 @@ class Reviewers extends AuthController{
 		$this->views->getView($this, "list_reviewers", $data);
 	}
 
-	public function get_analiticas_jugadores_partida()
+	public function get_reviewers_partida_clasificacion()
 	{
 		$jsonData = file_get_contents('php://input');
 		$postData = json_decode($jsonData, true);
 		$idJugador = $this->getUserData('id');
 
-		$analytics = $this->model->get_analiticas_jugadores_partida($postData, $idJugador);
+		$analytics = $this->model->get_reviewers_partida_clasificacion($postData, $idJugador);
 		$jsonResponse = json_encode($analytics, JSON_UNESCAPED_UNICODE);
 		$encryptedResponse = encryptResponse($jsonResponse);
 		echo json_encode([
