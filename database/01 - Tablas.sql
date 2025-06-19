@@ -68,7 +68,6 @@ CREATE TABLE jugadores (
     correo VARCHAR(255) UNIQUE NOT NULL,
 	password varchar(255) NOT NULL,
 	id_tipo INT NOT NULL,
-    isRevisor BOOLEAN DEFAULT FALSE,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	fecha_modificacion TIMESTAMP NULL,
     ultimo_cambio_password TIMESTAMP NULL,
@@ -148,6 +147,7 @@ CREATE TABLE partidas_jugadores (
     intentos_totales INT DEFAULT 0,
     tiempo_total INT DEFAULT 0,
     movimientos_totales INT DEFAULT 0,
+    isRevisor BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (id_partida, id_jugador),
     FOREIGN KEY (id_partida) REFERENCES partidas(id_partida),
     FOREIGN KEY (id_jugador) REFERENCES jugadores(id_jugador)

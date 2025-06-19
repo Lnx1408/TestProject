@@ -28,7 +28,7 @@ WHERE rs.id_usuario_revisor = 4;
 -- Obtener requisitos originales por usuario
 Select * From reqscapetest_db.requisitos where id_usuario_creador = 1;
 
-
+use reqscapetest_db
 -- SP Obtener lista de estudiantes subscritos a una partida
 DELIMITER //
 DROP PROCEDURE IF EXISTS sp_get_reviewers_partida_clasificacion //
@@ -86,34 +86,101 @@ BEGIN
 		SET p_mensaje_retorno = 'No existen datos para la partida especificada';
     END IF;
     
-	WITH total_requisitos_partida AS (
-            SELECT COUNT(*) as requisitos_partida
-            FROM requisitos_clasificacion_partida 
-            WHERE id_partida = v_id_partida
-        )
         SELECT 
-            i.id_partida,
-            i.id_jugador,
+            jug.id_jugador,
             jug.nombres,
             jug.apellidos,
             jug.correo,
             jug.usuario,
-            SUM(i.cantidad_movimientos) as movimientos_totales_jugador,
-            SUM(i.requisitos_correctos) as requisitos_clasificados,
-            t.requisitos_partida as total_requisitos_partida,
-            jug.isRevisor as estado,
+            pj.isRevisor as estado,
             CASE 
-                WHEN jug.isRevisor = 1 THEN 'ESTUDIANTE REVISOR'
+                WHEN pj.isRevisor = 1 THEN 'ESTUDIANTE REVISOR'
                 ELSE 'ESTUDIANTE'
             END as estado_texto,
-            MAX(i.precision_general) as porcentaje_avance_alt,
+            CASE 
+                WHEN pj.estado = 'en_progreso' THEN 'En progreso'
+                ELSE 'Completado'
+            END as porcentaje_avance_alt,
             jug.fecha_registro as fecha_registro
-        FROM intentos i
-        CROSS JOIN total_requisitos_partida t
-		INNER JOIN jugadores jug ON i.id_jugador = jug.id_jugador
-        WHERE i.id_partida = v_id_partida
-        GROUP BY i.id_partida, i.id_jugador, t.requisitos_partida
-        ORDER BY estado DESC, porcentaje_avance_alt DESC;
+        FROM partidas_jugadores pj
+        INNER JOIN jugadores jug ON pj.id_jugador = jug.id_jugador
+        WHERE pj.id_partida = v_id_partida
+        ORDER BY nombres ASC;
     -- END;
 END //
 DELIMITER ;
+
+
+-- SP Obtener lista de estudiantes subscritos a una partida
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_update_reviewer //
+CREATE PROCEDURE sp_update_reviewer(
+	-- Parámetros de entrada
+	IN p_codigo_partida VARCHAR(10),
+	IN p_id_usuario INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+	-- Declaración de variables locales
+	DECLARE v_partida_existe INT DEFAULT 0;
+	DECLARE v_id_partida INT;
+
+    -- Declaración de variables para manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		GET DIAGNOSTICS CONDITION 1
+					@sqlstate = RETURNED_SQLSTATE,
+					@errno = MYSQL_ERRNO,
+					@text = MESSAGE_TEXT;
+        -- En caso de error SQL
+        SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+        -- Rollback en caso de haber transacciones
+        ROLLBACK;
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso ejecutado correctamente';
+
+	-- Validaciones de parámetros de entrada
+	IF p_codigo_partida IS NULL OR p_codigo_partida = '' THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El código de partida no es válido';
+	END IF;
+
+	IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El ID de usuario no es válido';
+	END IF;
+
+	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
+	   FROM partidas 
+	   WHERE codigo_partida = p_codigo_partida 
+	   AND id_usuario_creacion = p_id_usuario AND id_modalidad = 1;
+
+
+    -- Validar que la partida existe
+    IF v_partida_existe = 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'No existen datos para la partida especificada';
+    END IF;
+		SET p_codigo_retorno = 0;
+        SET p_mensaje_retorno = 'No se pudo actualizar el estado';
+        
+        UPDATE reqscapetest_db.partidas_jugadores
+        SET
+		isRevisor = 1
+        WHERE id_partida = v_id_partida
+        and id_jugador = p_id_usuario;
+        
+	IF ROW_COUNT() > 0 THEN
+        SET p_codigo_retorno = 1;
+        SET p_mensaje_retorno = 'Estado actualizado correctamente';
+    END IF;
+    -- END;
+END //
+DELIMITER ;
+
