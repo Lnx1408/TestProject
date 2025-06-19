@@ -6,16 +6,11 @@
     <div class="game-container">
 
         <!-- Botón Ver más -->
-        <div class="header-section">
+        <div class="header-section report-actions">
                 <h1 class="page-title">Asignar Usuarios Revisores</h1>
-            </div>
-
-        <!-- Nueva sección para el botón del reporte -->
+        </div>
+        
         <div class="report-actions">
-            <button id="generateReportBtn" class="btn btn-primary">
-                <i class='bx bx-file'></i>
-                <span data-i18n="details_classification.buttons.generate_report">Generar Reporte</span>
-            </button>
         </div>
 
          <!-- Tabla principal -->
@@ -29,12 +24,12 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Usuario</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
+                            <th>Estudiante</th>
+                            <th>Nombre Usuario</th>
                             <th>Correo</th>
+                            <th>Fecha Subscripción</th>
+                            <th>Tiempo de Juego</th>
                             <th>Es Revisor</th>
-                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
