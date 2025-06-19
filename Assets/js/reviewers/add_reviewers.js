@@ -88,30 +88,6 @@ const TableModule = {
         // Observar el contenedor principal
         resizeObserver.observe(mainContainer);
 
-        // Manejar el evento del botón toggle
-        /**
-        if (headerToggle) {
-            headerToggle.addEventListener('click', () => {
-                // Esperar a que termine la transición del menú
-                setTimeout(() => {
-                    if (this.state.instance) {
-                        this.state.instance.columns.adjust().responsive.recalc();
-                    }
-                }, 300); // Ajusta este tiempo según la duración de tu animación
-            });
-        }
-         */
-
-        // Opcional: Si quieres optimizar las llamadas para evitar múltiples actualizaciones
-        /*
-        this.debounceResize = this.debounce(() => {
-            if (this.state.instance) {
-                updateResponsiveColumns();
-            }
-        }, 250);
-
-        window.addEventListener('resize', this.debounceResize);
-        */
     },
 
     // Función de utilidad para debounce
@@ -206,15 +182,15 @@ const TableModule = {
             showCancelButton: true,
             confirmButtonColor: '#1976D2',
             cancelButtonColor: '#D32F2F',
-            confirmButtonText: this.translations.get('modals.view_details.confirm'),
-            cancelButtonText: this.translations.get('modals.view_details.cancel'),
+            confirmButtonText: 'Sí, hacer revisor',
+            cancelButtonText: 'No, cancelar',
             customClass: {
                 container: 'analytics-type-modal',
                 popup: 'analytics-modal-popup',
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                // Redirigir a la página de detalles
+                UpdateReviewer($id)                // Redirigir a la página de detalles
                 //window.location.href = `${base_url}/Analytics/details_user_clasification?gamecode=${encodeURIComponent(this.config.params.gameCode)}&Jugador=${encodeURIComponent(id_jugador)}`;
             }
         });
@@ -232,7 +208,7 @@ const TableModule = {
                 data: null,
                 className: "dt-center",
                 title: "Jugador",
-                title: `<span >Estudiante</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("player"); event.stopPropagation();'></i>`,
+                title: `<span >Estudiante</span>`,
                 //width: "50%",
                 responsivePriority: 1, // Alta prioridad - siempre visible
                 render: function (data, type, row) {
@@ -255,14 +231,14 @@ const TableModule = {
             },
             {
                 data: 'usuario',
-                title: `<span>Nombre Usuario</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("time"); event.stopPropagation();'></i>`,
+                title: `<span>Nombre Usuario</span>`,
                 className: "dt-center",
                 responsivePriority: 3,
                 width: "15%",
             },
             {
                 data: 'correo',
-                title: `<span>Correo</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("attempts"); event.stopPropagation();'></i>`,
+                title: `<span>Correo</span>`,
                 className: "dt-center",
                 width: "20%",
                 responsivePriority: 3,
@@ -270,24 +246,24 @@ const TableModule = {
             },
             {
                 data: 'fecha',
-                title: `<span>Fecha Subscripción</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("last_attempt"); event.stopPropagation();'></i>`,
+                title: `<span>Fecha Subscripción</span>`,
                 className: "dt-center",
                 width: "15%",
                 responsivePriority: 4,
                 type: 'string',
             },
             {
-                data: 'porcentaje',
-                title: `<span>Precisió en Juegos</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("progress"); event.stopPropagation();'></i>`,
+                data: 'estado_partida',
+                title: `<span>Estado de Partida</span> `,
                 className: "dt-center",
                 width: "15%",
                 responsivePriority: 3,
                 type: 'string',
-                render: data => `${data}%`
+                render: data => `${data}`
             },
             {
                 data: null,
-                title: `<span>Estado</span> <i class='bx bx-info-circle info-icon' style='color: #666; cursor: pointer;' onclick='TableModule.showColumnInfo("status"); event.stopPropagation();'></i>`,
+                title: `<span>Estado</span> `,
                 className: "dt-center",
                 width: "15%",
                 responsivePriority: 2,
@@ -378,7 +354,7 @@ const TableModule = {
                         usuario: item.usuario,
                         estado: this.utils.getStatusInfo(item.estado, item.estado_texto),
                         correo: item.correo,
-                        porcentaje: item.porcentaje_avance_alt,
+                        estado_partida: item.porcentaje_avance_alt,
                         fecha: item.fecha_registro,
                         id_jugador: item.id_jugador
                     }));
@@ -465,7 +441,6 @@ const TableModule = {
     }
 };
 
-
 // Módulo principal de funcionalidades
 const DashboardModule = {
     // Configuración inicial
@@ -519,24 +494,13 @@ const DashboardModule = {
     init() {
         this.bindElements();
         this.setupEventListeners();
-        this.initializeCards();
         this.initializeAvatars();
         this.initializeTable('tu_id_aqui');
-        // Obtenemos el gameCode de la URL
-        const gameCode = TableModule.getUrlParameter('gamecode');
-        if (gameCode) {
-            AnalyticsModule.init(gameCode);
-        } else {
-            console.error('No se encontró el código de juego');
-        }
     },
 
     // Vinculación de elementos del DOM
     bindElements() {
         this.elements = {
-            showMoreBtn: document.querySelector(this.config.selectors.showMoreBtn),
-            hiddenCards: document.querySelectorAll(`${this.config.selectors.cardItem}.hidden`),
-            analyseSection: document.querySelector(this.config.selectors.analyse)
         };
     },
 
@@ -547,60 +511,8 @@ const DashboardModule = {
         }
     },
 
-    // Inicialización de las cards
-    initializeCards() {
-        if (this.elements.hiddenCards.length === 0 && this.elements.showMoreBtn) {
-            this.elements.showMoreBtn.style.display = 'none';
-        }
-    },
+ 
 
-    // Manejador del botón "Ver más/menos"
-    handleShowMoreClick() {
-        this.state.isShowingAll ? this.hideExtraCards() : this.showMoreCards();
-    },
-
-    // Mostrar más cards
-    showMoreCards() {
-        const stillHidden = document.querySelectorAll(`${this.config.selectors.cardItem}.hidden`);
-
-        for (let i = 0; i < this.config.cardsToShow && i < stillHidden.length; i++) {
-            this.animateCardReveal(stillHidden[i], i);
-        }
-
-        if (stillHidden.length <= this.config.cardsToShow) {
-            this.updateShowMoreButton(true);
-        }
-    },
-
-    // Ocultar cards extras
-    hideExtraCards() {
-        const allCards = document.querySelectorAll(this.config.selectors.cardItem);
-        allCards.forEach((card, index) => {
-            if (index >= this.config.cardsToShow) {
-                card.classList.add('hidden');
-            }
-        });
-
-        this.updateShowMoreButton(false);
-        this.scrollToTop();
-    },
-
-    // Animación de revelar card
-    animateCardReveal(card, index) {
-        card.classList.remove('hidden');
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-    },
-
-    // Actualizar estado del botón
-    updateShowMoreButton(isShowingAll) {
-        this.state.isShowingAll = isShowingAll;
-        this.elements.showMoreBtn.innerHTML = isShowingAll
-            ? `<i class="bx bx-minus"></i> <span data-i18n="game_analytics_classification.buttons.show_less">${this.translations.get('buttons.show_less')}</span>`
-            : `<i class="bx bx-plus"></i> <span data-i18n="game_analytics_classification.buttons.show_more">${this.translations.get('buttons.show_more')}</span>`;    
-    },
 
     // Scroll suave hacia arriba
     scrollToTop() {
@@ -668,71 +580,12 @@ const DashboardModule = {
     }
 };
 
-
-const ReportModule = {
-    init() {
-        this.bindEvents();
-    },
-
-    bindEvents() {
-        const reportBtn = document.getElementById('generateReportBtn');
-        if (reportBtn) {
-            reportBtn.addEventListener('click', () => this.showReportOptions());
-        }
-    },
-
-    async showReportOptions() {
-        const result = await Swal.fire({
-            title: this.translations.get('report.modal.title'),
-            icon: 'question',
-            html: `
-                <div class="report-options">
-                    <p>${this.translations.get('report.modal.select_option')}</p>
-                </div>
-            `,
-            showCancelButton: true,
-            confirmButtonText: this.translations.get('report.modal.preview'),
-            cancelButtonText: this.translations.get('report.modal.cancel'),
-            confirmButtonColor: '#1976D2',
-            customClass: {
-                container: 'report-modal',
-                popup: 'analytics-modal-popup',
-                actions: 'report-modal-actions',
-                confirmButton: 'btn-preview',
-                denyButton: 'btn-print'
-            },
-        });
-
-        if (result.isConfirmed) {
-            //PREVISUALIZACION Y GUARDADO
-            this.downloadReport();
-        }
-    },
-
-    async downloadReport() {
-        const gameCode = this.getGameCode();
-        const url = `${base_url}/Analytics/downloadReportGeneralClassification?gamecode=${encodeURIComponent(gameCode)}`;
-        window.open(url, '_blank');
-    },
-
-    getGameCode() {
-        // Obtener el código del juego de la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('gamecode');
-    },
-
-    translations: {
-        get: (key) => LanguageManager.getTranslation(`analytics.${key}`)
-    }
-};
-
 // Inicialización cuando el DOM está listo
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     initializeModules();
 });
 
 function initializeModules() {
     // Inicializar módulos principales
     DashboardModule.init();
-    ReportModule.init();
 }

@@ -120,4 +120,36 @@ class Reviewers extends AuthController{
 		]);
 		exit();
 	}
+
+	public function update_reviewer()
+	{
+		try {
+			$idJugador = $this->getUserData('id');
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+
+			if (!isset($postData['encryptedData'])) {
+				throw new Exception('Datos no recibidos');
+			}
+
+			$response = $this->model->update_reviewer($postData, $idJugador);
+		} catch (Error $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al promover estudiante a revisor: ' . $e->getMessage()
+			];
+		} catch (Exception $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al promover estudiante a revisor: ' . $e->getMessage()
+			];
+		}
+
+		$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse
+		]);
+		die();
+	}
 }
