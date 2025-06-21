@@ -111,6 +111,8 @@ END //
 DELIMITER ;
 
 
+
+use reqscapetest_db
 -- SP Obtener lista de estudiantes subscritos a una partida
 DELIMITER //
 DROP PROCEDURE IF EXISTS sp_update_reviewer //
@@ -118,6 +120,7 @@ CREATE PROCEDURE sp_update_reviewer(
 	-- Parámetros de entrada
 	IN p_codigo_partida VARCHAR(10),
 	IN p_id_usuario INT,
+    IN p_rol_usuario INT,
     -- Parámetros de salida
     OUT p_codigo_retorno INT,
     OUT p_mensaje_retorno VARCHAR(500)
@@ -159,7 +162,7 @@ BEGIN
 	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
 	   FROM partidas 
 	   WHERE codigo_partida = p_codigo_partida 
-	   AND id_usuario_creacion = p_id_usuario AND id_modalidad = 1;
+	    AND id_modalidad = 1;
 
 
     -- Validar que la partida existe
@@ -172,15 +175,13 @@ BEGIN
         
         UPDATE reqscapetest_db.partidas_jugadores
         SET
-		isRevisor = 1
-        WHERE id_partida = v_id_partida
-        and id_jugador = p_id_usuario;
+		isRevisor = p_rol_usuario
+        WHERE (id_partida = v_id_partida) AND (id_jugador = p_id_usuario);
         
 	IF ROW_COUNT() > 0 THEN
         SET p_codigo_retorno = 1;
         SET p_mensaje_retorno = 'Estado actualizado correctamente';
     END IF;
-    -- END;
 END //
 DELIMITER ;
 

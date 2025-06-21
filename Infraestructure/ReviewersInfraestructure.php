@@ -57,12 +57,12 @@ class ReviewersInfraestructure extends Mysql
 		return $arrResponse;
 	}
 
-	public function update_reviewerBD(int $codigoPartida, int $idEstudiante)
+	public function update_reviewerBD(string $codigoPartida, int $idEstudiante, int $rolEstudiante)
 	{
 		try {
 			$response = $this->executeProcedureWithParametersOut(
 				'sp_update_reviewer',
-				[$codigoPartida, $idEstudiante],
+				[$codigoPartida, $idEstudiante, $rolEstudiante],
 				['codigo', 'mensaje']  // Parámetro de salida actualizado
 			);
 

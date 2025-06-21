@@ -124,15 +124,14 @@ class Reviewers extends AuthController{
 	public function update_reviewer()
 	{
 		try {
-			$idJugador = $this->getUserData('id');
 			$jsonData = file_get_contents('php://input');
 			$postData = json_decode($jsonData, true);
-
+			
 			if (!isset($postData['encryptedData'])) {
 				throw new Exception('Datos no recibidos');
 			}
 
-			$response = $this->model->update_reviewer($postData, $idJugador);
+			$response = $this->model->update_reviewer($postData);
 		} catch (Error $e) {
 			$response = [
 				'success' => false,
