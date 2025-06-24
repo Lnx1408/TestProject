@@ -24,8 +24,6 @@
                                 <th></th>
                                 <th data-i18n="create_classification.main_table.columns.description">Descripción</th>
                                 <th data-i18n="create_classification.main_table.columns.type">Tipo</th>
-                                <th data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</th>
-                                <th data-i18n="create_classification.main_table.columns.feedback">Retroalimentación</th>
                                 <th data-i18n="create_classification.main_table.columns.actions">Acciones</th>
                             </tr>
                         </thead>
