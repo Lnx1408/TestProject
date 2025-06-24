@@ -201,7 +201,7 @@ class MyGamesManager {
         });
 
         if (result.isConfirmed) {
-            const baseUrl = `${base_url}/Analytics/game_${type}`;
+            const baseUrl = `${base_url}/reviewers/review_${type}`;
             window.location.href = `${baseUrl}?gamecode=${gameCode}`;
         }
     }

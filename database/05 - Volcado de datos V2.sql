@@ -26,7 +26,7 @@ INSERT INTO partidas (id_modalidad, codigo_partida, id_usuario_creacion, estado,
 
 -- Registrar participación del jugador en la partida
 INSERT INTO partidas_jugadores (id_partida, id_jugador, estado) VALUES
-(1, 1, 'en_progreso');
+(1, 3, 'en_progreso');
 
 -- INSERT INTO partidas_jugadores (id_partida, id_jugador, estado) VALUES
 -- (2, 1, 'en_progreso');

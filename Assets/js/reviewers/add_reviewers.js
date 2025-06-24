@@ -305,11 +305,11 @@ const TableModule = {
         render: function (data, type, row) {
           return `
                     <div class="btn-group">
-                        <button class="btn btn-info btn-sm"
+                        <button class="btn-sm"
                             onclick="TableModule.viewDetails('${row.nombres}', '${row.apellidos}', '${row.id_jugador}'); event.stopPropagation();">
                             <i class='bx bx-info-circle'></i>
                         </button>
-                        <button class="btn btn-info btn-sm"
+                        <button class="btn-sm"
                             onclick="TableModule.updateToReviewer('${row.nombres}', '${row.apellidos}', '${row.id_jugador}', '${row.estado.text}'); event.stopPropagation();">
                             <i class='bx bx-user-check'></i>
                         </button>

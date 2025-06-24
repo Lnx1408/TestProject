@@ -34,7 +34,7 @@
                 <!-- Sección: Ver revisiones -->
                 <div class="teachers-section">
                     <div id="personalInfo" class="section-content">
-                        <a href="<?= base_url(); ?>/reviewers/reviews" class="menu-option">
+                        <a href="<?= base_url(); ?>/reviewers/list_reviews" class="menu-option">
                             <div class="header-icon">
                                 <i class='bx bx-check-square'></i>
                             </div>    

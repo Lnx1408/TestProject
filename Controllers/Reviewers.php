@@ -60,7 +60,7 @@ class Reviewers extends AuthController{
 		$this->views->getView($this, "add_reviewers", $data);
 	}
 
-	public function reviews()
+	public function list_reviews()
 	{
 		$data = array();
 		$data['page_tag'] = "Reviews - " . name_project();
@@ -68,7 +68,7 @@ class Reviewers extends AuthController{
 		$data['page_name'] = "Reviews";
 		$data['page_functions_js'] = array(
 			'jquery-3.7.1.min.js',
-			'reviewers/reviews.js',
+			'reviewers/list_reviews.js',
 		);
 		$data['page_css'] =  array(
 			'reviewers/add_reviews.css',
@@ -80,7 +80,7 @@ class Reviewers extends AuthController{
 		);
 		
 		$this->addNavInfo($data);
-		$this->views->getView($this, "reviews", $data);
+		$this->views->getView($this, "list_reviews", $data);
 	}
 	public function list_reviewers()
 	{
@@ -104,6 +104,39 @@ class Reviewers extends AuthController{
 		
 		$this->addNavInfo($data);
 		$this->views->getView($this, "list_reviewers", $data);
+	}
+	public function review_classification()
+	{
+		$data = array();
+		$data['page_tag'] = "New Reviewers - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "New Reviewers";
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'plugins/datatables/dataTables.min.js',
+			'plugins/datatables/dataTables.responsive.js',
+			'plugins/datatables/responsive.dataTables.js',
+			'plugins/papaparse.min.js',
+			'reviewers/review_classification.js'
+			
+		);
+		$data['page_css'] =  array(
+			'game/game-focal.css',
+			'levels/levels-base.css',
+			'levels/levels-focal.css',
+			'levels/create-clasification.css',
+			'levels/create-construction.css',
+			'levels/create-construction-form.css',
+			'reviewers/review_classification.css',
+			
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "review_classification", $data);
 	}
 
 	public function get_reviewers_partida_clasificacion()
