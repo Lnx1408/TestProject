@@ -198,7 +198,7 @@ const TableModule = {
       showCancelButton: true,
       confirmButtonColor: "#1976D2",
       cancelButtonColor: "#D32F2F",
-      confirmButtonText: "Sí, hacer revisor",
+      confirmButtonText: "Sí, cambiar",
       cancelButtonText: "No, cancelar",
       customClass: {
         container: "analytics-type-modal",
@@ -311,7 +311,7 @@ const TableModule = {
                         </button>
                         <button class="btn-sm"
                             onclick="TableModule.updateToReviewer('${row.nombres}', '${row.apellidos}', '${row.id_jugador}', '${row.estado.text}'); event.stopPropagation();">
-                            <i class='bx bx-user-check'></i>
+                            <i class='bx bx-user-check' hint="123-45-678"></i>
                         </button>
                     </div>
                 `;

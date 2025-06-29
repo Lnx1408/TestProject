@@ -48,6 +48,23 @@
                         </a>
                     </div>
                 </div>
+                <!-- Sección: Agregar Docenctes a revisionews -->
+                <div class="teachers-section">
+                    <div id="personalInfo" class="section-content">
+                        <a href="<?= base_url(); ?>/reviewers/teachers_reviews" class="menu-option">
+                            <div class="header-icon">
+                                <i class='bx bx-check-square'></i>
+                            </div>    
+                            <div class="option-info">
+                                <h3>Ver Docentes revisores</h3>
+                                <p >Lista de docentes que pueden acceder a tus partidas para revisiones</p>
+                            </div>
+                            <div class="option-chevron">
+                                <i class='bx bx-chevron-right'></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
                 </div>
         </div>
     </div>
