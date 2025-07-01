@@ -7,7 +7,7 @@
 
         <!-- Botón Ver más -->
         <div class="header-section report-actions">
-                <h1 class="page-title">Asignar Usuarios Revisores</h1>
+                <h1 class="page-title">Asignar Estudiantes Revisores</h1>
         </div>
         
         <div class="report-actions">
@@ -18,7 +18,7 @@
             <div class="orders container-table">
                 <div class="header-table">
                     <i class='bx ri-user-community-fill'></i>
-                    <h3 >Estudiantes Subscritos</h3>
+                    <h3>Estudiantes Subscritos</h3>
                 </div>
                 <table id="tableJugadores" class="table-players nowrap">
                     <thead>

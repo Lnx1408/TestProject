@@ -23,7 +23,7 @@
                 </button>
                 <button id="generateWithAiBtn" class="btn btn-primary">
                     <i class='bx bx-plus-circle'></i>
-                    <span>Generacion con IA</span>
+                    <span>Generación con IA</span>
                 </button>
                 <!-- Nuevo botón de importar -->
                 <button id="importReqBtn" class="btn btn-primary">

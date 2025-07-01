@@ -4,7 +4,7 @@
     <div class="my-games-container">
         <!-- Header Section -->
         <div class="games-header">
-            <h1 class="page-title">Agregar Revisores</h1>
+            <h1 class="page-title">Agregar Estudiantes Revisores</h1>
             <div class="games-stats">
                 <div class="stat-card">
                     <i class='bx ri-file-list-3-line'></i>
