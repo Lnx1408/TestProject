@@ -25,6 +25,22 @@ class ReviewersModel extends ReviewersInfraestructure
         }
     }
 
+    public function get_teachers_reviewers_clasificacion($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            return $this->get_teachers_reviewers_clasificacionDB($data['gamecode'], $idJugador);
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+                'analytics' => []
+            ];
+        }
+    }
+
     public function update_reviewer($postData)
     {
         if (isset($postData['encryptedData'])) {

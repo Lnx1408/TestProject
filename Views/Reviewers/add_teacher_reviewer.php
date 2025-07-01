@@ -27,7 +27,6 @@
                             <th>Estudiante</th>
                             <th>Nombre Usuario</th>
                             <th>Correo</th>
-                            <th>Fecha Subscripción</th>
                             <th>Tiempo de Juego</th>
                             <th>Es Revisor</th>
                             <th>Acciones</th>

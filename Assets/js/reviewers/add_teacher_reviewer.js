@@ -7,7 +7,7 @@ const TableModule = {
       tableId: "#tableJugadores",
       // ... otros selectores ...
     },
-    endpoint: `${base_url}/Reviewers/get_reviewers_partida_clasificacion`,
+    endpoint: `${base_url}/Reviewers/get_teachers_reviewers_clasificacion`,
     endpointReviewer: `${base_url}/Reviewers/update_reviewer`,
     params: {
       id: null, // Parámetro que necesitamos enviar
@@ -157,7 +157,7 @@ const TableModule = {
     },
   },
 
-  
+
   updateToReviewer(nombres, apellidos, id_jugador, rol_estudiante) {
     let rol_estudianteTexto = "";
     let rol_value = 0;
@@ -168,13 +168,13 @@ const TableModule = {
       rol_estudianteTexto = "ESTUDIANTE";
     }
     Swal.fire({
-      title: "Cambiar rol",
-      html: `¿Desea cambiar el rol de <b>${nombres} ${apellidos}</b> al rol de <b>${rol_estudianteTexto}</b>?`,
+      title: "Agregar Docente Revisor",
+      html: `¿Desea agregar al docente <b>${nombres} ${apellidos}</b> como <b>Revisor</b> de la partida <b>${this.config.params.gameCode}</b>?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#1976D2",
       cancelButtonColor: "#D32F2F",
-      confirmButtonText: "Sí, cambiar",
+      confirmButtonText: "Sí, Agregar",
       cancelButtonText: "No, cancelar",
       customClass: {
         container: "analytics-type-modal",
@@ -250,15 +250,6 @@ const TableModule = {
         width: "15%",
         responsivePriority: 4,
         type: "string",
-      },
-      {
-        data: "estado_partida",
-        title: `<span>Estado de Partida</span> `,
-        className: "dt-center",
-        width: "15%",
-        responsivePriority: 3,
-        type: "string",
-        render: (data) => `${data}`,
       },
       {
         data: null,

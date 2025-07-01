@@ -212,6 +212,21 @@ class Reviewers extends AuthController{
 		exit();
 	}
 
+	public function get_teachers_reviewers_clasificacion()
+	{
+		$jsonData = file_get_contents('php://input');
+		$postData = json_decode($jsonData, true);
+		$idJugador = $this->getUserData('id');
+
+		$analytics = $this->model->get_teachers_reviewers_clasificacion($postData, $idJugador);
+		$jsonResponse = json_encode($analytics, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse // Tu función de encriptación
+		]);
+		exit();
+	}
+
 	public function update_reviewer()
 	{
 		try {
