@@ -166,7 +166,7 @@
         <!--Fin Contraseña-->
 
         <div class="mb-3 btn-container d-grid">
-          <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-user-plus fa-lg fa-fw"></i>REGISTRARSE</button>
+          <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-user-plus fa-lg fa-fw"></i> REGISTRARSE</button>
         </div>
         <div class="mb-3 mt-3">
           <p class="semibold-text mb-0">

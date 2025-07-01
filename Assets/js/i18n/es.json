@@ -1641,7 +1641,7 @@
         "description": "Gestiona tus usuarios",
         "options": {
             "create": {
-                "title": "Agregar usuario",
+                "title": "Agregar Usuario",
                 "description": "Agregar usuario con rol \"docente\""
             }
         },
