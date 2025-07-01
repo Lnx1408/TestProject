@@ -79,6 +79,83 @@ BEGIN
 END //
 DELIMITER ;
 
+-- SP Obtener lista de estudiantes subscritos a una partida
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_teachers_reviewers_clasificacion //
+CREATE PROCEDURE sp_get_teachers_reviewers_clasificacion(
+	-- Parámetros de entrada
+	IN p_codigo_partida VARCHAR(10),
+	IN p_id_usuario INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+	-- Declaración de variables locales
+	DECLARE v_partida_existe INT DEFAULT 0;
+	DECLARE v_id_partida INT;
+
+    -- Declaración de variables para manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		GET DIAGNOSTICS CONDITION 1
+					@sqlstate = RETURNED_SQLSTATE,
+					@errno = MYSQL_ERRNO,
+					@text = MESSAGE_TEXT;
+        -- En caso de error SQL
+        SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+        -- Rollback en caso de haber transacciones
+        ROLLBACK;
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso ejecutado correctamente';
+
+	-- Validaciones de parámetros de entrada
+	IF p_codigo_partida IS NULL OR p_codigo_partida = '' THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El código de partida no es válido';
+	END IF;
+
+	IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El ID de usuario no es válido';
+	END IF;
+
+	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
+	   FROM partidas 
+	   WHERE codigo_partida = p_codigo_partida 
+	   AND id_usuario_creacion = p_id_usuario AND id_modalidad = 1;
+
+
+    -- Validar que la partida existe
+    IF v_partida_existe = 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'No existen datos para la partida especificada';
+    END IF;
+        SELECT 
+            jug.id_jugador,
+            jug.nombres,
+            jug.apellidos,
+            jug.correo,
+            jug.usuario,
+            jug.estado as estado,
+            CASE 
+                WHEN jug.id_tipo = 3 THEN 'DOCENTE'
+                ELSE 'DOCENTE'
+            END as estado_texto,
+            jug.estado as porcentaje_avance_alt,
+            jug.fecha_registro as fecha_registro
+        FROM jugadores jug
+        WHERE jug.id_tipo = 2
+        and jug.id_jugador != p_id_usuario
+        ORDER BY nombres ASC;
+    -- END;
+END //
+DELIMITER ;
+
 
 
 use reqscapetest_db
@@ -220,7 +297,10 @@ BEGIN
         CASE 
 			WHEN r.es_funcional = 1 THEN 'Funcional'
 			ELSE 'No Funcional'
-		END as tipo
+		END as tipo,
+        r.es_ambiguo,
+        r.retroalimentacion
+        
 		FROM reqscapetest_db.partidas p
 		INNER JOIN reqscapetest_db.requisitos_clasificacion_partida rcp
 		ON rcp.id_partida = p.id_partida

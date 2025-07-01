@@ -60,6 +60,39 @@ class Reviewers extends AuthController{
 		$this->views->getView($this, "add_reviewers", $data);
 	}
 
+	public function add_teacher_reviewer()
+	{
+		$data = array();
+		$data['page_tag'] = "New Reviewers - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "New Reviewers";
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'plugins/datatables/dataTables.min.js',
+			'plugins/datatables/dataTables.responsive.js',
+			'plugins/datatables/responsive.dataTables.js',
+			'reviewers/add_teacher_reviewer.js'
+		);
+		$data['page_css'] =  array(
+			'reviewers/add_teacher_reviewer.css',
+			'game/game-focal.css',
+			'analytics/base.css',
+			'levels/requirements-generator.css',
+			'modal-custom.css',
+			'plugins/tabulator/tabulator.min.css',
+			'levels/levels-base.css',
+			'levels/levels-focal.css',
+			'levels/create-clasification.css'
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "add_teacher_reviewer", $data);
+	}
+
 	public function list_reviews()
 	{
 		$data = array();
@@ -105,6 +138,31 @@ class Reviewers extends AuthController{
 		$this->addNavInfo($data);
 		$this->views->getView($this, "list_reviewers", $data);
 	}
+
+	public function list_teachers_reviews()
+	{
+		$data = array();
+		$data['page_tag'] = "New Reviewers - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "New Reviewers";
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'reviewers/list_teachers_reviews.js',
+			
+		);
+		$data['page_css'] =  array(
+			'reviewers/list_teachers_reviews.css',
+			'analytics/games.css'
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "list_teachers_reviews", $data);
+	}
+
 	public function review_classification()
 	{
 		$data = array();
