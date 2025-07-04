@@ -1637,12 +1637,12 @@
         }
     },
     "teachers":{
-        "title":"Teachers",
-        "description": "Manage your users",
+        "title":"Docentes",
+        "description": "Gestiona tus usuarios",
         "options": {
             "create": {
-                "title": "Create user",
-                "description": "Add users with \"teacher\" role"
+                "title": "Agregar Usuario",
+                "description": "Agregar usuario con rol \"docente\""
             }
         },
         "teacher": {
@@ -1660,6 +1660,27 @@
                 "default":"Fortaleza de contraseña"
             }
 
+        }
+    },
+    "reviewers":{
+        "title":"Revisiones",
+        "description": "Gestiona los revisores y revisiones",
+        "options": {
+            "create": {
+                "title": "Agregar usuario",
+                "description": "Agregar usuario con rol \"revisor\""
+            },
+            "reviews": {
+                "title": "Ver revisiones",
+                "description": "Consulta las sugerencias de tus revisores"
+            }
+        },
+        "reviewer": {
+            "title": "Agregar usuario",
+            "description": "Ingresa los datos del docente para crear su usuario",
+            "buttons": {
+                "addReviewer":"REGISTRAR REVISOR"
+            }
         }
     }
 }
