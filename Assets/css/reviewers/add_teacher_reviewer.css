@@ -1,0 +1,294 @@
+/* Contenedor principal */
+.create-game-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Estilos del header */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    color: var(--title-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.requirements-counter {
+    background: #0056b326;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-1);
+    color: var(--title-color);
+    font-weight: 500;
+}
+
+.requirements-counter small {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    margin-top: 0.25rem;
+}
+
+#reqCount {
+    font-weight: 600;
+    color: var(--primary);
+    margin: 0 0.5rem;
+}
+
+/* Sección de acciones */
+.actions-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-content: center;
+}
+
+.actions-section .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-1);
+    transition: all 0.3s ease;
+}
+
+.actions-section .btn i {
+    font-size: 1.2rem;
+}
+
+.actions-section .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección de tabla */
+.table-section {
+    background: var(--body-color);
+    padding: 1.5rem;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
+}
+
+.table-section h2 {
+    color: var(--title-color);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Estilos para la tabla */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.table th {
+    background: var(--transparent-theme-color);
+    color: var(--title-color);
+    font-weight: 600;
+    padding: 1rem;
+}
+
+.table td {
+    padding: 1rem;
+    color: var(--text-color);
+    vertical-align: middle;
+}
+
+/* Estado de requisito */
+.requirement-type {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.requirement-type.functional {
+    background: var(--light-success);
+    color: var(--success);
+}
+
+.requirement-type.non-functional {
+    background: var(--light-warning);
+    color: var(--warning);
+}
+
+.ambiguous-state {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ambiguous-state i {
+    font-size: 1.2rem;
+}
+
+.ambiguous-state.yes {
+    color: var(--primary);
+}
+
+.ambiguous-state.no {
+    color: var(--success);
+}
+
+/* Acciones en la tabla */
+.table-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.table-actions button {
+    padding: 0.5rem;
+    border-radius: var(--border-radius-1);
+    background: transparent;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.table-actions button:hover {
+    background: var(--light-primary);
+    color: var(--primary);
+}
+
+/* Footer */
+.footer-section {
+    display: flex;
+    padding: 1rem 0;
+    gap: 3rem;
+}
+
+.footer-section .btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-success {
+    background: var(--color-success);
+    color: var(--light);
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    background: var(--success);
+}
+
+.btn-success:disabled {
+    transform: none;
+    background: var(--dark-grey);
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .create-game-container {
+        padding: 1rem;
+    }
+
+    .header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .actions-section {
+        flex-direction: column;
+    }
+
+    .actions-section .btn {
+        width: auto;
+    }
+}
+
+/* Estilos para DataTables */
+.dataTables_wrapper {
+    padding: 1rem 0;
+}
+
+.dataTables_length select,
+.dataTables_filter input {
+    padding: 0.5rem;
+    border: 1px solid var(--grey);
+    border-radius: var(--border-radius-1);
+    background: var(--body-color);
+    color: var(--text-color);
+}
+
+.dataTables_info,
+.dataTables_length,
+.dataTables_filter {
+    color: var(--text-color);
+}
+
+.dataTables_paginate .paginate_button {
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: var(--border-radius-1);
+    color: var(--text-color) !important;
+}
+
+.dataTables_paginate .paginate_button.current {
+    background: var(--primary) !important;
+    color: var(--light) !important;
+    border: none;
+}
+
+.dataTables_paginate .paginate_button:hover {
+    background: var(--light-primary) !important;
+    color: var(--primary) !important;
+    border: none;
+}
+
+
+.wrap-cell {
+    white-space: normal !important;
+    min-width: 300px;
+}
+
+.requirement-description {
+    line-height: 1.4;
+    padding: 8px 0;
+}
+
+.dataTables_wrapper .dataTables_scroll {
+    overflow: visible !important;
+}
+
+#existingRequirementsTable td {
+    vertical-align: top;
+}
+
+
+.select-modal-header {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.select-modal-header .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.select-modal-header .btn i {
+    font-size: 1.2rem;
+}
+
+.select-modal-header .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

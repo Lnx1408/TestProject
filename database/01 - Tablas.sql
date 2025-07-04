@@ -111,7 +111,32 @@ CREATE TABLE requisitos (
     retroalimentacion TEXT,
     es_funcional BOOLEAN NOT NULL,
 	id_usuario_creador INT NULL, 
-    codigo_lote_referencia VARCHAR(36) NULL
+    codigo_lote_referencia VARCHAR(36) NULL,
+    medio_creacion VARCHAR(36) NULL /**Empírico - IA**/
+);
+
+CREATE TABLE requisitos_sugerencias (
+    id_requisito_sugerencia INT PRIMARY KEY AUTO_INCREMENT,
+    id_requisito INT NOT NULL,
+    descripcion TEXT NOT NULL,
+    retroalimentacion TEXT,
+    id_usuario_revisor INT NULL, 
+	id_usuario_creador INT NULL, 
+    codigo_lote_referencia VARCHAR(36) NULL,
+    FOREIGN KEY (id_requisito) REFERENCES requisitos(id_requisito),
+    FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador),
+    FOREIGN KEY (id_usuario_creador) REFERENCES jugadores(id_jugador)
+);
+
+CREATE TABLE feedback_requirement (
+    id_feedback_requirement INT PRIMARY KEY AUTO_INCREMENT,
+    id_requisito_sugerencia INT NOT NULL,
+    id_partida INT NOT NULL,
+    id_usuario_revisor INT NULL,
+    feedback_description VARCHAR(250),
+    FOREIGN KEY (id_requisito_sugerencia) REFERENCES requisitos_sugerencias(id_requisito_sugerencia),
+    FOREIGN KEY (id_partida) REFERENCES partidas(id_partida),
+    FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador)
 );
 
 CREATE TABLE requisitos_clasificacion_partida (
@@ -133,6 +158,7 @@ CREATE TABLE partidas_jugadores (
     intentos_totales INT DEFAULT 0,
     tiempo_total INT DEFAULT 0,
     movimientos_totales INT DEFAULT 0,
+    isRevisor BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (id_partida, id_jugador),
     FOREIGN KEY (id_partida) REFERENCES partidas(id_partida),
     FOREIGN KEY (id_jugador) REFERENCES jugadores(id_jugador)

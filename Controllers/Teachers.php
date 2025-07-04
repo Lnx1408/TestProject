@@ -22,8 +22,6 @@ class Teachers extends AuthController{
 		$data['page_tag'] = "Teachers - " . name_project();
 		$data['page_title'] = name_project();
 		$data['page_name'] = "Teachers";
-		
-
 		$data['page_functions_js'] = array(
 			'jquery-3.7.1.min.js',
 			'teachers/teachers.js'
