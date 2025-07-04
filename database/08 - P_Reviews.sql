@@ -1,3 +1,5 @@
+use reqscapetest_db
+
 -- SP Obtener lista de estudiantes subscritos a una partida
 DELIMITER //
 DROP PROCEDURE IF EXISTS sp_get_reviewers_partida_clasificacion //
@@ -157,8 +159,6 @@ END //
 DELIMITER ;
 
 
-
-use reqscapetest_db
 -- SP Obtener lista de estudiantes subscritos a una partida
 DELIMITER //
 DROP PROCEDURE IF EXISTS sp_update_reviewer //

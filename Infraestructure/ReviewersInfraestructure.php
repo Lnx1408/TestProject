@@ -92,6 +92,41 @@ class ReviewersInfraestructure extends Mysql
 		return $arrResponse;
 	}
 
+	public function get_requisitos_reviewDB(string $gameCode, string $idJugador)
+	{
+		try {
+			$responseAnalyticsJugadores = $this->executeProcedureWithParametersOut(
+				'sp_get_requisitos_review',
+				[$gameCode, $idJugador],
+				['codigo', 'mensaje']  // Parámetros de salida
+			);
+			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 0) {
+				$arrResponse = array(
+					'status' => true,
+					'analytics' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'status' => false,
+					'analytics' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'status' => false,
+				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
+				'analytics' => []
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
+
 	public function update_reviewerBD(string $codigoPartida, int $idEstudiante, int $rolEstudiante)
 	{
 		try {

@@ -18,12 +18,14 @@
                         <i class='bx ri-user-community-fill'></i>
                         <h2 data-i18n="create_classification.main_table.title">Requisitos de la Partida</h2>
                     </div>
-                    <table id="selectedRequirementsTable" class="nowrap">
+                    <table id="existingRequirementsTable" class="nowrap">
                         <thead>
                             <tr>
                                 <th></th>
                                 <th data-i18n="create_classification.main_table.columns.description">Descripción</th>
                                 <th data-i18n="create_classification.main_table.columns.type">Tipo</th>
+                                <th data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</th>
+                                <th data-i18n="create_classification.main_table.columns.feedback">Retroalimentacion</th>
                                 <th data-i18n="create_classification.main_table.columns.actions">Acciones</th>
                             </tr>
                         </thead>

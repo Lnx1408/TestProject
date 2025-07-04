@@ -257,4 +257,19 @@ class Reviewers extends AuthController{
 		]);
 		die();
 	}
+
+	public function get_requisitos_review()
+	{
+		$jsonData = file_get_contents('php://input');
+		$postData = json_decode($jsonData, true);
+		$idJugador = $this->getUserData('id');
+
+		$analytics = $this->model->get_requisitos_review($postData, $idJugador);
+		$jsonResponse = json_encode($analytics, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse // Tu función de encriptación
+		]);
+		exit();
+	}
 }

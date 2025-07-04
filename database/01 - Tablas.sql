@@ -128,6 +128,17 @@ CREATE TABLE requisitos_sugerencias (
     FOREIGN KEY (id_usuario_creador) REFERENCES jugadores(id_jugador)
 );
 
+CREATE TABLE feedback_requirement (
+    id_feedback_requirement INT PRIMARY KEY AUTO_INCREMENT,
+    id_requisito_sugerencia INT NOT NULL,
+    id_partida INT NOT NULL,
+    id_usuario_revisor INT NULL,
+    feedback_description VARCHAR(250),
+    FOREIGN KEY (id_requisito_sugerencia) REFERENCES requisitos_sugerencias(id_requisito_sugerencia),
+    FOREIGN KEY (id_partida) REFERENCES partidas(id_partida),
+    FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador)
+);
+
 CREATE TABLE requisitos_clasificacion_partida (
     id_requisito_partida INT PRIMARY KEY AUTO_INCREMENT,
     id_requisito INT,

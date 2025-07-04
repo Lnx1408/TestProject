@@ -41,6 +41,22 @@ class ReviewersModel extends ReviewersInfraestructure
         }
     }
 
+    public function get_requisitos_review($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            return $this->get_requisitos_reviewDB($data['gamecode'], $idJugador);
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+                'analytics' => []
+            ];
+        }
+    }
+
     public function update_reviewer($postData)
     {
         if (isset($postData['encryptedData'])) {
