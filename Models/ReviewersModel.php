@@ -52,7 +52,7 @@ class ReviewersModel extends ReviewersInfraestructure
             return [
                 'success' => false,
                 'message' => 'Datos no recibidos',
-                'analytics' => []
+                'data' => []
             ];
         }
     }

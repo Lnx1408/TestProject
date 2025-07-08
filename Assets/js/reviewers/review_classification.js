@@ -51,15 +51,10 @@ class ReviewClassification {
         },
         {
           data: "is_ambiguous",
-          responsivePriority: 2,
+          responsivePriority: 3,
           //title: this.translations.get('main_table.columns.is_ambiguous'),
           title: `<span data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</span>`,
           render: (data) => this.renderAmbiguousState(data),
-        },
-        {
-          data: "retroalimentacion",
-          responsivePriority: 3,
-          title: `<span data-i18n="create_classification.main_table.columns.feedback">Retroalimentación</span>`,
         },
         {
           data: null,
@@ -73,6 +68,7 @@ class ReviewClassification {
 
     this.initializeParams();
     this.initializeTables();
+    this.modificarTituloPagina();
   }
 
   getUrlParameter(name) {
@@ -88,6 +84,10 @@ class ReviewClassification {
       return false;
     }
     this.config.params.gameCode = gameCode;
+    return true;
+  }
+  modificarTituloPagina() {
+    document.getElementById("page-title-r").innerHTML = "Requisitos de la partida: <b>" + this.config.params.gameCode + "</b>";
     return true;
   }
 
@@ -132,7 +132,7 @@ class ReviewClassification {
               );
             }
 
-            return decryptedData.analytics || [];
+            return decryptedData.data || [];
           } catch (error) {
             console.error("Error processing data:", error);
             this.showErrorMessage(this.translations.get("errors.general"));
@@ -248,15 +248,15 @@ class ReviewClassification {
 
   renderActions(row) {
     return `<div class="table-actions">
-                    <button onclick="reviewClassification.viewDetails('${row.id_requisito}')" 
+                    <button title="Ver revisiones" onclick="reviewClassification.viewDetails('${row.id_requisito}')" 
                             class="btn-action">
-                        <i class='bx bx-edit'></i>
+                        <i class='ri-search-eye-line'></i>
                     </button>
                 </div>`;
   }
   viewDetails(id_requisito) {
         // Redirigir a la página de detalles
-        window.location.href = `${base_url}/Reviewers/details_user_clasification?gamecode=${encodeURIComponent(
+        window.location.href = `${base_url}/Reviewers/requirements_suggestions?gamecode=${encodeURIComponent(
           this.config.params.gameCode
         )}&Requisito=${encodeURIComponent(id_requisito)}`;
   }

@@ -103,13 +103,13 @@ class ReviewersInfraestructure extends Mysql
 			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 0) {
 				$arrResponse = array(
 					'status' => true,
-					'analytics' => $responseAnalyticsJugadores['results'],
+					'data' => $responseAnalyticsJugadores['results'],
 					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
 				);
 			} else {
 				$arrResponse = array(
 					'status' => false,
-					'analytics' => $responseAnalyticsJugadores['results'],
+					'data' => $responseAnalyticsJugadores['results'],
 					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
 				);
 			}
@@ -118,7 +118,7 @@ class ReviewersInfraestructure extends Mysql
 			return [
 				'status' => false,
 				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
-				'analytics' => []
+				'data' => []
 			];
 		} finally {
 			$this->cerrarConexion();
