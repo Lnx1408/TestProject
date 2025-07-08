@@ -33,6 +33,11 @@ class Reviewers extends AuthController{
 		$data['page_tag'] = "New Reviewers - " . name_project();
 		$data['page_title'] = name_project();
 		$data['page_name'] = "New Reviewers";
+		$data['breadcrumbs'] = [
+            ['name' => 'Revisores', 'url' => 'reviewers'],
+            ['name' => 'Partidas', 'url' => 'reviewers/list_reviewers'],
+            ['name' => 'Agregar revisor', 'url' => '']
+        ];
 		$data['page_functions_js'] = array(
 			'jquery-3.7.1.min.js',
 			'plugins/datatables/dataTables.min.js',
@@ -66,6 +71,11 @@ class Reviewers extends AuthController{
 		$data['page_tag'] = "New Reviewers - " . name_project();
 		$data['page_title'] = name_project();
 		$data['page_name'] = "New Reviewers";
+		$data['breadcrumbs'] = [
+            ['name' => 'Revisores', 'url' => 'reviewers'],
+            ['name' => 'Partidas', 'url' => 'reviewers/list_teachers_reviews'],
+            ['name' => 'Agregar Docente Revisor', 'url' => '']
+        ];
 		$data['page_functions_js'] = array(
 			'jquery-3.7.1.min.js',
 			'plugins/datatables/dataTables.min.js',
@@ -169,6 +179,11 @@ class Reviewers extends AuthController{
 		$data['page_tag'] = "New Reviewers - " . name_project();
 		$data['page_title'] = name_project();
 		$data['page_name'] = "New Reviewers";
+		$data['breadcrumbs'] = [
+            ['name' => 'Revisores', 'url' => 'reviewers'],
+            ['name' => 'Partidas', 'url' => 'reviewers/list_reviews'],
+            ['name' => 'Revisiones de estudiantes', 'url' => '']
+        ];
 		$data['page_functions_js'] = array(
 			'jquery-3.7.1.min.js',
 			'plugins/datatables/dataTables.min.js',

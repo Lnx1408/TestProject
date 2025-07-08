@@ -6,6 +6,19 @@
     <div id="ai-generator-modal-izi" class="iziModal"></div>
     <div class="game-container">
         <div class="create-game-container">
+            <div class="breadcrumbs-container">
+            <ul class="breadcrumbs">
+                <?php foreach ($data['breadcrumbs'] as $index => $crumb): ?>
+                    <li>
+                        <?php if (!empty($crumb['url'])): ?>
+                            <a href="<?= base_url() . '/' . $crumb['url']; ?>"><?= $crumb['name']; ?></a>
+                        <?php else: ?>
+                            <a href="javascript:void(0);"><?= $crumb['name']; ?></a>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
             <!-- Header con título y contador -->
             <div class="header-section">
                 <h1 class="page-title">Revisiones por estudiantes</h1>
