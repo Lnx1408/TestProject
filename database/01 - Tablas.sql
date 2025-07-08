@@ -119,10 +119,11 @@ CREATE TABLE requisitos_sugerencias (
     id_requisito_sugerencia INT PRIMARY KEY AUTO_INCREMENT,
     id_requisito INT NOT NULL,
     descripcion TEXT NOT NULL,
+    es_ambiguo BOOLEAN NOT NULL,
     retroalimentacion TEXT,
+    es_funcional BOOLEAN NOT NULL,
     id_usuario_revisor INT NULL, 
-	id_usuario_creador INT NULL, 
-    codigo_lote_referencia VARCHAR(36) NULL,
+	id_usuario_creador INT NULL,
     FOREIGN KEY (id_requisito) REFERENCES requisitos(id_requisito),
     FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador),
     FOREIGN KEY (id_usuario_creador) REFERENCES jugadores(id_jugador)
