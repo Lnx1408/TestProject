@@ -18,9 +18,8 @@
                 <?php endforeach; ?>
             </ul>
         </div>
-        <!-- Botón Ver más -->
         <div class="header-section report-actions">
-                <h1 class="page-title">Asignar Docentes Revisores</h1>
+                <h1 class="page-title" id="page-title-r">Asignar Docente Revisor a:</h1>
         </div>
         
         <div class="report-actions">

@@ -652,8 +652,19 @@ const DashboardModule = {
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", async () => {
   initializeModules();
+  modificarTituloPagina();
 });
 
+function modificarTituloPagina() {
+  const params = new URLSearchParams(window.location.search);
+  const gameCode = params.get("gamecode");
+    if (!gameCode) {
+      console.error("No se encontró el código de juego en la URL");
+      return false;
+    }
+    document.getElementById("page-title-r").innerHTML = "Asignar Estudiante Revisor a: <b>" + gameCode + "</b>";
+    return true;
+  }
 function initializeModules() {
   // Inicializar módulos principales
   DashboardModule.init();
