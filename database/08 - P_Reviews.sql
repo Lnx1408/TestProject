@@ -151,7 +151,7 @@ BEGIN
             jug.estado as porcentaje_avance_alt,
             jug.fecha_registro as fecha_registro
         FROM jugadores jug
-        WHERE jug.id_tipo = 2
+        WHERE (jug.id_tipo = 2 or jug.id_tipo = 1)
         and jug.id_jugador != p_id_usuario
         ORDER BY nombres ASC;
     -- END;
@@ -298,8 +298,7 @@ BEGIN
 			WHEN r.es_funcional = 1 THEN 'Funcional'
 			ELSE 'No Funcional'
 		END as tipo,
-        r.es_ambiguo,
-        r.retroalimentacion
+        r.es_ambiguo
         
 		FROM reqscapetest_db.partidas p
 		INNER JOIN reqscapetest_db.requisitos_clasificacion_partida rcp
@@ -376,6 +375,187 @@ BEGIN
     SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
 
 END //
-
 DELIMITER ;
 
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_requirements_suggestions //
+CREATE PROCEDURE sp_get_requirements_suggestions(
+    -- Parámetros de entrada
+    IN p_id_usuario INT,
+    IN p_id_requisito INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+    -- Declaración de variables locales
+    DECLARE v_usuario_existe INT DEFAULT 0;
+    
+    -- Manejo de errores SQL
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            @sqlstate = RETURNED_SQLSTATE,
+            @errno = MYSQL_ERRNO,
+            @text = MESSAGE_TEXT;
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso iniciado correctamente';
+
+    -- Validar que el usuario existe
+    IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El ID de usuario no es válido';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ID de usuario inválido';
+    END IF;
+
+    SELECT COUNT(*) INTO v_usuario_existe
+    FROM jugadores 
+    WHERE id_jugador = p_id_usuario;
+
+    IF v_usuario_existe = 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El usuario no existe';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario no existe';
+    END IF;
+
+    -- Obtener las partidas con la información requerida
+	SELECT rs.id_requisito, rs.descripcion, rs.es_ambiguo, rs.es_funcional, concat(j.nombres, ' ', j.apellidos) as revisor
+	FROM
+	requisitos_sugerencias rs
+	INNER JOIN jugadores j
+	ON rs.id_usuario_revisor = j.id_jugador
+	WHERE 
+    rs.id_requisito = p_id_requisito AND
+    rs.id_usuario_creador = p_id_usuario;
+
+    -- Si llegamos aquí, todo se ejecutó correctamente
+    SET p_codigo_retorno = 1;
+    SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
+END //
+DELIMITER ;
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_original_requirement //
+CREATE PROCEDURE sp_get_original_requirement(
+    -- Parámetros de entrada
+    IN p_id_usuario INT,
+    IN p_id_requisito INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+    -- Declaración de variables locales
+    DECLARE v_usuario_existe INT DEFAULT 0;
+    
+    -- Manejo de errores SQL
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            @sqlstate = RETURNED_SQLSTATE,
+            @errno = MYSQL_ERRNO,
+            @text = MESSAGE_TEXT;
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso iniciado correctamente';
+
+    -- Validar que el usuario existe
+    IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El ID de usuario no es válido';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ID de usuario inválido';
+    END IF;
+
+    SELECT COUNT(*) INTO v_usuario_existe
+    FROM jugadores 
+    WHERE id_jugador = p_id_usuario;
+
+    IF v_usuario_existe = 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El usuario no existe';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario no existe';
+    END IF;
+
+    -- Obtener las partidas con la información requerida
+	SELECT r.descripcion
+	FROM
+    requisitos r
+    WHERE 
+    r.id_requisito = p_id_requisito AND
+    r.id_usuario_creador = p_id_usuario;
+
+    -- Si llegamos aquí, todo se ejecutó correctamente
+    SET p_codigo_retorno = 1;
+    SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
+END //
+DELIMITER ;
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_update_original_requirement //
+CREATE PROCEDURE sp_update_original_requirement(
+	-- Parámetros de entrada
+	IN p_id_requisito INT,
+    IN p_requisito VARCHAR(500),
+	IN es_funcional INT,
+    IN es_ambiguo INT,
+    IN p_id_usuario INT, 
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+	-- Declaración de variables locales
+	DECLARE v_partida_existe INT DEFAULT 0;
+	DECLARE v_id_partida INT;
+
+    -- Declaración de variables para manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		GET DIAGNOSTICS CONDITION 1
+					@sqlstate = RETURNED_SQLSTATE,
+					@errno = MYSQL_ERRNO,
+					@text = MESSAGE_TEXT;
+        -- En caso de error SQL
+        SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+        -- Rollback en caso de haber transacciones
+        ROLLBACK;
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso ejecutado correctamente';
+
+	-- Validaciones de parámetros de entrada
+	IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El ID de usuario no es válido';
+	END IF;
+    
+    -- Validar que la partida existe
+		SET p_codigo_retorno = 0;
+        SET p_mensaje_retorno = 'No se pudo actualizar el estado';
+        
+        UPDATE reqscapetest_db.requisitos
+        SET
+		descripcion = p_requisito
+        WHERE (id_requisito = p_id_requisito) AND (id_usuario_creador = p_id_usuario);
+        
+	IF ROW_COUNT() > 0 THEN
+        SET p_codigo_retorno = 1;
+        SET p_mensaje_retorno = 'Estado actualizado correctamente';
+    END IF;
+END //
+DELIMITER ;

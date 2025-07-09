@@ -182,7 +182,7 @@ class Reviewers extends AuthController{
 		$data['breadcrumbs'] = [
             ['name' => 'Revisores', 'url' => 'reviewers'],
             ['name' => 'Partidas', 'url' => 'reviewers/list_reviews'],
-            ['name' => 'Revisiones de estudiantes', 'url' => '']
+            ['name' => 'Requisitos', 'url' => '']
         ];
 		$data['page_functions_js'] = array(
 			'jquery-3.7.1.min.js',
@@ -210,6 +210,46 @@ class Reviewers extends AuthController{
 		
 		$this->addNavInfo($data);
 		$this->views->getView($this, "review_classification", $data);
+	}
+
+	public function requirements_suggestions()
+	{
+		$data = array();
+		$data['page_tag'] = "New Reviewers - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "New Reviewers";
+		$data['breadcrumbs'] = [
+            ['name' => 'Revisores', 'url' => 'reviewers'],
+            ['name' => 'Partidas', 'url' => 'reviewers/list_reviews'],
+            ['name' => 'Requisitos', 'url' => ''],
+            ['name' => 'Revisiones de estudiantes', 'url' => '']
+        ];
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'plugins/datatables/dataTables.min.js',
+			'plugins/datatables/dataTables.responsive.js',
+			'plugins/datatables/responsive.dataTables.js',
+			'plugins/papaparse.min.js',
+			'reviewers/requirements_suggestions.js'
+			
+		);
+		$data['page_css'] =  array(
+			'game/game-focal.css',
+			'levels/levels-base.css',
+			'levels/levels-focal.css',
+			'levels/create-clasification.css',
+			'levels/create-construction.css',
+			'levels/create-construction-form.css',
+			'reviewers/requirements_suggestions.css',
+			
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "requirements_suggestions", $data);
 	}
 
 	public function get_reviewers_partida_clasificacion()
@@ -279,12 +319,76 @@ class Reviewers extends AuthController{
 		$postData = json_decode($jsonData, true);
 		$idJugador = $this->getUserData('id');
 
-		$analytics = $this->model->get_requisitos_review($postData, $idJugador);
-		$jsonResponse = json_encode($analytics, JSON_UNESCAPED_UNICODE);
+		$data = $this->model->get_requisitos_review($postData, $idJugador);
+		$jsonResponse = json_encode($data, JSON_UNESCAPED_UNICODE);
 		$encryptedResponse = encryptResponse($jsonResponse);
 		echo json_encode([
 			'data' => $encryptedResponse // Tu función de encriptación
 		]);
 		exit();
 	}
+
+
+	public function get_requirements_suggestions()
+	{
+		$jsonData = file_get_contents('php://input');
+		$postData = json_decode($jsonData, true);
+		$idJugador = $this->getUserData('id');
+
+		$data = $this->model->get_requirements_suggestions($postData, $idJugador);
+		$jsonResponse = json_encode($data, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse // Tu función de encriptación
+		]);
+		exit();
+	}
+
+	public function get_original_requirement()
+	{
+		$jsonData = file_get_contents('php://input');
+		$postData = json_decode($jsonData, true);
+		$idJugador = $this->getUserData('id');
+
+		$data = $this->model->get_original_requirement($postData, $idJugador);
+		$jsonResponse = json_encode($data, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $jsonResponse // Tu función de encriptación
+		]);
+		exit();
+	}
+
+	public function update_original_requirement()
+	{
+		try {
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+			$idJugador = $this->getUserData('id');
+			
+			if (!isset($postData['encryptedData'])) {
+				throw new Exception('Datos no recibidos');
+			}
+
+			$response = $this->model->update_original_requirement($postData, $idJugador);
+		} catch (Error $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al promover estudiante a revisor: ' . $e->getMessage()
+			];
+		} catch (Exception $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al promover estudiante a revisor: ' . $e->getMessage()
+			];
+		}
+
+		$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse
+		]);
+		die();
+	}
+	
 }

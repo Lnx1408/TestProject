@@ -57,6 +57,35 @@ class ReviewersModel extends ReviewersInfraestructure
         }
     }
 
+    public function get_requirements_suggestions($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            return $this->get_requirements_suggestionsDB($data['requisito'], $idJugador);
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+                'data' => []
+            ];
+        }
+    }
+
+    public function get_original_requirement($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            return $this->get_original_requirementDB('1', 1);
+        } else {
+            return $this->get_original_requirementDB('1', 1);
+            
+        }
+    }
+
     public function update_reviewer($postData)
     {
         if (isset($postData['encryptedData'])) {
@@ -72,6 +101,35 @@ class ReviewersModel extends ReviewersInfraestructure
                 codigoPartida: $codigoPartida,
                 idEstudiante: $idJugador,
                 rolEstudiante: $rolEstudiante,
+            );
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+            ];
+        }
+    }
+
+
+    public function update_original_requirement($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            // Validar y procesar los datos
+            
+            $id_requisito = $data['id_requisito'];
+            $requisito = $data['requisito'];
+            $es_funcional = $data['es_funcional'];
+            $es_ambiguo = $data['es_ambiguo'];
+            // Llamar a la función de base de datos con los datos procesados
+            return $this->update_original_requirementBD(
+                id_requisito: $id_requisito,
+                requisito: $requisito,
+                es_funcional: $es_funcional,
+                es_ambiguo: $es_ambiguo,
+                id_creador: $idJugador,
             );
         } else {
             return [
