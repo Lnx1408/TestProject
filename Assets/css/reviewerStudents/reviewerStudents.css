@@ -1,0 +1,451 @@
+.analytics-levels-popup {
+    background: var(--body-color) !important;
+}
+
+/* Container principal */
+.my-games-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header y Stats */
+.games-header {
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    color: var(--title-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.games-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    padding: 1.5rem;
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 2px 24px var(--shadow-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    box-shadow: 0rem 0.2rem 1rem  var(--color-light);
+    transform: translateY(-2px);
+}
+
+.stat-card i {
+    font-size: 2rem;
+    color: var(--primary);
+    background: var(--light-primary);
+    padding: 0.8rem;
+    border-radius: var(--border-radius-1);
+}
+
+/*
+.stat-info {
+    flex: 1;
+}
+*/
+
+.stat-label {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    color: var(--title-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Búsqueda */
+.search-section {
+    margin-bottom: 2rem;
+}
+
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid;
+    border-radius: var(--border-radius-1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-1);
+    background: var(--body-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--light-primary);
+    outline: none;
+}
+
+/* Secciones de Juegos */
+.games-section {
+    margin-bottom: 2rem;
+    border-radius: var(--card-border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--transparent-thow-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    color: var(--title-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.toggle-view-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.toggle-view-btn:hover {
+    background: var(--transparent-theme-color);
+    color: var(--first-color);
+}
+
+.toggle-view-btn i {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.toggle-view-btn.collapsed i {
+    transform: rotate(-180deg);
+}
+
+/* Grid de Juegos */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Cards de Juegos */
+.game-card {
+    background: var(--body-color);
+    border-radius: 0.8rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--card-accent-color, var(--primary));
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+}
+
+.game-code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.game-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.game-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.game-detail i {
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+/* Botones Ver Más/Menos */
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.load-more-btn,
+.load-less-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.load-more-btn {
+    background: var(--light-primary);
+    color: var(--primary);
+}
+
+.load-less-btn {
+    background: var(--light-grey);
+    color: var(--text-color);
+}
+
+.load-more-btn:hover:not(:disabled),
+.load-less-btn:hover:not(:disabled) {
+    background: var(--transparent-theme-color);
+    transform: translateY(-2px);
+}
+
+.load-more-btn i,
+.load-less-btn i {
+    font-size: 1.2rem;
+}
+
+.load-more-btn:disabled,
+.load-less-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--light-grey);
+    color: var(--text-color);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-card {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .my-games-container {
+        padding: 1rem;
+    }
+
+    .games-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+.fade-in {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+/* Skeleton Loading Animation */
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--border-color) 25%,
+            var(--light-grey) 50%,
+            var(--border-color) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.skeleton-text {
+    height: 1em;
+    margin: 0.5rem 0;
+    border-radius: var(--border-radius-1);
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Estado de Loading del botón */
+.load-more-btn.loading {
+    position: relative;
+    padding-right: 3rem;
+}
+
+.load-more-btn.loading::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid var(--primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+/* Mensaje de No Resultados */
+.no-games-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+/* Estilos para dispositivos táctiles */
+@media (hover: none) {
+    .game-card:hover {
+        transform: none;
+    }
+
+    .load-more-btn:hover {
+        background: var(--light-primary);
+        color: var(--primary);
+    }
+}
+
+/* Estilos de impresión */
+@media print {
+
+    .search-section,
+    .load-more-container,
+    .toggle-view-btn {
+        display: none !important;
+    }
+
+    .game-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .game-card::before {
+        display: none;
+    }
+}
+
+/* Estilos de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+
+    .game-card,
+    .stat-card,
+    .load-more-btn,
+    .toggle-view-btn i {
+        transition: none;
+    }
+
+    .game-card {
+        animation: none;
+    }
+
+    .skeleton {
+        animation: none;
+        background: var(--border-color);
+    }
+}
+
+/* Soporte para modo de alto contraste */
+@media (forced-colors: active) {
+    .game-card::before {
+        border-top: 2px solid CanvasText;
+    }
+
+    .game-card,
+    .stat-card {
+        border: 1px solid CanvasText;
+    }
+}
+
+/* Variables CSS personalizadas adicionales */
+:root {
+    --card-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    --card-hover-transform: translateY(-4px);
+    --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --card-border-radius: 2rem;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}

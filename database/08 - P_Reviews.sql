@@ -144,8 +144,8 @@ BEGIN
 			j.correo,
 			j.usuario,
 			CASE
-				WHEN r.rol = 'REVISOR' THEN 1
-				ELSE 0
+				WHEN r.rol = 'REVISOR' THEN '1'
+				ELSE '0'
 			END AS estado,
 			CASE
 				WHEN r.rol IS NOT NULL THEN r.rol
@@ -366,7 +366,7 @@ BEGIN
         p.codigo_partida as code,
         p.fecha_creacion as createdAt,
         m.codigo as tipo,
-        COUNT(DISTINCT pj.id_jugador) as totalStudents
+        (SELECT COUNT(pj.id_jugador) FROM partidas_jugadores pj WHERE pj.id_partida = p.id_partida) as totalStudents
     FROM partidas p
     INNER JOIN modalidades m ON p.id_modalidad = m.id_modalidad
     LEFT JOIN partidas_jugadores pj ON p.id_partida = pj.id_partida
@@ -648,5 +648,85 @@ BEGIN
         SET p_codigo_retorno = 1;
         SET p_mensaje_retorno = 'Estado actualizado correctamente';
     END IF;
+END //
+DELIMITER ;
+
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_original_requirement_reviewer //
+CREATE PROCEDURE sp_get_original_requirement_reviewer(
+	-- Parámetros de entrada
+	IN p_codigo_partida VARCHAR(10),
+	IN p_id_usuario INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+	-- Declaración de variables locales
+	DECLARE v_partida_existe INT DEFAULT 0;
+	DECLARE v_id_partida INT;
+
+    -- Declaración de variables para manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		GET DIAGNOSTICS CONDITION 1
+					@sqlstate = RETURNED_SQLSTATE,
+					@errno = MYSQL_ERRNO,
+					@text = MESSAGE_TEXT;
+        -- En caso de error SQL
+        SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+        -- Rollback en caso de haber transacciones
+        ROLLBACK;
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso ejecutado correctamente';
+
+	-- Validaciones de parámetros de entrada
+	IF p_codigo_partida IS NULL OR p_codigo_partida = '' THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El código de partida no es válido';
+	END IF;
+
+	IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El ID de usuario no es válido';
+	END IF;
+
+	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
+	   FROM partidas 
+	   WHERE codigo_partida = p_codigo_partida;
+
+    -- Validar que la partida existe
+    IF v_partida_existe = 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'No existen datos para la partida especificada';
+    END IF;
+		
+        SELECT 
+        r.id_requisito,
+        r.descripcion, 
+        CASE 
+			WHEN r.es_funcional = 1 THEN 'Funcional'
+			ELSE 'No Funcional'
+		END as tipo,
+        r.es_ambiguo
+		FROM reqscapetest_db.partidas p
+		INNER JOIN reqscapetest_db.requisitos_clasificacion_partida rcp
+		ON rcp.id_partida = p.id_partida
+		INNER JOIN reqscapetest_db.requisitos r
+		ON rcp.id_requisito = r.id_requisito 
+        INNER JOIN reqscapetest_db.partidas_jugadores pj
+        ON pj.id_partida = p.id_partida 
+		WHERE p.id_partida = v_id_partida
+		AND pj.id_jugador = p_id_usuario AND pj.isRevisor = 1;
+		-- END;
+        
+	SET p_codigo_retorno = 1;
+    SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
 END //
 DELIMITER ;
