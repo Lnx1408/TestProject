@@ -1,5 +1,4 @@
 <?php
-require_once("Libraries/Reports/ReportAnalyzer.php");
 class Reviewers extends AuthController{
     public function __construct() {
         // Especificar roles permitidos para este controlador
