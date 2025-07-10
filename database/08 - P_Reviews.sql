@@ -137,25 +137,30 @@ BEGIN
 		SET p_codigo_retorno = -1;
 		SET p_mensaje_retorno = 'No existen datos para la partida especificada';
     END IF;
-        SELECT 
-            jug.id_jugador,
-            jug.nombres,
-            jug.apellidos,
-            jug.correo,
-            jug.usuario,
-            jug.estado as estado,
-            CASE 
-                WHEN jug.id_tipo = 3 THEN 'DOCENTE'
-                ELSE 'DOCENTE'
-            END as estado_texto,
-            jug.estado as porcentaje_avance_alt,
-            jug.fecha_registro as fecha_registro
-        FROM jugadores jug
-        WHERE (jug.id_tipo = 2 or jug.id_tipo = 1)
-        and jug.id_jugador != p_id_usuario
-        ORDER BY nombres ASC;
-    -- END;
-END //
+		SELECT 
+			j.id_jugador,
+			j.nombres,
+			j.apellidos,
+			j.correo,
+			j.usuario,
+			CASE
+				WHEN r.rol = 'REVISOR' THEN 1
+				ELSE 0
+			END AS estado,
+			CASE
+				WHEN r.rol IS NOT NULL THEN r.rol
+				ELSE 'DOCENTE'
+			END AS estado_texto,
+			j.estado AS porcentaje_avance_alt,
+			j.fecha_registro AS fecha_registro
+		FROM reqscapetest_db.jugadores j
+		LEFT JOIN reqscapetest_db.docente_revisor_partida r
+		ON j.id_jugador = r.id_docente_revisor AND r.id_partida = v_id_partida
+		WHERE (j.id_tipo = 2 or j.id_tipo = 1)
+		AND j.id_jugador != p_id_usuario
+		ORDER BY j.nombres ASC;
+			-- END;
+	END //
 DELIMITER ;
 
 

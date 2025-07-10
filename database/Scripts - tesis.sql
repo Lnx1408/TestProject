@@ -417,3 +417,18 @@ BEGIN
    END bloque_principal; 
 END //
 DELIMITER ;
+
+
+SELECT j.id_jugador,
+       j.nombres,
+       j.apellidos,
+       j.correo,
+       j.usuario,
+       j.estado AS estado,
+       r.rol AS estado_texto, -- This will be NULL if the player is not a revisor for partida 1
+       j.estado AS porcentaje_avance_alt,
+       j.fecha_registro AS fecha_registro
+FROM reqscapetest_db.jugadores j
+LEFT JOIN reqscapetest_db.docente_revisor_partida r
+  ON j.id_jugador = r.id_docente_revisor AND r.id_partida = 2
+WHERE j.id_tipo <> 3;
