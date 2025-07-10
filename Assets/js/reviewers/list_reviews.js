@@ -176,10 +176,7 @@ class MyGamesManager {
                         <i class='bx bx-calendar'></i>
                         <span>${formattedDate}</span>
                     </div>
-                    <div class="game-detail">
-                        <i class='bx bx-user'></i>
-                        <span>${game.totalStudents} ${this.translations.get('cards.students')}</span>
-                    </div>
+                    
                 </div>
             </div>
         `;

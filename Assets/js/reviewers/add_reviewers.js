@@ -210,7 +210,7 @@ const TableModule = {
           `Cambiando rol a: ${rol_estudianteTexto}`
         );
         this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_value);
-        this.reload();
+        location.reload();
         
       }
     });
@@ -305,11 +305,11 @@ const TableModule = {
         render: function (data, type, row) {
           return `
                     <div class="btn-group">
-                        <button class="btn-sm"
+                        <button class="btn-sm" title="Ver detalles"
                             onclick="TableModule.viewDetails('${row.nombres}', '${row.apellidos}', '${row.id_jugador}'); event.stopPropagation();">
                             <i class='bx bx-info-circle'></i>
                         </button>
-                        <button class="btn-sm"
+                        <button class="btn-sm" title="Cambiar rol a revisor"
                             onclick="TableModule.updateToReviewer('${row.nombres}', '${row.apellidos}', '${row.id_jugador}', '${row.estado.text}'); event.stopPropagation();">
                             <i class='bx bx-user-check' hint="123-45-678"></i>
                         </button>
@@ -652,8 +652,19 @@ const DashboardModule = {
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", async () => {
   initializeModules();
+  modificarTituloPagina();
 });
 
+function modificarTituloPagina() {
+  const params = new URLSearchParams(window.location.search);
+  const gameCode = params.get("gamecode");
+    if (!gameCode) {
+      console.error("No se encontró el código de juego en la URL");
+      return false;
+    }
+    document.getElementById("page-title-r").innerHTML = "Asignar Estudiante Revisor a: <b>" + gameCode + "</b>";
+    return true;
+  }
 function initializeModules() {
   // Inicializar módulos principales
   DashboardModule.init();

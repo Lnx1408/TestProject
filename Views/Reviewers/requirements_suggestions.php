@@ -20,8 +20,11 @@
             </ul>
         </div>
             <!-- Header con título y contador -->
-            <div class="header-section report-actions">
-                <h1 class="page-title" id="page-title-r">Requisitos de la partida</h1>
+            <div class="header-section">
+                <h1 class="page-title">Requisito original:</h1>
+            </div>
+            <div class="header-section">
+                <h1 id="requisito-original">Revisiones por estudiantes</h1>
             </div>
 
             <!-- Tabla principal -->
@@ -29,7 +32,7 @@
                 <div class="data-info container-table">
                     <div class="header-table">
                         <i class='bx ri-user-community-fill'></i>
-                        <h2 data-i18n="create_classification.main_table.title">Requisitos de la Partida</h2>
+                        <h2>Revisiones de estudiantes</h2>
                     </div>
                     <table id="existingRequirementsTable" class="nowrap">
                         <thead>
@@ -38,6 +41,7 @@
                                 <th data-i18n="create_classification.main_table.columns.description">Descripción</th>
                                 <th data-i18n="create_classification.main_table.columns.type">Tipo</th>
                                 <th data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</th>
+                                <th>Estudiante Revisor</th>
                                 <th data-i18n="create_classification.main_table.columns.actions">Acciones</th>
                             </tr>
                         </thead>

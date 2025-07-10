@@ -103,13 +103,13 @@ class ReviewersInfraestructure extends Mysql
 			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 0) {
 				$arrResponse = array(
 					'status' => true,
-					'analytics' => $responseAnalyticsJugadores['results'],
+					'data' => $responseAnalyticsJugadores['results'],
 					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
 				);
 			} else {
 				$arrResponse = array(
 					'status' => false,
-					'analytics' => $responseAnalyticsJugadores['results'],
+					'data' => $responseAnalyticsJugadores['results'],
 					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
 				);
 			}
@@ -118,7 +118,7 @@ class ReviewersInfraestructure extends Mysql
 			return [
 				'status' => false,
 				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
-				'analytics' => []
+				'data' => []
 			];
 		} finally {
 			$this->cerrarConexion();
@@ -126,6 +126,79 @@ class ReviewersInfraestructure extends Mysql
 
 		return $arrResponse;
 	}
+
+
+	public function get_requirements_suggestionsDB(string $requisito, string $idJugador)
+	{
+		try {
+			$responseAnalyticsJugadores = $this->executeProcedureWithParametersOut(
+				'sp_get_requirements_suggestions',
+				[$idJugador, $requisito],
+				['codigo', 'mensaje']  // Parámetros de salida
+			);
+			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'status' => true,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'status' => false,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'status' => false,
+				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
+				'data' => []
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
+
+
+	public function get_original_requirementDB(int $requisito, int $idJugador)
+	{
+		try {
+			$responseAnalyticsJugadores = $this->executeProcedureWithParametersOut(
+				'sp_get_original_requirement',
+				[$requisito, $idJugador],
+				outParams: ['codigo', 'mensaje']  // Parámetros de salida
+			);
+			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'status' => true,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'status' => false,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'status' => false,
+				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
+				'data' => []
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
+
 
 	public function update_reviewerBD(string $codigoPartida, int $idEstudiante, int $rolEstudiante)
 	{
@@ -163,6 +236,77 @@ class ReviewersInfraestructure extends Mysql
 		return $arrResponse;
 	}
 
+
+
+	public function update_original_requirementBD(string $id_requisito, string $requisito, string $es_funcional, string $es_ambiguo, int $id_creador)
+	{
+		try {
+			$response = $this->executeProcedureWithParametersOut(
+				'sp_update_original_requirement',
+				[$id_requisito, $requisito, $es_funcional, $es_ambiguo, $id_creador],
+				['codigo', 'mensaje']  // Parámetro de salida actualizado
+			);
+
+			if (!empty($response) && $response['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'success' => true,
+					'requirement' => $response['results'],
+					'message' => $response['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'success' => false,
+					'attemptDetails' => $response['results'],
+					'headerDetails' => [],
+					'message' => $response['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'success' => false,
+				'message' => 'Error al actualizar el requisito: ' . $e->getMessage(),
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
+
 	
+	public function update_teacher_reviewerBD(string $codigoPartida, int $idJugador, string $rolDocente)
+	{
+		try {
+			$response = $this->executeProcedureWithParametersOut(
+				'sp_update_teacher_reviewer',
+				[$codigoPartida, $idJugador, $rolDocente],
+				['codigo', 'mensaje']  // Parámetro de salida actualizado
+			);
+
+			if (!empty($response) && $response['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'success' => true,
+					'message' => $response['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'success' => false,
+					'headerDetails' => [],
+					'message' => $response['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'success' => false,
+				'message' => 'Error al actualizar el requisito: ' . $e->getMessage(),
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
 	
 }

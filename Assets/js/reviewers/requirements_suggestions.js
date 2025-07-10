@@ -1,15 +1,19 @@
-class ReviewClassification {
+class RequirementSuggestion {
   constructor() {
     this.config = {
       selectors: {
         mainContainer: "#main",
       },
       endpoints: {
-        getRequirement: `${base_url}/Reviewers/get_requisitos_review`,
+        get_requirements_suggestions: `${base_url}/Reviewers/get_requirements_suggestions`,
+        get_original_requirement: `${base_url}/Reviewers/get_original_requirement`,
+        update_original_requirement: `${base_url}/Reviewers/update_original_requirement`,
       },
-      params: {// Parámetro que necesitamos enviar
+      params: {
+        // Parámetro que necesitamos enviar
         gameCode: null,
-      }
+        requisito: null,
+      },
     };
 
     this.translations = {
@@ -43,18 +47,27 @@ class ReviewClassification {
           },
         },
         {
-          data: "is_functional",
+          data: "es_funcional",
           responsivePriority: 3,
           //title: this.translations.get('main_table.columns.type'),
           title: `<span data-i18n="create_classification.main_table.columns.type">Tipo</span>`,
           render: (data) => this.renderRequirementType(data),
         },
         {
-          data: "is_ambiguous",
+          data: "es_ambiguo",
           responsivePriority: 3,
           //title: this.translations.get('main_table.columns.is_ambiguous'),
           title: `<span data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</span>`,
           render: (data) => this.renderAmbiguousState(data),
+        },
+        {
+          data: "revisor",
+          title: `<span>Estudiante Revisor</span>`,
+          className: "wrap-cell",
+          responsivePriority: 2,
+          render: function (data, type, row) {
+            return `<div class="ambiguous-state">${data}</div>`;
+          },
         },
         {
           data: null,
@@ -68,7 +81,7 @@ class ReviewClassification {
 
     this.initializeParams();
     this.initializeTables();
-    this.modificarTituloPagina();
+    this.obtenerRequisitoOriginal();
   }
 
   getUrlParameter(name) {
@@ -83,24 +96,27 @@ class ReviewClassification {
       console.error("No se encontró el código de juego en la URL");
       return false;
     }
+    const requisito = this.getUrlParameter("Requisito");
+    if (!gameCode) {
+      console.error("No se encontró el id requisito en la URL");
+      return false;
+    }
     this.config.params.gameCode = gameCode;
-    return true;
-  }
-  modificarTituloPagina() {
-    document.getElementById("page-title-r").innerHTML = "Requisitos de la partida: <b>" + this.config.params.gameCode + "</b>";
+    this.config.params.requisito = requisito;
     return true;
   }
 
   initializeTables() {
     this.elements.selectedTable = $("#existingRequirementsTable").DataTable({
       ajax: {
-        url: this.config.endpoints.getRequirement,
+        url: this.config.endpoints.get_requirements_suggestions,
         type: "POST",
         //dataSrc: 'data'
         data: (d) => {
           const requestData = {
             ...d,
             gamecode: this.config.params.gameCode,
+            requisito: this.config.params.requisito,
           };
           return JSON.stringify({
             encryptedData: CryptoModule.encrypt(requestData),
@@ -109,15 +125,11 @@ class ReviewClassification {
         dataSrc: (response) => {
           try {
             if (!response.data) {
-                
-                console.error("Invalid response data:", response);
+              console.error("Invalid response data:", response);
               throw new Error(this.translations.get("errors.invalid_data"));
             }
 
             const decryptedData = CryptoModule.decrypt(response.data);
-            
-            console.log(this.config.params.gameCode);
-            console.log("Decrypted Data:", decryptedData);
 
             if (!decryptedData) {
               throw new Error(
@@ -227,7 +239,45 @@ class ReviewClassification {
       ],
       processing: true,
       serverSide: false,
-      
+    });
+  }
+
+  obtenerRequisitoOriginal() {
+    $.ajax({
+      url: this.config.endpoints.get_original_requirement,
+      type: "POST",
+      //dataSrc: 'data'
+      data: (d) => {
+        const requestData = {
+          ...d,
+          requisito: this.config.params.requisito,
+        };
+        return JSON.stringify({
+          encryptedData: CryptoModule.encrypt(requestData),
+        });
+      },
+      success: (response) => {
+        try {
+          const parsedOuterResponse = JSON.parse(response);
+          const innerJsonString = parsedOuterResponse.data;
+          const parsedInnerData = JSON.parse(innerJsonString);
+          const dataArray = parsedInnerData.data;
+
+          // Step 5: Get the 'descripcion' from the first object in the array
+          const description = dataArray[0].descripcion;
+
+          console.log(description);
+          document.getElementById("requisito-original").innerHTML = description;
+
+        } catch (error) {
+          console.error("Error processing data:", error);
+          return [];
+        }
+      },
+      error: (xhr, error, thrown) => {
+        console.error("Ajax error:", error);
+        this.showErrorMessage(this.translations.get("errors.connection_error"));
+      },
     });
   }
 
@@ -248,17 +298,21 @@ class ReviewClassification {
 
   renderActions(row) {
     return `<div class="table-actions">
-                    <button title="Ver revisiones" onclick="reviewClassification.viewDetails('${row.id_requisito}')" 
+    <button title="Actualizar revisión" onclick="requirementSuggestion.updateRequerimentModal('${row.id_requisito}','${row.descripcion}', '${row.es_funcional}', '${row.es_ambiguo}' ); event.stopPropagation();" 
                             class="btn-action">
-                        <i class='ri-search-eye-line'></i>
+                        <i class='bx bx-edit'></i>
+                    </button>
+                    <button title="Dar Feedback" onclick="requirementSuggestion.viewDetails('${row.id_requisito}')" 
+                            class="btn-action">
+                        <i class='bx bx-message'></i>
                     </button>
                 </div>`;
   }
   viewDetails(id_requisito) {
-        // Redirigir a la página de detalles
-        window.location.href = `${base_url}/Reviewers/requirements_suggestions?gamecode=${encodeURIComponent(
-          this.config.params.gameCode
-        )}&Requisito=${encodeURIComponent(id_requisito)}`;
+    // Redirigir a la página de detalles
+    window.location.href = `${base_url}/Reviewers/requirements_suggestions?gamecode=${encodeURIComponent(
+      this.config.params.gameCode
+    )}&Requisito=${encodeURIComponent(id_requisito)}`;
   }
   getDataTableLanguage() {
     const currentLanguage = LanguageManager.currentLang;
@@ -276,9 +330,82 @@ class ReviewClassification {
     };
   }
 
+
+  updateRequerimentModal(id_requisito, requisito, es_funcional, es_ambiguo) {
+    
+    Swal.fire({
+      title: "Actualizar requisito",
+      html: `¿Desea modificar el requisito original?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#1976D2",
+      cancelButtonColor: "#D32F2F",
+      confirmButtonText: "Sí, cambiar",
+      cancelButtonText: "No, cancelar",
+      customClass: {
+        container: "analytics-type-modal",
+        popup: "analytics-modal-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(
+          `Actualizando requisito: ${requisito}`
+        );
+        this.UpdateRequeriment(id_requisito, requisito, es_funcional, es_ambiguo);
+        location.reload();
+        
+      }
+    });
+  }
+
+  async UpdateRequeriment(id_requisito, requisito, es_funcional, es_ambiguo) {
+    try {
+
+        const encryptedPayload = CryptoModule.encrypt({
+            id_requisito: id_requisito,
+            requisito: requisito,
+            es_funcional: es_funcional,
+            es_ambiguo: es_ambiguo,
+        });
+        
+
+        const response = await fetch(this.config.endpoints.update_original_requirement, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                encryptedData: encryptedPayload // Enviar el payload ya cifrado
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error de comunicación con el servidor: ${response.status}`);
+        }
+
+        const resultEncrypt = await response.json();
+
+        if (!resultEncrypt.data) {
+             throw new Error("La respuesta del servidor no tiene el formato esperado.");
+        }
+
+        // --- PROCESAMIENTO DE LA RESPUESTA ---
+        const decryptedString = CryptoModule.decrypt(resultEncrypt.data);
+        
+        // --- PASO DE DEPURACIÓN CRUCIAL ---
+        console.log("Datos descifrados:", decryptedString);
+        // el problema está en la función `encryptResponse` de tu PHP.
+
+    } catch (error) {
+        console.error('Error en UpdateReviewer:', error.message);
+        // Muestra el error al usuario
+        // this.showErrorMessage('Error: ' + error.message);
+    }
+  }
+
 }
 
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", async () => {
-  window.reviewClassification = new ReviewClassification();
+  window.requirementSuggestion = new RequirementSuggestion();
 });
