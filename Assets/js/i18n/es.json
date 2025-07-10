@@ -1669,7 +1669,7 @@
         "options": {
             "create": {
                 "title": "Agregar Estudiante Revisor",
-                "description": "Agregar usuario con rol \"revisor\""
+                "description": "Agrega estudiantes con rol de \"revisor\" a tus partidas"
             },
             "reviews": {
                 "title": "Ver Revisiones de Estudiantes",
