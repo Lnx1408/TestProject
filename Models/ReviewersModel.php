@@ -139,4 +139,28 @@ class ReviewersModel extends ReviewersInfraestructure
         }
     }
 
+    public function update_teacher_reviewer($postData)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            // Validar y procesar los datos
+            $codigoPartida = $data['codigoPartida'];
+            $idJugador = $data['id_jugador'];
+            $rolDocente = $data['rol'];
+            // Llamar a la función de base de datos con los datos procesados
+            return $this->update_teacher_reviewerBD(
+                codigoPartida: $codigoPartida,
+                idJugador: $idJugador,
+                rolDocente: $rolDocente,
+            );
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+            ];
+        }
+    }
+
 }

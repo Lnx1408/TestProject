@@ -275,5 +275,38 @@ class ReviewersInfraestructure extends Mysql
 	}
 
 	
+	public function update_teacher_reviewerBD(string $codigoPartida, int $idJugador, string $rolDocente)
+	{
+		try {
+			$response = $this->executeProcedureWithParametersOut(
+				'sp_update_teacher_reviewer',
+				[$codigoPartida, $idJugador, $rolDocente],
+				['codigo', 'mensaje']  // Parámetro de salida actualizado
+			);
+
+			if (!empty($response) && $response['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'success' => true,
+					'message' => $response['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'success' => false,
+					'headerDetails' => [],
+					'message' => $response['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'success' => false,
+				'message' => 'Error al actualizar el requisito: ' . $e->getMessage(),
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
 	
 }

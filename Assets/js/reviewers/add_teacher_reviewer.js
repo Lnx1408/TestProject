@@ -8,7 +8,7 @@ const TableModule = {
       // ... otros selectores ...
     },
     endpoint: `${base_url}/Reviewers/get_teachers_reviewers_clasificacion`,
-    endpointReviewer: `${base_url}/Reviewers/update_reviewer`,
+    endpointReviewer: `${base_url}/Reviewers/update_teacher_reviewer`,
     params: {
       id: null, // Parámetro que necesitamos enviar
       gameCode: null,
@@ -158,18 +158,10 @@ const TableModule = {
   },
 
 
-  updateToReviewer(nombres, apellidos, id_jugador, rol_estudiante) {
-    let rol_estudianteTexto = "";
-    let rol_value = 0;
-    if (rol_estudiante === "ESTUDIANTE") {
-      rol_estudianteTexto = "ESTUDIANTE REVISOR";
-      rol_value = 1; // Asignar el valor correspondiente para revisor
-    }else {
-      rol_estudianteTexto = "ESTUDIANTE";
-    }
+  updateToReviewer(nombres, apellidos, id_jugador, rol_docente) {
     Swal.fire({
-      title: "Agregar Docente Revisor",
-      html: `¿Desea agregar al docente <b>${nombres} ${apellidos}</b> como <b>Revisor</b> de la partida <b>${this.config.params.gameCode}</b>?`,
+      title: "Cambiar Rol",
+      html: `¿Desea cambiar el rol de <b>${nombres} ${apellidos}</b> como <b>${rol_docente}</b> de la partida <b>${this.config.params.gameCode}</b>?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#1976D2",
@@ -183,9 +175,13 @@ const TableModule = {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log(
-          `Cambiando rol a: ${rol_estudianteTexto}`
+          `Cambiando rol a: ${rol_docente}`
         );
-        this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_value);
+        console.log('Game Code:', this.config.params.gameCode);
+        console.log('ID Jugador:', id_jugador);
+        console.log('Rol Docente:', rol_docente);
+
+        this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_docente);
         this.reload();
         
       }

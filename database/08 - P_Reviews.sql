@@ -48,7 +48,7 @@ BEGIN
 	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
 	   FROM partidas 
 	   WHERE codigo_partida = p_codigo_partida 
-	   AND id_usuario_creacion = p_id_usuario AND id_modalidad = 1;
+	   AND id_usuario_creacion = p_id_usuario;
 
 
     -- Validar que la partida existe
@@ -129,7 +129,7 @@ BEGIN
 	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
 	   FROM partidas 
 	   WHERE codigo_partida = p_codigo_partida 
-	   AND id_usuario_creacion = p_id_usuario AND id_modalidad = 1;
+	   AND id_usuario_creacion = p_id_usuario;
 
 
     -- Validar que la partida existe
@@ -207,8 +207,7 @@ BEGIN
 
 	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
 	   FROM partidas 
-	   WHERE codigo_partida = p_codigo_partida 
-	    AND id_modalidad = 1;
+	   WHERE codigo_partida = p_codigo_partida;
 
 
     -- Validar que la partida existe
@@ -282,7 +281,7 @@ BEGIN
 	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
 	   FROM partidas 
 	   WHERE codigo_partida = p_codigo_partida 
-	   AND id_usuario_creacion = p_id_usuario AND id_modalidad = 1;
+	   AND id_usuario_creacion = p_id_usuario;
 
 
     -- Validar que la partida existe
@@ -552,6 +551,93 @@ BEGIN
         SET
 		descripcion = p_requisito
         WHERE (id_requisito = p_id_requisito) AND (id_usuario_creador = p_id_usuario);
+        
+	IF ROW_COUNT() > 0 THEN
+        SET p_codigo_retorno = 1;
+        SET p_mensaje_retorno = 'Estado actualizado correctamente';
+    END IF;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_update_teacher_reviewer //
+CREATE PROCEDURE sp_update_teacher_reviewer(
+	-- Parámetros de entrada
+	IN p_codigo_partida VARCHAR(10),
+	IN p_id_usuario INT,
+    IN p_rol_usuario  VARCHAR(10),
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+	-- Declaración de variables locales
+	DECLARE v_partida_existe INT DEFAULT 0;
+    DECLARE v_has_partida_revisor INT DEFAULT 0;
+	DECLARE v_id_partida INT;
+
+    -- Declaración de variables para manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		GET DIAGNOSTICS CONDITION 1
+					@sqlstate = RETURNED_SQLSTATE,
+					@errno = MYSQL_ERRNO,
+					@text = MESSAGE_TEXT;
+        -- En caso de error SQL
+        SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+        -- Rollback en caso de haber transacciones
+        ROLLBACK;
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso ejecutado correctamente';
+
+	-- Validaciones de parámetros de entrada
+	IF p_codigo_partida IS NULL OR p_codigo_partida = '' THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El código de partida no es válido';
+	END IF;
+
+	IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El ID de usuario no es válido';
+	END IF;
+
+	SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
+	   FROM partidas 
+	   WHERE codigo_partida = p_codigo_partida;
+       
+	-- Validar que la el docente este registrado como revisor en la partida
+	SELECT COUNT(*) INTO v_has_partida_revisor
+	   FROM docente_revisor_partida 
+	   WHERE id_partida = v_id_partida and id_docente_revisor = p_id_usuario;
+
+
+    -- Validar que la partida existe
+    IF v_partida_existe = 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'No existen datos para la partida especificada';
+    END IF;
+		SET p_codigo_retorno = 0;
+        SET p_mensaje_retorno = 'No se pudo actualizar el estado';
+	
+    IF v_has_partida_revisor = 0 THEN
+		INSERT INTO reqscapetest_db.docente_revisor_partida
+		(id_partida, id_docente_revisor)
+		VALUES
+		(v_id_partida, p_id_usuario);
+    END IF;
+    
+    IF v_has_partida_revisor > 0 THEN
+		UPDATE reqscapetest_db.docente_revisor_partida
+        SET rol = p_rol_usuario
+        WHERE (id_partida = v_id_partida) AND (id_docente_revisor = p_id_usuario);
+    
+    END IF;
+        
         
 	IF ROW_COUNT() > 0 THEN
         SET p_codigo_retorno = 1;

@@ -259,3 +259,16 @@ CREATE TABLE detalle_construccion_intento (
     FOREIGN KEY (id_intento) REFERENCES intentos_construccion(id_intento),
     FOREIGN KEY (id_fragmento) REFERENCES fragmentos_requisito(id_fragmento)
 );
+
+
+CREATE TABLE docente_revisor_partida (
+    id_revisor_partida INT PRIMARY KEY AUTO_INCREMENT,
+    id_partida INT,
+    id_docente_revisor INT,
+    rol ENUM('DOCENTE', 'REVISOR') DEFAULT 'REVISOR',
+    estado ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO',
+    
+    FOREIGN KEY (id_partida) REFERENCES partidas(id_partida),
+	FOREIGN KEY (id_docente_revisor) REFERENCES jugadores(id_jugador)
+);
+

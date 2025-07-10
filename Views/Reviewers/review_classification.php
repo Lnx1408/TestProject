@@ -20,7 +20,7 @@
             </ul>
         </div>
             <!-- Header con título y contador -->
-            <div class="header-section">
+            <div class="header-section report-actions">
                 <h1 class="page-title" id="page-title-r">Requisitos de la partida</h1>
             </div>
 
