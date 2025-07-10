@@ -1,1 +1,1 @@
-a:2:{s:10:"expires_at";i:1746533740;s:4:"data";N;}
+a:2:{s:10:"expires_at";i:1752725415;s:4:"data";a:10:{s:2:"id";i:1;s:4:"name";s:20:"email_config_default";s:4:"host";s:14:"smtp.gmail.com";s:4:"port";i:587;s:6:"secure";s:3:"tls";s:10:"from_email";s:31:"ingenieria.softwarem4@gmail.com";s:9:"from_name";s:8:"ReqScape";s:8:"username";s:31:"ingenieria.softwarem4@gmail.com";s:8:"password";s:19:"vpmy rsha posu buty";s:10:"is_default";i:1;}}
