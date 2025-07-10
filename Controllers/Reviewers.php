@@ -345,17 +345,34 @@ class Reviewers extends AuthController{
 
 	public function get_original_requirement()
 	{
-		$jsonData = file_get_contents('php://input');
-		$postData = json_decode($jsonData, true);
-		$idJugador = $this->getUserData('id');
+		try {
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+			$idJugador = $this->getUserData('id');
+			
+			if (!isset($postData['encryptedData'])) {
+				throw new Exception('Datos no recibidos');
+			}
 
-		$data = $this->model->get_original_requirement($postData, $idJugador);
-		$jsonResponse = json_encode($data, JSON_UNESCAPED_UNICODE);
+			$response = $this->model->get_original_requirement($postData, $idJugador);
+		} catch (Error $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al promover estudiante a revisor: ' . $e->getMessage()
+			];
+		} catch (Exception $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al promover estudiante a revisor: ' . $e->getMessage()
+			];
+		}
+
+		$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
 		$encryptedResponse = encryptResponse($jsonResponse);
 		echo json_encode([
-			'data' => $jsonResponse // Tu función de encriptación
+			'data' => $encryptedResponse
 		]);
-		exit();
+		die();
 	}
 
 	public function update_original_requirement()

@@ -43,14 +43,14 @@ class ReviewClassification {
           },
         },
         {
-          data: "is_functional",
+          data: "tipo",
           responsivePriority: 3,
           //title: this.translations.get('main_table.columns.type'),
           title: `<span data-i18n="create_classification.main_table.columns.type">Tipo</span>`,
           render: (data) => this.renderRequirementType(data),
         },
         {
-          data: "is_ambiguous",
+          data: "es_ambiguo",
           responsivePriority: 3,
           //title: this.translations.get('main_table.columns.is_ambiguous'),
           title: `<span data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</span>`,
@@ -231,20 +231,27 @@ class ReviewClassification {
     });
   }
 
-  renderRequirementType(isFunctional) {
-    const typeClass = isFunctional ? "functional" : "non-functional";
-    const typeText = isFunctional ? "Funcional" : "No Funcional";
-    return `<span class="requirement-type ${typeClass}">${typeText}</span>`;
-  }
+  renderRequirementType(typeString) {
+    // console.log("typeString:", typeString); // Now this should show "Funcional" or "No Funcional"
+    const isFunctional = typeString === "Funcional";
 
-  renderAmbiguousState(isAmbiguous) {
+    const typeClass = isFunctional ? "functional" : "non-functional";
+    const typeText = typeString; // Use the string directly from the data
+    console.log(typeText);
+    return `<span class="requirement-type ${typeClass}">${typeText}</span>`;
+}
+
+  renderAmbiguousState(isAmbiguousNum) {
+    // console.log("isAmbiguousNum:", isAmbiguousNum); // Now this should show 0 or 1
+    const isAmbiguous = isAmbiguousNum === 1;
     const stateClass = isAmbiguous ? "yes" : "no";
     const icon = isAmbiguous ? "bx-check" : "bx-x";
+    console.log(isAmbiguous)
     return `<span class="ambiguous-state ${stateClass}">
                     <i class='bx ${icon}'></i>
                     ${isAmbiguous ? "Sí" : "No"}
                 </span>`;
-  }
+}
 
   renderActions(row) {
     return `<div class="table-actions">

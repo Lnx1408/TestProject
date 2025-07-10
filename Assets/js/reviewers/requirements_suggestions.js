@@ -242,43 +242,50 @@ class RequirementSuggestion {
     });
   }
 
-  obtenerRequisitoOriginal() {
-    $.ajax({
-      url: this.config.endpoints.get_original_requirement,
-      type: "POST",
-      //dataSrc: 'data'
-      data: (d) => {
-        const requestData = {
-          ...d,
-          requisito: this.config.params.requisito,
-        };
-        return JSON.stringify({
-          encryptedData: CryptoModule.encrypt(requestData),
-        });
-      },
-      success: (response) => {
-        try {
-          const parsedOuterResponse = JSON.parse(response);
-          const innerJsonString = parsedOuterResponse.data;
-          const parsedInnerData = JSON.parse(innerJsonString);
-          const dataArray = parsedInnerData.data;
-
-          // Step 5: Get the 'descripcion' from the first object in the array
-          const description = dataArray[0].descripcion;
-
-          console.log(description);
-          document.getElementById("requisito-original").innerHTML = description;
-
-        } catch (error) {
-          console.error("Error processing data:", error);
-          return [];
+  async obtenerRequisitoOriginal() {
+    try {
+      const response = await fetch(
+        this.config.endpoints.get_original_requirement,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            encryptedData: CryptoModule.encrypt({
+              requisito: this.config.params.requisito,
+            }),
+          }),
         }
-      },
-      error: (xhr, error, thrown) => {
-        console.error("Ajax error:", error);
-        this.showErrorMessage(this.translations.get("errors.connection_error"));
-      },
-    });
+      );
+
+      const data = await response.json();
+      const decryptedData = CryptoModule.decrypt(data.data);
+
+      console.log(this.config.params.requisito + ' | ' + decryptedData);
+
+      if (!decryptedData.status) {
+        throw new Error(decryptedData.message);
+      }
+
+      if (
+        decryptedData &&
+        decryptedData.data &&
+        decryptedData.data.length > 0
+      ) {
+        const description = decryptedData.data[0].descripcion;
+        document.getElementById("requisito-original").innerHTML = description;
+      } else {
+        console.warn("No description found in decryptedData.");
+        // Optionally, set a default message or handle the empty state
+        document.getElementById("requisito-original").innerHTML =
+          "No se encontró la descripción del requisito.";
+      }
+      return decryptedData.data;
+    } catch (error) {
+      console.error("Error loading initial data:", error);
+      this.showError(this.translations.get("errors.loading"));
+    }
   }
 
   renderRequirementType(isFunctional) {
@@ -332,7 +339,7 @@ class RequirementSuggestion {
 
 
   updateRequerimentModal(id_requisito, requisito, es_funcional, es_ambiguo) {
-    
+
     Swal.fire({
       title: "Actualizar requisito",
       html: `¿Desea modificar el requisito original?`,
@@ -348,61 +355,67 @@ class RequirementSuggestion {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(
-          `Actualizando requisito: ${requisito}`
+        console.log(`Actualizando requisito: ${requisito}`);
+        this.UpdateRequeriment(
+          id_requisito,
+          requisito,
+          es_funcional,
+          es_ambiguo
         );
-        this.UpdateRequeriment(id_requisito, requisito, es_funcional, es_ambiguo);
         location.reload();
-        
+
       }
     });
   }
 
   async UpdateRequeriment(id_requisito, requisito, es_funcional, es_ambiguo) {
     try {
+      const encryptedPayload = CryptoModule.encrypt({
+        id_requisito: id_requisito,
+        requisito: requisito,
+        es_funcional: es_funcional,
+        es_ambiguo: es_ambiguo,
+      });
 
-        const encryptedPayload = CryptoModule.encrypt({
-            id_requisito: id_requisito,
-            requisito: requisito,
-            es_funcional: es_funcional,
-            es_ambiguo: es_ambiguo,
-        });
-        
-
-        const response = await fetch(this.config.endpoints.update_original_requirement, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                encryptedData: encryptedPayload // Enviar el payload ya cifrado
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error de comunicación con el servidor: ${response.status}`);
+      const response = await fetch(
+        this.config.endpoints.update_original_requirement,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            encryptedData: encryptedPayload, // Enviar el payload ya cifrado
+          }),
         }
+      );
 
-        const resultEncrypt = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          `Error de comunicación con el servidor: ${response.status}`
+        );
+      }
 
-        if (!resultEncrypt.data) {
-             throw new Error("La respuesta del servidor no tiene el formato esperado.");
-        }
+      const resultEncrypt = await response.json();
 
-        // --- PROCESAMIENTO DE LA RESPUESTA ---
-        const decryptedString = CryptoModule.decrypt(resultEncrypt.data);
-        
-        // --- PASO DE DEPURACIÓN CRUCIAL ---
-        console.log("Datos descifrados:", decryptedString);
-        // el problema está en la función `encryptResponse` de tu PHP.
+      if (!resultEncrypt.data) {
+        throw new Error(
+          "La respuesta del servidor no tiene el formato esperado."
+        );
+      }
 
+      // --- PROCESAMIENTO DE LA RESPUESTA ---
+      const decryptedString = CryptoModule.decrypt(resultEncrypt.data);
+
+      // --- PASO DE DEPURACIÓN CRUCIAL ---
+      console.log("Datos descifrados:", decryptedString);
+      // el problema está en la función `encryptResponse` de tu PHP.
     } catch (error) {
-        console.error('Error en UpdateReviewer:', error.message);
-        // Muestra el error al usuario
-        // this.showErrorMessage('Error: ' + error.message);
+      console.error("Error en UpdateReviewer:", error.message);
+      // Muestra el error al usuario
+      // this.showErrorMessage('Error: ' + error.message);
     }
   }
-
 }
 
 // Inicialización cuando el DOM está listo

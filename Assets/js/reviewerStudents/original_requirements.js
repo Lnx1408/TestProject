@@ -43,14 +43,14 @@ class ReviewClassification {
           },
         },
         {
-          data: "is_functional",
+          data: "tipo",
           responsivePriority: 3,
           //title: this.translations.get('main_table.columns.type'),
           title: `<span data-i18n="create_classification.main_table.columns.type">Tipo</span>`,
           render: (data) => this.renderRequirementType(data),
         },
         {
-          data: "is_ambiguous",
+          data: "es_ambiguo",
           responsivePriority: 3,
           //title: this.translations.get('main_table.columns.is_ambiguous'),
           title: `<span data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</span>`,
@@ -231,26 +231,30 @@ class ReviewClassification {
     });
   }
 
-  renderRequirementType(isFunctional) {
+renderRequirementType(typeString) {
+    // console.log("typeString:", typeString); // Now this should show "Funcional" or "No Funcional"
+    const isFunctional = typeString === "Funcional";
     const typeClass = isFunctional ? "functional" : "non-functional";
-    const typeText = isFunctional ? "Funcional" : "No Funcional";
+    const typeText = typeString; // Use the string directly from the data
     return `<span class="requirement-type ${typeClass}">${typeText}</span>`;
-  }
+}
 
-  renderAmbiguousState(isAmbiguous) {
+  renderAmbiguousState(isAmbiguousNum) {
+    // console.log("isAmbiguousNum:", isAmbiguousNum); // Now this should show 0 or 1
+    const isAmbiguous = isAmbiguousNum === 1; // Check if it's 1
     const stateClass = isAmbiguous ? "yes" : "no";
     const icon = isAmbiguous ? "bx-check" : "bx-x";
     return `<span class="ambiguous-state ${stateClass}">
                     <i class='bx ${icon}'></i>
                     ${isAmbiguous ? "Sí" : "No"}
                 </span>`;
-  }
+}
 
   renderActions(row) {
     return `<div class="table-actions">
                     <button title="Ver revisiones" onclick="reviewClassification.viewDetails('${row.id_requisito}')" 
                             class="btn-action">
-                        <i class='ri-search-eye-line'></i>
+                        <i class='bx bx-message'></i>
                     </button>
                 </div>`;
   }
