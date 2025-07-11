@@ -362,7 +362,6 @@ class RequirementSuggestion {
           es_funcional,
           es_ambiguo
         );
-        location.reload();
 
       }
     });
@@ -410,11 +409,47 @@ class RequirementSuggestion {
       // --- PASO DE DEPURACIÓN CRUCIAL ---
       console.log("Datos descifrados:", decryptedString);
       // el problema está en la función `encryptResponse` de tu PHP.
+      this.showSuccessMessage(`Requisito original actualizado correctamente`);
+
     } catch (error) {
       console.error("Error en UpdateReviewer:", error.message);
+      this.showErrorMessage(`Error al actualizar el requisito original`);
       // Muestra el error al usuario
       // this.showErrorMessage('Error: ' + error.message);
     }
+  }
+
+  showSuccessMessage(message) {
+        return Swal.fire({
+            icon: 'success',
+            title: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+    }
+
+    showErrorMessage(message) {
+        return Swal.fire({
+            icon: 'error',
+            title: this.translations.get('messages.error'),
+            text: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
   }
 }
 

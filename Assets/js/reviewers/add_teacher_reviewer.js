@@ -184,7 +184,7 @@ const TableModule = {
         );
         
         this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_docente);
-        location.reload();
+        
         
       }
     });
@@ -384,8 +384,11 @@ const TableModule = {
         // --- PASO DE DEPURACIÓN CRUCIAL ---
         console.log("Datos descifrados:", decryptedString);
         // el problema está en la función `encryptResponse` de tu PHP.
+        this.showSuccessMessage(`Actualización exitosa`);
+        // Actualizar la tabla después de la modificación
 
     } catch (error) {
+      this.showErrorMessage(`Error al actualizar el rol`);
         console.error('Error en UpdateReviewer:', error.message);
         // Muestra el error al usuario
         // this.showErrorMessage('Error: ' + error.message);
@@ -468,6 +471,39 @@ const TableModule = {
       window.removeEventListener("resize", this.debounceResize);
     }
   },
+
+  showSuccessMessage(message) {
+        return Swal.fire({
+            icon: 'success',
+            title: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+    },
+
+    showErrorMessage(message) {
+        return Swal.fire({
+            icon: 'error',
+            title: this.translations.get('messages.error'),
+            text: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
 };
 
 // Módulo principal de funcionalidades
