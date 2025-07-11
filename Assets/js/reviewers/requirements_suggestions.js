@@ -48,7 +48,7 @@ class RequirementSuggestion {
         },
         {
           data: "es_funcional",
-          responsivePriority: 3,
+          responsivePriority: 4,
           //title: this.translations.get('main_table.columns.type'),
           title: `<span data-i18n="create_classification.main_table.columns.type">Tipo</span>`,
           render: (data) => this.renderRequirementType(data),
@@ -68,6 +68,13 @@ class RequirementSuggestion {
           render: function (data, type, row) {
             return `<div class="ambiguous-state">${data}</div>`;
           },
+        },
+
+        {
+          data: "retroalimentacion",
+          responsivePriority: 6,
+          title: `<span>Comentario del estudiante</span>`,
+          className: "dt-left",
         },
         {
           data: null,
@@ -234,7 +241,7 @@ class RequirementSuggestion {
         },
         {
           targets: [1],
-          width: "50%",
+          width: "75%",
         },
       ],
       processing: true,
@@ -262,7 +269,7 @@ class RequirementSuggestion {
       const data = await response.json();
       const decryptedData = CryptoModule.decrypt(data.data);
 
-      console.log(this.config.params.requisito + ' | ' + decryptedData);
+      console.log(this.config.params.requisito + " | " + decryptedData);
 
       if (!decryptedData.status) {
         throw new Error(decryptedData.message);
@@ -337,9 +344,7 @@ class RequirementSuggestion {
     };
   }
 
-
   updateRequerimentModal(id_requisito, requisito, es_funcional, es_ambiguo) {
-
     Swal.fire({
       title: "Actualizar requisito",
       html: `¿Desea modificar el requisito original?`,
@@ -362,7 +367,6 @@ class RequirementSuggestion {
           es_funcional,
           es_ambiguo
         );
-
       }
     });
   }
@@ -410,7 +414,6 @@ class RequirementSuggestion {
       console.log("Datos descifrados:", decryptedString);
       // el problema está en la función `encryptResponse` de tu PHP.
       this.showSuccessMessage(`Requisito original actualizado correctamente`);
-
     } catch (error) {
       console.error("Error en UpdateReviewer:", error.message);
       this.showErrorMessage(`Error al actualizar el requisito original`);
@@ -420,32 +423,32 @@ class RequirementSuggestion {
   }
 
   showSuccessMessage(message) {
-        return Swal.fire({
-            icon: 'success',
-            title: message,
-            confirmButtonColor: '#1976D2',
-            customClass: {
-                container: 'game-type-modal',
-                popup: 'game-levels-popup',
-            },
-        }).then((result) => {
+    return Swal.fire({
+      icon: "success",
+      title: message,
+      confirmButtonColor: "#1976D2",
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+    }).then((result) => {
       if (result.isConfirmed) {
         location.reload(); // Recargar la página al confirmar
       }
     });
-    }
+  }
 
-    showErrorMessage(message) {
-        return Swal.fire({
-            icon: 'error',
-            title: this.translations.get('messages.error'),
-            text: message,
-            confirmButtonColor: '#1976D2',
-            customClass: {
-                container: 'game-type-modal',
-                popup: 'game-levels-popup',
-            },
-        }).then((result) => {
+  showErrorMessage(message) {
+    return Swal.fire({
+      icon: "error",
+      title: this.translations.get("messages.error"),
+      text: message,
+      confirmButtonColor: "#1976D2",
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+    }).then((result) => {
       if (result.isConfirmed) {
         location.reload(); // Recargar la página al confirmar
       }

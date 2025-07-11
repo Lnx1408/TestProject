@@ -42,6 +42,7 @@
                                 <th data-i18n="create_classification.main_table.columns.type">Tipo</th>
                                 <th data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</th>
                                 <th>Estudiante Revisor</th>
+                                <th>Comentario Estudiante</th>
                                 <th data-i18n="create_classification.main_table.columns.actions">Acciones</th>
                             </tr>
                         </thead>

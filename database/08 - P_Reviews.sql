@@ -429,7 +429,7 @@ BEGIN
     END IF;
 
     -- Obtener las partidas con la información requerida
-	SELECT rs.id_requisito, rs.descripcion, rs.es_ambiguo, rs.es_funcional, concat(j.nombres, ' ', j.apellidos) as revisor
+	SELECT rs.id_requisito, rs.descripcion, rs.es_ambiguo, rs.es_funcional, concat(j.nombres, ' ', j.apellidos) as revisor, rs.retroalimentacion
 	FROM
 	requisitos_sugerencias rs
 	INNER JOIN jugadores j
