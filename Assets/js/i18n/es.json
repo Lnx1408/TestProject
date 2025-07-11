@@ -7,7 +7,7 @@
         "profile": "Perfil",
         "analytics": "Estadísticas",
         "analyticsStudent": "Análisis",
-        "reviewersStudents": "Revisiones",
+        "reviewerStudents": "Revisiones",
         "reviewers":"Revisores",
         "teachers":"Docentes",
         "settings": "Ajustes",
@@ -1669,7 +1669,7 @@
         "options": {
             "create": {
                 "title": "Agregar Estudiante Revisor",
-                "description": "Agregar usuario con rol \"revisor\""
+                "description": "Agrega estudiantes con rol de \"revisor\" a tus partidas"
             },
             "reviews": {
                 "title": "Ver Revisiones de Estudiantes",

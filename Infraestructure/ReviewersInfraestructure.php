@@ -164,12 +164,12 @@ class ReviewersInfraestructure extends Mysql
 	}
 
 
-	public function get_original_requirementDB(int $requisito, int $idJugador)
+	public function get_original_requirementDB(string $requisito, int $idJugador)
 	{
 		try {
 			$responseAnalyticsJugadores = $this->executeProcedureWithParametersOut(
 				'sp_get_original_requirement',
-				[$requisito, $idJugador],
+				[$idJugador, $requisito],
 				outParams: ['codigo', 'mensaje']  // Parámetros de salida
 			);
 			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 1) {

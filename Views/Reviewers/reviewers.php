@@ -39,8 +39,8 @@
                                 <i class='bx bx-user-check'></i>
                             </div>
                             <div class="option-info">
-                                <h3>Agregar Docentes revisores</h3>
-                                <p >Lista de docentes que pueden acceder a tus partidas para revisiones</p>
+                                <h3>Agregar Docentes Revisores</h3>
+                                <p >Lista de docentes que pueden acceder a tus partidas para revisiones hechas por tus estudiantes</p>
                             </div>
                             <div class="option-chevron">
                                 <i class='bx bx-chevron-right'></i>

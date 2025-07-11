@@ -58,10 +58,10 @@ $menuItems = [
       'text' => 'Análisis',
       'roles' => [SessionManager::ROLE_STUDENT]
    ],
-   'reviewersStudents' => [
+   'reviewerStudents' => [
       'icon' => 'ri-user-search-fill',
       'text' => 'Revisiones',
-      'roles' => [SessionManager::ROLE_STUDENT]
+      'roles' => [SessionManager::ROLE_STUDENT],
    ],
 ];
 $usersManagement = [

@@ -159,6 +159,11 @@ const TableModule = {
 
 
   updateToReviewer(nombres, apellidos, id_jugador, rol_docente) {
+    if (rol_docente === "DOCENTE") {
+          rol_docente = "REVISOR";
+        }else{
+          rol_docente = "DOCENTE";
+        }
     Swal.fire({
       title: "Cambiar Rol",
       html: `¿Desea cambiar el rol de <b>${nombres} ${apellidos}</b> como <b>${rol_docente}</b> de la partida <b>${this.config.params.gameCode}</b>?`,
@@ -166,7 +171,7 @@ const TableModule = {
       showCancelButton: true,
       confirmButtonColor: "#1976D2",
       cancelButtonColor: "#D32F2F",
-      confirmButtonText: "Sí, Agregar",
+      confirmButtonText: "Sí, Cambiar",
       cancelButtonText: "No, cancelar",
       customClass: {
         container: "analytics-type-modal",
@@ -177,12 +182,9 @@ const TableModule = {
         console.log(
           `Cambiando rol a: ${rol_docente}`
         );
-        console.log('Game Code:', this.config.params.gameCode);
-        console.log('ID Jugador:', id_jugador);
-        console.log('Rol Docente:', rol_docente);
-
+        
         this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_docente);
-        this.reload();
+        
         
       }
     });
@@ -249,7 +251,7 @@ const TableModule = {
       },
       {
         data: null,
-        title: `<span>Estado</span> `,
+        title: `<span>Rol</span> `,
         className: "dt-center",
         width: "15%",
         responsivePriority: 2,
@@ -382,8 +384,11 @@ const TableModule = {
         // --- PASO DE DEPURACIÓN CRUCIAL ---
         console.log("Datos descifrados:", decryptedString);
         // el problema está en la función `encryptResponse` de tu PHP.
+        this.showSuccessMessage(`Actualización exitosa`);
+        // Actualizar la tabla después de la modificación
 
     } catch (error) {
+      this.showErrorMessage(`Error al actualizar el rol`);
         console.error('Error en UpdateReviewer:', error.message);
         // Muestra el error al usuario
         // this.showErrorMessage('Error: ' + error.message);
@@ -466,6 +471,39 @@ const TableModule = {
       window.removeEventListener("resize", this.debounceResize);
     }
   },
+
+  showSuccessMessage(message) {
+        return Swal.fire({
+            icon: 'success',
+            title: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+    },
+
+    showErrorMessage(message) {
+        return Swal.fire({
+            icon: 'error',
+            title: this.translations.get('messages.error'),
+            text: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
 };
 
 // Módulo principal de funcionalidades

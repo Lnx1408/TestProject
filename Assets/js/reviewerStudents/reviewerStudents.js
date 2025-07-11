@@ -1,8 +1,8 @@
-class MyGamesManager {
+class ReviewerStudents {
     constructor() {
         this.config = {
             endpoints: {
-                getGames: `${base_url}/Analytics/get_my_games`,
+                getGames: `${base_url}/ReviewerStudents/get_partidas_estudiante_revisor`,
             },
             initialLoadLimit: 10,  // Límite inicial de cards a mostrar
             loadMoreLimit: 5,      // Cantidad de cards adicionales a cargar con "Ver más"
@@ -176,7 +176,10 @@ class MyGamesManager {
                         <i class='bx bx-calendar'></i>
                         <span>${formattedDate}</span>
                     </div>
-                    
+                    <div class="game-detail">
+                        <i class='bx bx-user'></i>
+                        <span>${game.totalStudents} ${this.translations.get('cards.students')}</span>
+                    </div>
                 </div>
             </div>
         `;
@@ -198,7 +201,7 @@ class MyGamesManager {
         });
 
         if (result.isConfirmed) {
-            const baseUrl = `${base_url}/reviewers/review_classification`;
+            const baseUrl = `${base_url}/reviewerStudents/original_requirements`;
             window.location.href = `${baseUrl}?gamecode=${gameCode}`;
         }
     }
@@ -432,5 +435,5 @@ class MyGamesManager {
 
 // Inicialización cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', () => {
-    window.myGamesManager = new MyGamesManager();
+    window.reviewerStudents = new ReviewerStudents();
 });

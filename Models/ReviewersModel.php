@@ -79,10 +79,14 @@ class ReviewersModel extends ReviewersInfraestructure
             $decryptedData = decryptData($postData['encryptedData']);
             $data = json_decode($decryptedData, true);
 
-            return $this->get_original_requirementDB('1', 1);
+            $requisito = $data['requisito'];
+            return $this->get_original_requirementDB($requisito, $idJugador
+            );
         } else {
-            return $this->get_original_requirementDB('1', 1);
-            
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+            ];
         }
     }
 
