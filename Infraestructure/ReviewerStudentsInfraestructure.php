@@ -125,4 +125,41 @@ class ReviewerStudentsInfraestructure extends Mysql
 		return $arrResponse;
 	}
 
+	public function create_suggestion_requirementsBD(int $id_requisito, string $description, string $es_ambiguo, string $tipo, string $feedback, int $id_revisor)
+	{
+		try {
+			$response = $this->executeProcedureWithParametersOut(
+				'sp_create_suggestion_requirements',
+				[$id_requisito, $description, $es_ambiguo, $tipo, $feedback, $id_revisor],
+				['codigo', 'mensaje', 'id_requisito']  // Parámetros de salida
+			);
+			if (!empty($response) && $response['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'success' => true,
+					'requirement' => $response['results'],
+					'outputs' => [
+						'id_requeriment' => $response['outParams']['id_requisito'],
+					],
+					'message' => $response['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'success' => false,
+					'attemptDetails' => $response['results'],
+					'headerDetails' => [],
+					'message' => $response['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'success' => false,
+				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+		return $arrResponse;
+	}
+
 }

@@ -43,4 +43,30 @@ class ReviewerStudentsModel extends ReviewerStudentsInfraestructure
         }
     }
 
+    public function create_suggestion_requirements($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+            // Validar y procesar los datos
+            $es_ambiguo = $data['isAmbiguous'];
+            $es_funcional = $data['isFunctional'];
+
+            // Llamar a la función de base de datos con los datos procesados
+            return $this->create_suggestion_requirementsBD(
+                $data['id'],
+                $data['description'] ?? '', // Descripción, se asegura de no ser nula
+                $es_ambiguo,
+                $es_funcional,
+                $data['feedback'] ?? '',    // Feedback, se asegura de no ser nulo
+                $idJugador
+            );
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+            ];
+        }
+    }
+
 }

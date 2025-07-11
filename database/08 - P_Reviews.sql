@@ -730,3 +730,99 @@ BEGIN
     SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
 END //
 DELIMITER ;
+
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_create_suggestion_requirements //
+CREATE PROCEDURE sp_create_suggestion_requirements(
+    -- Parámetros de entrada
+	IN p_id_requisito INT,
+	IN p_descripcion VARCHAR(500), 
+	IN p_es_ambiguo INT, 
+    IN p_tipo_requisito INT,
+	IN p_retroalimentacion VARCHAR(500),
+    IN p_id_revisor INT,
+   -- Parámetros de salida
+	OUT p_codigo_retorno INT,
+	OUT p_mensaje_retorno VARCHAR(500), 
+	OUT p_id_requisito_out INT
+)
+BEGIN
+	-- Declaración de variables locales
+	DECLARE v_usuario_existe INT DEFAULT 0;
+    DECLARE v_usuario_creador INT DEFAULT 0;
+    
+   -- Manejo de errores SQL
+   DECLARE EXIT HANDLER FOR SQLEXCEPTION
+   BEGIN
+	   GET DIAGNOSTICS CONDITION 1
+					@sqlstate = RETURNED_SQLSTATE,
+					@errno = MYSQL_ERRNO,
+					@text = MESSAGE_TEXT;
+       SET p_codigo_retorno = -1;
+	   SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+       ROLLBACK;
+   END;
+	
+  bloque_principal: BEGIN
+   -- Inicialización de variables de salida
+   SET p_codigo_retorno = 0;
+   SET p_mensaje_retorno = 'Proceso iniciado correctamente';
+
+	IF p_id_revisor IS NULL OR p_id_revisor <= 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El ID de usuario no es válido';
+		LEAVE bloque_principal;
+	END IF;
+
+	SELECT COUNT(*) INTO v_usuario_existe
+	   FROM jugadores 
+	   WHERE id_jugador = p_id_revisor;
+       
+	SELECT id_usuario_creador INTO v_usuario_creador
+	   FROM reqscapetest_db.requisitos
+	   WHERE id_requisito = p_id_requisito;
+       
+	IF v_usuario_creador IS NULL OR v_usuario_creador <= 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El ID de usuario creador no es válido';
+		LEAVE bloque_principal;
+	END IF;
+
+	-- Validaciones de parámetros de entrada
+	IF v_usuario_existe IS NULL OR v_usuario_existe <= 0 THEN
+       SET p_codigo_retorno = -1;
+       SET p_mensaje_retorno = 'El usuario no existe';
+		LEAVE bloque_principal;
+	END IF;
+	
+	START TRANSACTION;
+
+		INSERT INTO requisitos_sugerencias(
+			id_requisito, descripcion, es_ambiguo, retroalimentacion, es_funcional, id_usuario_revisor, id_usuario_creador
+		)
+		VALUES (
+			p_id_requisito, p_descripcion, p_es_ambiguo, p_retroalimentacion, p_tipo_requisito, p_id_revisor, v_usuario_creador
+		);
+
+		-- Obtener el ID del intento recién insertado
+		SET p_id_requisito_out = LAST_INSERT_ID();
+		
+        SELECT 
+			r.id_requisito as id,
+			r.descripcion as description,
+			r.es_funcional as is_functional,
+			r.es_ambiguo as is_ambiguous,
+			r.retroalimentacion as feedback,
+			r.id_usuario_creador as created_by
+		FROM requisitos_sugerencias r
+		where r.id_requisito = p_id_requisito_out
+		ORDER BY 1 DESC;
+        
+    COMMIT;
+	SET p_codigo_retorno = 1;
+	SET p_mensaje_retorno = 'Requisito registrado exitosamente';
+   END bloque_principal; 
+END //
+DELIMITER ;

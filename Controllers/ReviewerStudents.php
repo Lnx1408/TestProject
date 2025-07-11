@@ -47,9 +47,7 @@ class ReviewerStudents extends AuthController{
 		$data['page_css'] =  array(
 			'game/game-focal.css',
 			'levels/levels-base.css',
-			'levels/levels-focal.css',
 			'levels/create-clasification.css',
-			'levels/create-construction.css',
 			'levels/create-construction-form.css',
 			'reviewers/original_requirements.css',
 			
@@ -118,6 +116,34 @@ class ReviewerStudents extends AuthController{
 			'data' => $encryptedResponse // Tu función de encriptación
 		]);
 		exit();
+	}
+
+	public function create_suggestion_requirements()
+	{
+		try {
+			$idJugador = $this->getUserData('id'); // Por ahora usamos 1 como ejemplo
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+			$response = $this->model->create_suggestion_requirements($postData, $idJugador);
+		} catch (Error $e) {
+			// Captura errores fatales como "Call to undefined method"
+			$response = [
+				'success' => false,
+				'message' => 'Error al crear el requisito: ' . $e->getMessage()
+			];
+		} catch (Exception $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al crear el requisito: ' . $e->getMessage()
+			];
+		}
+		//echo json_encode($response);
+		$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse // Tu función de encriptación
+		]);
+		die();
 	}
 	
 }
