@@ -310,6 +310,43 @@ class ReviewersInfraestructure extends Mysql
 	}
 
 	
+	public function create_feedback_suggestionsBD(int $id_requisito, string $codigo_partida, int $id_revisor, int $idJugador, string $feedback)
+	{
+		try {
+			$response = $this->executeProcedureWithParametersOut(
+				'sp_create_feedback_suggestions',
+				[$id_requisito, $codigo_partida, $id_revisor, $idJugador, $feedback],
+				['codigo', 'mensaje']  // Parámetro de salida actualizado
+			);
+
+			if (!empty($response) && $response['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'success' => true,
+					'requirement' => $response['results'],
+					'message' => $response['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'success' => false,
+					'attemptDetails' => $response['results'],
+					'headerDetails' => [],
+					'message' => $response['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'success' => false,
+				'message' => 'Error al actualizar el requisito: ' . $e->getMessage(),
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
+
+	
 	public function update_teacher_reviewerBD(string $codigoPartida, int $idJugador, string $rolDocente)
 	{
 		try {

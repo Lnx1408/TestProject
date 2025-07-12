@@ -161,6 +161,35 @@ class ReviewersModel extends ReviewersInfraestructure
         }
     }
 
+
+    public function create_feedback_suggestions($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            // Validar y procesar los datos
+            
+            $id_requisito = $data['id_requisito'];
+            $codigo_partida = $data['codigo_partida'];
+            $id_revisor = $data['id_revisor'];
+            $feedback = $data['feedback'];
+            // Llamar a la función de base de datos con los datos procesados
+            return $this->create_feedback_suggestionsBD(
+                id_requisito: $id_requisito,
+                codigo_partida: $codigo_partida,
+                id_revisor: $id_revisor,
+                idJugador: $idJugador,
+                feedback: $feedback,
+            );
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+            ];
+        }
+    }
+
     public function update_teacher_reviewer($postData)
     {
         if (isset($postData['encryptedData'])) {

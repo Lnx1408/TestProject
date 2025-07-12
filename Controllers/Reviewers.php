@@ -486,6 +486,38 @@ class Reviewers extends AuthController{
 		die();
 	}
 
+	public function create_feedback_suggestions()
+	{
+		try {
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+			$idJugador = $this->getUserData('id');
+			
+			if (!isset($postData['encryptedData'])) {
+				throw new Exception('Datos no recibidos');
+			}
+
+			$response = $this->model->create_feedback_suggestions($postData, $idJugador);
+		} catch (Error $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al dar feedback: ' . $e->getMessage()
+			];
+		} catch (Exception $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error dar feedback: ' . $e->getMessage()
+			];
+		}
+
+		$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse
+		]);
+		die();
+	}
+
 	public function update_teacher_reviewer()
 	{
 		try {

@@ -6,7 +6,7 @@ class RequirementSuggestion {
       },
       endpoints: {
         get_requirements_suggestions: `${base_url}/Reviewers/get_requirements_suggestions_collab`,
-        get_original_requirement: `${base_url}/Reviewers/get_original_requirement`,
+        create_feedback_suggestions: `${base_url}/Reviewers/create_feedback_suggestions`,
         update_original_requirement: `${base_url}/Reviewers/update_original_requirement`,
       },
       params: {
@@ -93,7 +93,6 @@ class RequirementSuggestion {
 
     this.initializeParams();
     this.initializeTables();
-    this.obtenerRequisitoOriginal();
   }
 
   getUrlParameter(name) {
@@ -256,51 +255,6 @@ class RequirementSuggestion {
     });
   }
 
-  async obtenerRequisitoOriginal() {
-    try {
-      const response = await fetch(
-        this.config.endpoints.get_original_requirement,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            encryptedData: CryptoModule.encrypt({
-              requisito: this.config.params.requisito,
-            }),
-          }),
-        }
-      );
-
-      const data = await response.json();
-      const decryptedData = CryptoModule.decrypt(data.data);
-
-      console.log(this.config.params.requisito + " | " + decryptedData);
-
-      if (!decryptedData.status) {
-        throw new Error(decryptedData.message);
-      }
-
-      if (
-        decryptedData &&
-        decryptedData.data &&
-        decryptedData.data.length > 0
-      ) {
-        const description = decryptedData.data[0].descripcion;
-        document.getElementById("requisito-original").innerHTML = description;
-      } else {
-        console.warn("No description found in decryptedData.");
-        // Optionally, set a default message or handle the empty state
-        document.getElementById("requisito-original").innerHTML =
-          "No se encontró la descripción del requisito.";
-      }
-      return decryptedData.data;
-    } catch (error) {
-      console.error("Error loading initial data:", error);
-      this.showError(this.translations.get("errors.loading"));
-    }
-  }
 
   renderRequirementType(isFunctional) {
     const typeClass = isFunctional ? "functional" : "non-functional";
@@ -319,7 +273,7 @@ class RequirementSuggestion {
 
   renderActions(row) {
     return `<div class="table-actions">
-                    <button title="Dar Feedback" onclick="requirementSuggestion.viewDetails('${row.id_requisito}','${row.id_revisor}')" 
+                    <button title="Dar Feedback" onclick="requirementSuggestion.showCreateFeedbackModal('${row.id_requisito_sugerencia}','${row.id_revisor}')" 
                             class="btn-action">
                         <i class='bx bx-message'></i>
                     </button>
@@ -422,6 +376,93 @@ class RequirementSuggestion {
       this.showErrorMessage(`Error al actualizar el requisito original`);
       // Muestra el error al usuario
       // this.showErrorMessage('Error: ' + error.message);
+    }
+  }
+  
+  showCreateFeedbackModal(id_requisito,id_revisor) {
+    Swal.fire({
+      title: "Dar Feedback al Estudiante",
+      html: this.createFormModalContent(id_requisito,id_revisor),
+      width: "600px",
+      showCancelButton: true,
+      confirmButtonText: "Agregar Revisión",
+      cancelButtonText: this.translations.get("create_modal.buttons.cancel"),
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+      preConfirm: () => this.validateAndGetFormData(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.createNewRequirement(result.value);
+      }
+    });
+  }
+
+  createFormModalContent(id_requisito,id_revisor) {
+    return `
+            <form id="editRequirementForm" class="requirement-form">
+            <input type="hidden" id="reqId" value="${id_requisito}">
+            <input type="hidden" id="revId" value="${id_revisor}">
+                <div class="form-group">
+                <b><label>Comentario</label><b/>
+                <textarea id="reqFeedback" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        `;
+  }
+
+  validateAndGetFormData(isEditing = false) {
+    const id_requisito = document.getElementById("reqId").value;
+    const id_revisor = document.getElementById("revId").value;
+    const codigo_partida = this.config.params.gameCode;
+    const feedback = document.getElementById("reqFeedback").value.trim();
+
+    if (!feedback) {
+      Swal.showValidationMessage(
+        "El comentario es obligatorio."
+      );
+      return false;
+    }
+
+    const data = {
+      id_requisito,
+      id_revisor,
+      codigo_partida,
+      feedback,
+    };
+
+    return data;
+  }
+
+  async createNewRequirement(data) {
+    try {
+      const response = await fetch(this.config.endpoints.create_feedback_suggestions, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          encryptedData: CryptoModule.encrypt(data),
+        }),
+      });
+
+      const resultEncript = await response.json();
+      const result = CryptoModule.decrypt(resultEncript.data);
+
+      console.log("Response:", result);
+      if (
+        result.success
+      ) {
+        this.showSuccessMessage(
+          "Feedback enviado."
+        );
+      } else {
+        throw new Error(result.message || "An unknown error occurred.");
+      }
+    } catch (error) {
+      console.log("Error:", error.message);
+      this.showErrorMessage(this.translations.get("messages.error_message"));
     }
   }
 

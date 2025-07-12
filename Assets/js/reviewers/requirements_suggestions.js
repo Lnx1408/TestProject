@@ -8,6 +8,7 @@ class RequirementSuggestion {
         get_requirements_suggestions: `${base_url}/Reviewers/get_requirements_suggestions`,
         get_original_requirement: `${base_url}/Reviewers/get_original_requirement`,
         update_original_requirement: `${base_url}/Reviewers/update_original_requirement`,
+        create_feedback_suggestions: `${base_url}/Reviewers/create_feedback_suggestions`,
       },
       params: {
         // Parámetro que necesitamos enviar
@@ -318,7 +319,7 @@ class RequirementSuggestion {
                             class="btn-action">
                         <i class='bx bx-edit'></i>
                     </button>
-                    <button title="Dar Feedback" onclick="requirementSuggestion.viewDetails('${row.id_requisito}','${row.id_revisor}')" 
+                    <button title="Dar Feedback" onclick="requirementSuggestion.showCreateFeedbackModal('${row.id_requisito_sugerencia}','${row.id_revisor}')" 
                             class="btn-action">
                         <i class='bx bx-message'></i>
                     </button>
@@ -423,6 +424,94 @@ class RequirementSuggestion {
       // this.showErrorMessage('Error: ' + error.message);
     }
   }
+
+  showCreateFeedbackModal(id_requisito,id_revisor) {
+    Swal.fire({
+      title: "Dar Feedback al Estudiante",
+      html: this.createFormModalContent(id_requisito,id_revisor),
+      width: "600px",
+      showCancelButton: true,
+      confirmButtonText: "Agregar Revisión",
+      cancelButtonText: this.translations.get("create_modal.buttons.cancel"),
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+      preConfirm: () => this.validateAndGetFormData(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.createNewRequirement(result.value);
+      }
+    });
+  }
+
+  createFormModalContent(id_requisito,id_revisor) {
+    return `
+            <form id="editRequirementForm" class="requirement-form">
+            <input type="hidden" id="reqId" value="${id_requisito}">
+            <input type="hidden" id="revId" value="${id_revisor}">
+                <div class="form-group">
+                <b><label>Comentario</label><b/>
+                <textarea id="reqFeedback" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        `;
+  }
+
+  validateAndGetFormData(isEditing = false) {
+    const id_requisito = document.getElementById("reqId").value;
+    const id_revisor = document.getElementById("revId").value;
+    const codigo_partida = this.config.params.gameCode;
+    const feedback = document.getElementById("reqFeedback").value.trim();
+
+    if (!feedback) {
+      Swal.showValidationMessage(
+        "El comentario es obligatorio."
+      );
+      return false;
+    }
+
+    const data = {
+      id_requisito,
+      id_revisor,
+      codigo_partida,
+      feedback,
+    };
+
+    return data;
+  }
+
+  async createNewRequirement(data) {
+    try {
+      const response = await fetch(this.config.endpoints.create_feedback_suggestions, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          encryptedData: CryptoModule.encrypt(data),
+        }),
+      });
+
+      const resultEncript = await response.json();
+      const result = CryptoModule.decrypt(resultEncript.data);
+
+      console.log("Response:", result);
+      if (
+        result.success
+      ) {
+        this.showSuccessMessage(
+          "Feedback enviado."
+        );
+      } else {
+        throw new Error(result.message || "An unknown error occurred.");
+      }
+    } catch (error) {
+      console.log("Error:", error.message);
+      this.showErrorMessage(this.translations.get("messages.error_message"));
+    }
+  }
+
 
   showSuccessMessage(message) {
     return Swal.fire({
