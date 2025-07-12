@@ -1,16 +1,16 @@
-class ReviewClassification {
+class RequirementSuggestion {
   constructor() {
     this.config = {
       selectors: {
         mainContainer: "#main",
       },
       endpoints: {
-        getRequirement: `${base_url}/ReviewerStudents/get_original_requirement_reviewer`,
-        createSuggestionRequirements: `${base_url}/ReviewerStudents/create_suggestion_requirements`,
+        get_requirements_suggestions: `${base_url}/ReviewerStudentsMenu/get_feedback_suggestions`,
       },
       params: {
         // Parámetro que necesitamos enviar
         gameCode: null,
+        requisito: null,
       },
     };
 
@@ -45,8 +45,8 @@ class ReviewClassification {
           },
         },
         {
-          data: "tipo",
-          responsivePriority: 3,
+          data: "es_funcional",
+          responsivePriority: 4,
           //title: this.translations.get('main_table.columns.type'),
           title: `<span data-i18n="create_classification.main_table.columns.type">Tipo</span>`,
           render: (data) => this.renderRequirementType(data),
@@ -57,6 +57,18 @@ class ReviewClassification {
           //title: this.translations.get('main_table.columns.is_ambiguous'),
           title: `<span data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</span>`,
           render: (data) => this.renderAmbiguousState(data),
+        },
+        {
+          data: "requisito_original",
+          responsivePriority: 6,
+          title: `<span>Requisito Original</span>`,
+          className: "dt-left",
+        },
+        {
+          data: "retroalimentacion",
+          responsivePriority: 7,
+          title: `<span>Mi Comentario</span>`,
+          className: "dt-left",
         },
         {
           data: null,
@@ -85,25 +97,27 @@ class ReviewClassification {
       console.error("No se encontró el código de juego en la URL");
       return false;
     }
+    const requisito = this.getUrlParameter("Requisito");
+    if (!gameCode) {
+      console.error("No se encontró el id requisito en la URL");
+      return false;
+    }
     this.config.params.gameCode = gameCode;
-    return true;
-  }
-  modificarTituloPagina() {
-    document.getElementById("page-title-r").innerHTML =
-      "Requisitos de la partida: <b>" + this.config.params.gameCode + "</b>";
+    this.config.params.requisito = requisito;
     return true;
   }
 
   initializeTables() {
     this.elements.selectedTable = $("#existingRequirementsTable").DataTable({
       ajax: {
-        url: this.config.endpoints.getRequirement,
+        url: this.config.endpoints.get_requirements_suggestions,
         type: "POST",
         //dataSrc: 'data'
         data: (d) => {
           const requestData = {
             ...d,
             gamecode: this.config.params.gameCode,
+            requisito: this.config.params.requisito,
           };
           return JSON.stringify({
             encryptedData: CryptoModule.encrypt(requestData),
@@ -118,9 +132,6 @@ class ReviewClassification {
 
             const decryptedData = CryptoModule.decrypt(response.data);
 
-            console.log(this.config.params.gameCode);
-            console.log("Decrypted Data:", decryptedData);
-
             if (!decryptedData) {
               throw new Error(
                 this.translations.get("errors.messages.error_loading")
@@ -134,7 +145,9 @@ class ReviewClassification {
               );
             }
 
+            console.log(decryptedData);
             return decryptedData.data || [];
+            
           } catch (error) {
             console.error("Error processing data:", error);
             this.showErrorMessage(this.translations.get("errors.general"));
@@ -224,7 +237,7 @@ class ReviewClassification {
         },
         {
           targets: [1],
-          width: "50%",
+          width: "75%",
         },
       ],
       processing: true,
@@ -232,17 +245,14 @@ class ReviewClassification {
     });
   }
 
-  renderRequirementType(typeString) {
-    // console.log("typeString:", typeString); // Now this should show "Funcional" or "No Funcional"
-    const isFunctional = typeString === "Funcional";
+
+  renderRequirementType(isFunctional) {
     const typeClass = isFunctional ? "functional" : "non-functional";
-    const typeText = typeString; // Use the string directly from the data
+    const typeText = isFunctional ? "Funcional" : "No Funcional";
     return `<span class="requirement-type ${typeClass}">${typeText}</span>`;
   }
 
-  renderAmbiguousState(isAmbiguousNum) {
-    // console.log("isAmbiguousNum:", isAmbiguousNum); // Now this should show 0 or 1
-    const isAmbiguous = isAmbiguousNum === 1; // Check if it's 1
+  renderAmbiguousState(isAmbiguous) {
     const stateClass = isAmbiguous ? "yes" : "no";
     const icon = isAmbiguous ? "bx-check" : "bx-x";
     return `<span class="ambiguous-state ${stateClass}">
@@ -252,17 +262,16 @@ class ReviewClassification {
   }
 
   renderActions(row) {
-    return `
-            <div class="table-actions">
-                        <button class="btn-md" title="Hacer Revisión"
-                            onclick="reviewClassification.showCreateModal('${row.id_requisito}','${row.descripcion}', '${row.es_ambiguo}', '${row.tipo}'); event.stopPropagation();">
-                            <i class='bx bx-message'></i>
-                        </button>
-                    </div>`;
+    return `<div class="table-actions">
+                    <button title="Ver Feedback" onclick="requirementSuggestion.viewDetails('${row.id_requisito_sugerencia}')" 
+                            class="btn-action">
+                        <i class='bx bx-message'></i>
+                    </button>
+                </div>`;
   }
   viewDetails(id_requisito) {
     // Redirigir a la página de detalles
-    window.location.href = `${base_url}/Reviewers/requirements_suggestions?gamecode=${encodeURIComponent(
+    window.location.href = `${base_url}/reviewerStudentsMenu/feedback_suggestions_details?gamecode=${encodeURIComponent(
       this.config.params.gameCode
     )}&Requisito=${encodeURIComponent(id_requisito)}`;
   }
@@ -282,73 +291,88 @@ class ReviewClassification {
     };
   }
 
-  createFormModalContent(id_requisito, descripcion, es_ambiguo, tipo) {
-     const isAmbiguousChecked = es_ambiguo === '1' ? 'checked' : '';
-     const isFunctionalChecked = tipo === "Funcional" ? 'checked' : '';
-    return `
-            <form id="editRequirementForm" class="requirement-form">
-            <input type="hidden" id="reqId" value="${id_requisito}">
-                <div class="form-group"><b>
-                    <label>${this.translations.get('create_modal.form.description') || 'Descripción del Requisito'}</label></b>
-                    <textarea id="reqDescription" class="form-control" rows="3">${descripcion}</textarea>
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-container"><b>
-                        ${this.translations.get('create_modal.form.is_ambiguous') || '¿Es ambiguo?'}</b>
-                        <input type="checkbox" id="reqIsAmbiguous" ${isAmbiguousChecked}>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-container"><b>
-                        ${this.translations.get('create_modal.form.is_functional') || '¿Es funcional?'}</b>
-                        <input type="checkbox" id="reqIsFunctional" ${isFunctionalChecked}>
-                    </label>
-                </div>
-                <div class="form-group">
-                <b><label>Comentario</label><b/>
-                <textarea id="reqFeedback" class="form-control" rows="3"></textarea>
-                </div>
-            </form>
-        `;
-  }
-
-  validateAndGetFormData(isEditing = false) {
-    const description = document.getElementById("reqDescription").value.trim();
-    const feedback = document.getElementById("reqFeedback").value.trim();
-    const isAmbiguous = document.getElementById("reqIsAmbiguous").checked;
-    const isFunctional = document.getElementById("reqIsFunctional").checked;
-
-    if (!description) {
-      Swal.showValidationMessage(
-        this.translations.get("create_modal.validation.description_required")
-      );
-      return false;
-    }
-
-    if (!feedback) {
-      Swal.showValidationMessage(
-        "El comentario es obligatorio."
-      );
-      return false;
-    }
-
-    const data = {
-      description,
-      feedback,
-      isAmbiguous,
-      isFunctional,
-    };
-
-    // Si estamos editando, añadimos el ID
-    data.id = document.getElementById("reqId").value;
-
-    return data;
-  }
-
-  showCreateModal(id_requisito,descripcion, es_ambiguo, tipo, feedback) {
+  updateRequerimentModal(id_requisito, requisito, es_funcional, es_ambiguo) {
     Swal.fire({
-      title: "Agregar Sugerencia del Requisito",
-      html: this.createFormModalContent(id_requisito,descripcion, es_ambiguo, tipo, feedback),
+      title: "Actualizar requisito",
+      html: `¿Desea modificar el requisito original?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#1976D2",
+      cancelButtonColor: "#D32F2F",
+      confirmButtonText: "Sí, cambiar",
+      cancelButtonText: "No, cancelar",
+      customClass: {
+        container: "analytics-type-modal",
+        popup: "analytics-modal-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(`Actualizando requisito: ${requisito}`);
+        this.UpdateRequeriment(
+          id_requisito,
+          requisito,
+          es_funcional,
+          es_ambiguo
+        );
+      }
+    });
+  }
+
+  async UpdateRequeriment(id_requisito, requisito, es_funcional, es_ambiguo) {
+    try {
+      const encryptedPayload = CryptoModule.encrypt({
+        id_requisito: id_requisito,
+        requisito: requisito,
+        es_funcional: es_funcional,
+        es_ambiguo: es_ambiguo,
+      });
+
+      const response = await fetch(
+        this.config.endpoints.update_original_requirement,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            encryptedData: encryptedPayload, // Enviar el payload ya cifrado
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Error de comunicación con el servidor: ${response.status}`
+        );
+      }
+
+      const resultEncrypt = await response.json();
+
+      if (!resultEncrypt.data) {
+        throw new Error(
+          "La respuesta del servidor no tiene el formato esperado."
+        );
+      }
+
+      // --- PROCESAMIENTO DE LA RESPUESTA ---
+      const decryptedString = CryptoModule.decrypt(resultEncrypt.data);
+
+      // --- PASO DE DEPURACIÓN CRUCIAL ---
+      console.log("Datos descifrados:", decryptedString);
+      // el problema está en la función `encryptResponse` de tu PHP.
+      this.showSuccessMessage(`Requisito original actualizado correctamente`);
+    } catch (error) {
+      console.error("Error en UpdateReviewer:", error.message);
+      this.showErrorMessage(`Error al actualizar el requisito original`);
+      // Muestra el error al usuario
+      // this.showErrorMessage('Error: ' + error.message);
+    }
+  }
+  
+  showCreateFeedbackModal(id_requisito,id_revisor) {
+    Swal.fire({
+      title: "Dar Feedback al Estudiante",
+      html: this.createFormModalContent(id_requisito,id_revisor),
       width: "600px",
       showCancelButton: true,
       confirmButtonText: "Agregar Revisión",
@@ -365,9 +389,45 @@ class ReviewClassification {
     });
   }
 
+  createFormModalContent(id_requisito,id_revisor) {
+    return `
+            <form id="editRequirementForm" class="requirement-form">
+            <input type="hidden" id="reqId" value="${id_requisito}">
+            <input type="hidden" id="revId" value="${id_revisor}">
+                <div class="form-group">
+                <b><label>Comentario</label><b/>
+                <textarea id="reqFeedback" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        `;
+  }
+
+  validateAndGetFormData(isEditing = false) {
+    const id_requisito = document.getElementById("reqId").value;
+    const id_revisor = document.getElementById("revId").value;
+    const codigo_partida = this.config.params.gameCode;
+    const feedback = document.getElementById("reqFeedback").value.trim();
+
+    if (!feedback) {
+      Swal.showValidationMessage(
+        "El comentario es obligatorio."
+      );
+      return false;
+    }
+
+    const data = {
+      id_requisito,
+      id_revisor,
+      codigo_partida,
+      feedback,
+    };
+
+    return data;
+  }
+
   async createNewRequirement(data) {
     try {
-      const response = await fetch(this.config.endpoints.createSuggestionRequirements, {
+      const response = await fetch(this.config.endpoints.create_feedback_suggestions, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -385,7 +445,7 @@ class ReviewClassification {
         result.success
       ) {
         this.showSuccessMessage(
-          "Sugerencia de requisito creada correctamente."
+          "Feedback enviado."
         );
       } else {
         throw new Error(result.message || "An unknown error occurred.");
@@ -395,34 +455,46 @@ class ReviewClassification {
       this.showErrorMessage(this.translations.get("messages.error_message"));
     }
   }
+  modificarTituloPagina() {
+    document.getElementById("page-title-r").innerHTML = "Mis revisiones de la partida: <b>" + this.config.params.gameCode + "</b>";
+    return true;
+  }
 
   showSuccessMessage(message) {
-        return Swal.fire({
-            icon: 'success',
-            title: message,
-            confirmButtonColor: '#1976D2',
-            customClass: {
-                container: 'game-type-modal',
-                popup: 'game-levels-popup',
-            },
-        });
-    }
+    return Swal.fire({
+      icon: "success",
+      title: message,
+      confirmButtonColor: "#1976D2",
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
 
-    showErrorMessage(message) {
-        return Swal.fire({
-            icon: 'error',
-            title: this.translations.get('messages.error'),
-            text: message,
-            confirmButtonColor: '#1976D2',
-            customClass: {
-                container: 'game-type-modal',
-                popup: 'game-levels-popup',
-            },
-        });
-    }
+  showErrorMessage(message) {
+    return Swal.fire({
+      icon: "error",
+      title: this.translations.get("messages.error"),
+      text: message,
+      confirmButtonColor: "#1976D2",
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
 }
 
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", async () => {
-  window.reviewClassification = new ReviewClassification();
+  window.requirementSuggestion = new RequirementSuggestion();
 });

@@ -251,6 +251,70 @@ class Reviewers extends AuthController{
 		$this->views->getView($this, "requirements_suggestions", $data);
 	}
 
+	public function requirements_suggestions_collab()
+	{
+		$data = array();
+		$data['page_tag'] = "New Reviewers - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "New Reviewers";
+		$data['breadcrumbs'] = [
+            ['name' => 'Revisores', 'url' => 'reviewers'],
+            ['name' => 'Partidas', 'url' => 'reviewers/list_reviews'],
+            ['name' => 'Requisitos', 'url' => ''],
+            ['name' => 'Revisiones de estudiantes', 'url' => '']
+        ];
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'plugins/datatables/dataTables.min.js',
+			'plugins/datatables/dataTables.responsive.js',
+			'plugins/datatables/responsive.dataTables.js',
+			'plugins/papaparse.min.js',
+			'reviewers/requirements_suggestions_collab.js'
+			
+		);
+		$data['page_css'] =  array(
+			'game/game-focal.css',
+			'levels/levels-base.css',
+			'levels/levels-focal.css',
+			'levels/create-clasification.css',
+			'levels/create-construction.css',
+			'levels/create-construction-form.css',
+			'reviewers/requirements_suggestions_collab.css',
+			
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "requirements_suggestions_collab", $data);
+	}
+
+
+	public function list_reviews_collab()
+	{
+		$data = array();
+		$data['page_tag'] = "Reviews - " . name_project();
+		$data['page_title'] = name_project();
+		$data['page_name'] = "Reviews";
+		$data['page_functions_js'] = array(
+			'jquery-3.7.1.min.js',
+			'reviewers/list_reviews_collab.js',
+		);
+		$data['page_css'] =  array(
+			'reviewers/add_reviews.css',
+			'analytics/games.css'
+		);
+		$data['page_libraries_css'] =  array(
+			'plugins/datatables/dataTables.dataTables.min.css',
+			'plugins/datatables/responsive.dataTables.css'
+		);
+		
+		$this->addNavInfo($data);
+		$this->views->getView($this, "list_reviews_collab", $data);
+	}
+
 	public function get_reviewers_partida_clasificacion()
 	{
 		$jsonData = file_get_contents('php://input');
@@ -343,6 +407,21 @@ class Reviewers extends AuthController{
 		exit();
 	}
 
+	public function get_requirements_suggestions_collab()
+	{
+		$jsonData = file_get_contents('php://input');
+		$postData = json_decode($jsonData, true);
+		$idJugador = $this->getUserData('id');
+
+		$data = $this->model->get_requirements_suggestions_collab($postData, $idJugador);
+		$jsonResponse = json_encode($data, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse // Tu función de encriptación
+		]);
+		exit();
+	}
+
 	public function get_original_requirement()
 	{
 		try {
@@ -407,6 +486,38 @@ class Reviewers extends AuthController{
 		die();
 	}
 
+	public function create_feedback_suggestions()
+	{
+		try {
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+			$idJugador = $this->getUserData('id');
+			
+			if (!isset($postData['encryptedData'])) {
+				throw new Exception('Datos no recibidos');
+			}
+
+			$response = $this->model->create_feedback_suggestions($postData, $idJugador);
+		} catch (Error $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error al dar feedback: ' . $e->getMessage()
+			];
+		} catch (Exception $e) {
+			$response = [
+				'success' => false,
+				'message' => 'Error dar feedback: ' . $e->getMessage()
+			];
+		}
+
+		$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+		$encryptedResponse = encryptResponse($jsonResponse);
+		echo json_encode([
+			'data' => $encryptedResponse
+		]);
+		die();
+	}
+
 	public function update_teacher_reviewer()
 	{
 		try {
@@ -435,6 +546,48 @@ class Reviewers extends AuthController{
 		echo json_encode([
 			'data' => $encryptedResponse
 		]);
+		die();
+	}
+
+	public function get_partidas_docente_revisor()
+	{
+		try {
+			$jsonData = file_get_contents('php://input');
+			$postData = json_decode($jsonData, true);
+			$idJugador = $this->getUserData('id');
+
+			if (!isset($postData['encryptedData'])) {
+				throw new Exception('Datos no recibidos');
+			}
+
+			$decryptedData = decryptData($postData['encryptedData']);
+			$data = json_decode($decryptedData, true);
+
+			if (!$data) {
+				throw new Exception('Error al descifrar datos');
+			}
+
+			$response = $this->model->get_partidas_docente_revisor($data, $idJugador);
+
+			$jsonResponse = json_encode($response, JSON_UNESCAPED_UNICODE);
+			$encryptedResponse = encryptResponse($jsonResponse);
+
+			echo json_encode([
+				'data' => $encryptedResponse
+			]);
+		} catch (Exception $e) {
+			$errorResponse = [
+				'success' => false,
+				'message' => 'Error: ' . $e->getMessage()
+			];
+
+			$jsonResponse = json_encode($errorResponse, JSON_UNESCAPED_UNICODE);
+			$encryptedResponse = encryptResponse($jsonResponse);
+
+			echo json_encode([
+				'data' => $encryptedResponse
+			]);
+		}
 		die();
 	}
 	

@@ -5,10 +5,9 @@ class RequirementSuggestion {
         mainContainer: "#main",
       },
       endpoints: {
-        get_requirements_suggestions: `${base_url}/Reviewers/get_requirements_suggestions`,
-        get_original_requirement: `${base_url}/Reviewers/get_original_requirement`,
-        update_original_requirement: `${base_url}/Reviewers/update_original_requirement`,
+        get_requirements_suggestions: `${base_url}/Reviewers/get_requirements_suggestions_collab`,
         create_feedback_suggestions: `${base_url}/Reviewers/create_feedback_suggestions`,
+        update_original_requirement: `${base_url}/Reviewers/update_original_requirement`,
       },
       params: {
         // Parámetro que necesitamos enviar
@@ -70,11 +69,16 @@ class RequirementSuggestion {
             return `<div class="ambiguous-state">${data}</div>`;
           },
         },
-
+        {
+          data: "requisito_original",
+          responsivePriority: 6,
+          title: `<span>Requisito Original</span>`,
+          className: "dt-left",
+        },
         {
           data: "retroalimentacion",
-          responsivePriority: 6,
-          title: `<span>Comentario del estudiante</span>`,
+          responsivePriority: 7,
+          title: `<span>Comentario del Estudiante</span>`,
           className: "dt-left",
         },
         {
@@ -89,7 +93,7 @@ class RequirementSuggestion {
 
     this.initializeParams();
     this.initializeTables();
-    this.obtenerRequisitoOriginal();
+    this.modificarTituloPagina();
   }
 
   getUrlParameter(name) {
@@ -252,51 +256,6 @@ class RequirementSuggestion {
     });
   }
 
-  async obtenerRequisitoOriginal() {
-    try {
-      const response = await fetch(
-        this.config.endpoints.get_original_requirement,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            encryptedData: CryptoModule.encrypt({
-              requisito: this.config.params.requisito,
-            }),
-          }),
-        }
-      );
-
-      const data = await response.json();
-      const decryptedData = CryptoModule.decrypt(data.data);
-
-      console.log(this.config.params.requisito + " | " + decryptedData);
-
-      if (!decryptedData.status) {
-        throw new Error(decryptedData.message);
-      }
-
-      if (
-        decryptedData &&
-        decryptedData.data &&
-        decryptedData.data.length > 0
-      ) {
-        const description = decryptedData.data[0].descripcion;
-        document.getElementById("requisito-original").innerHTML = description;
-      } else {
-        console.warn("No description found in decryptedData.");
-        // Optionally, set a default message or handle the empty state
-        document.getElementById("requisito-original").innerHTML =
-          "No se encontró la descripción del requisito.";
-      }
-      return decryptedData.data;
-    } catch (error) {
-      console.error("Error loading initial data:", error);
-      this.showError(this.translations.get("errors.loading"));
-    }
-  }
 
   renderRequirementType(isFunctional) {
     const typeClass = isFunctional ? "functional" : "non-functional";
@@ -315,10 +274,6 @@ class RequirementSuggestion {
 
   renderActions(row) {
     return `<div class="table-actions">
-    <button title="Actualizar revisión" onclick="requirementSuggestion.updateRequerimentModal('${row.id_requisito}','${row.descripcion}', '${row.es_funcional}', '${row.es_ambiguo}' ); event.stopPropagation();" 
-                            class="btn-action">
-                        <i class='bx bx-edit'></i>
-                    </button>
                     <button title="Dar Feedback" onclick="requirementSuggestion.showCreateFeedbackModal('${row.id_requisito_sugerencia}','${row.id_revisor}')" 
                             class="btn-action">
                         <i class='bx bx-message'></i>
@@ -424,7 +379,7 @@ class RequirementSuggestion {
       // this.showErrorMessage('Error: ' + error.message);
     }
   }
-
+  
   showCreateFeedbackModal(id_requisito,id_revisor) {
     Swal.fire({
       title: "Dar Feedback al Estudiante",
@@ -512,6 +467,10 @@ class RequirementSuggestion {
     }
   }
 
+  modificarTituloPagina() {
+    document.getElementById("page-title-r").innerHTML = "Revisiones de la partida: <b>" + this.config.params.gameCode + "</b>";
+    return true;
+  }
 
   showSuccessMessage(message) {
     return Swal.fire({

@@ -2,7 +2,7 @@ class ReviewerStudents {
     constructor() {
         this.config = {
             endpoints: {
-                getGames: `${base_url}/ReviewerStudents/get_partidas_estudiante_revisor`,
+                getGames: `${base_url}/ReviewerStudentsMenu/get_partidas_estudiante_revisor`,
             },
             initialLoadLimit: 10,  // Límite inicial de cards a mostrar
             loadMoreLimit: 5,      // Cantidad de cards adicionales a cargar con "Ver más"
@@ -201,7 +201,7 @@ class ReviewerStudents {
         });
 
         if (result.isConfirmed) {
-            const baseUrl = `${base_url}/reviewerStudents/original_requirements`;
+            const baseUrl = `${base_url}/ReviewerStudentsMenu/original_requirements`;
             window.location.href = `${baseUrl}?gamecode=${gameCode}`;
         }
     }
