@@ -316,7 +316,6 @@ END //
 DELIMITER ;
 
 DELIMITER //
-
 DROP PROCEDURE IF EXISTS sp_get_partidas_estudiante_revisor //
 CREATE PROCEDURE sp_get_partidas_estudiante_revisor(
     -- Parámetros de entrada
@@ -429,7 +428,7 @@ BEGIN
     END IF;
 
     -- Obtener las partidas con la información requerida
-	SELECT rs.id_requisito, rs.descripcion, rs.es_ambiguo, rs.es_funcional, concat(j.nombres, ' ', j.apellidos) as revisor, rs.retroalimentacion
+	SELECT rs.id_requisito, rs.descripcion, rs.es_ambiguo, rs.es_funcional, concat(j.nombres, ' ', j.apellidos) as revisor, j.id_jugador as id_revisor ,rs.retroalimentacion
 	FROM
 	requisitos_sugerencias rs
 	INNER JOIN jugadores j
@@ -824,5 +823,157 @@ BEGIN
 	SET p_codigo_retorno = 1;
 	SET p_mensaje_retorno = 'Requisito registrado exitosamente';
    END bloque_principal; 
+END //
+DELIMITER ;
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_requirements_suggestions_collab //
+CREATE PROCEDURE sp_get_requirements_suggestions_collab(
+    -- Parámetros de entrada
+    IN p_codigo_partida VARCHAR(10),
+    IN p_id_usuario INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+    -- Declaración de variables locales
+    DECLARE v_usuario_existe INT DEFAULT 0;
+    DECLARE v_partida_existe INT DEFAULT 0;
+    DECLARE v_id_partida INT DEFAULT 0;
+    
+    -- Manejo de errores SQL
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            @sqlstate = RETURNED_SQLSTATE,
+            @errno = MYSQL_ERRNO,
+            @text = MESSAGE_TEXT;
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso iniciado correctamente';
+
+    -- Validar que el usuario existe
+    IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El ID de usuario no es válido';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ID de usuario inválido';
+    END IF;
+    
+    IF p_codigo_partida IS NULL OR p_codigo_partida = '' THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'El código de partida no es válido';
+	END IF;
+
+    SELECT COUNT(*) INTO v_usuario_existe
+    FROM jugadores 
+    WHERE id_jugador = p_id_usuario;
+
+    IF v_usuario_existe = 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El usuario no existe';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario no existe';
+    END IF;
+    
+    SELECT COUNT(*), id_partida INTO v_partida_existe, v_id_partida
+	   FROM partidas 
+	   WHERE codigo_partida = p_codigo_partida;
+       
+	IF v_partida_existe = 0 THEN
+		SET p_codigo_retorno = -1;
+		SET p_mensaje_retorno = 'No existen datos para la partida especificada';
+    END IF;
+		SET p_codigo_retorno = 0;
+        SET p_mensaje_retorno = 'No se pudo actualizar el estado';
+
+    -- Obtener las partidas con la información requerida
+    SELECT rs.id_requisito, rs.descripcion, rs.es_ambiguo, rs.es_funcional, CONCAT(j.nombres, ' ', j.apellidos) as revisor, j.id_jugador as id_revisor, r.descripcion as requisito_original ,rs.retroalimentacion
+	FROM reqscapetest_db.requisitos_sugerencias rs
+	INNER JOIN requisitos_clasificacion_partida rcp
+		ON rcp.id_requisito = rs.id_requisito
+	INNER JOIN partidas p
+		ON p.id_partida = rcp.id_partida
+	INNER JOIN jugadores j
+		ON j.id_jugador = rs.id_usuario_revisor
+	INNER JOIN requisitos r
+		ON r.id_requisito = rs.id_requisito
+	WHERE 
+		p.id_partida = v_id_partida;
+
+    -- Si llegamos aquí, todo se ejecutó correctamente
+    SET p_codigo_retorno = 1;
+    SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
+END //
+DELIMITER ;
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_partidas_docente_revisor //
+CREATE PROCEDURE sp_get_partidas_docente_revisor(
+    -- Parámetros de entrada
+    IN p_id_usuario INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+    -- Declaración de variables locales
+    DECLARE v_usuario_existe INT DEFAULT 0;
+    
+    -- Manejo de errores SQL
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            @sqlstate = RETURNED_SQLSTATE,
+            @errno = MYSQL_ERRNO,
+            @text = MESSAGE_TEXT;
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso iniciado correctamente';
+
+    -- Validar que el usuario existe
+    IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El ID de usuario no es válido';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ID de usuario inválido';
+    END IF;
+
+    SELECT COUNT(*) INTO v_usuario_existe
+    FROM jugadores 
+    WHERE id_jugador = p_id_usuario;
+
+    IF v_usuario_existe = 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El usuario no existe';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario no existe';
+    END IF;
+
+    -- Obtener las partidas con la información requerida
+     SELECT 
+        p.codigo_partida as code,
+        p.fecha_creacion as createdAt,
+        m.codigo as tipo,
+        (SELECT COUNT(pj.id_jugador) FROM partidas_jugadores pj WHERE pj.id_partida = p.id_partida) as totalStudents
+    FROM partidas p
+    INNER JOIN modalidades m ON p.id_modalidad = m.id_modalidad
+    INNER JOIN docente_revisor_partida dr
+		ON dr.id_partida =  p.id_partida
+    WHERE dr.rol = 'REVISOR' AND  dr.id_docente_revisor = p_id_usuario
+    GROUP BY p.id_partida, p.codigo_partida, p.fecha_creacion, m.codigo
+    ORDER BY p.fecha_creacion DESC;
+
+    -- Si llegamos aquí, todo se ejecutó correctamente
+    SET p_codigo_retorno = 1;
+    SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
+
 END //
 DELIMITER ;

@@ -73,6 +73,24 @@ class ReviewersModel extends ReviewersInfraestructure
         }
     }
 
+
+    public function get_requirements_suggestions_collab($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            return $this->get_requirements_suggestions_collabDB($data['gamecode'], $idJugador);
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+                'data' => []
+            ];
+        }
+    }
+
+
     public function get_original_requirement($postData, int $idJugador)
     {
         if (isset($postData['encryptedData'])) {
@@ -163,6 +181,24 @@ class ReviewersModel extends ReviewersInfraestructure
             return [
                 'success' => false,
                 'message' => 'Datos no recibidos',
+            ];
+        }
+    }
+
+    public function get_partidas_docente_revisor($data, int $idJugador)
+    {
+        try {
+            $offset = [
+                'classification' => $data['offset']['classification'] ?? 0,
+                'construction' => $data['offset']['construction'] ?? 0
+            ];
+            $limit = $data['limit'] ?? 10;
+
+            return $this->get_partidas_docente_revisorDB($idJugador, $offset, $limit);
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Error al obtener las partidas: ' . $e->getMessage()
             ];
         }
     }

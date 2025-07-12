@@ -5,7 +5,7 @@ class RequirementSuggestion {
         mainContainer: "#main",
       },
       endpoints: {
-        get_requirements_suggestions: `${base_url}/Reviewers/get_requirements_suggestions`,
+        get_requirements_suggestions: `${base_url}/Reviewers/get_requirements_suggestions_collab`,
         get_original_requirement: `${base_url}/Reviewers/get_original_requirement`,
         update_original_requirement: `${base_url}/Reviewers/update_original_requirement`,
       },
@@ -69,11 +69,16 @@ class RequirementSuggestion {
             return `<div class="ambiguous-state">${data}</div>`;
           },
         },
-
+        {
+          data: "requisito_original",
+          responsivePriority: 6,
+          title: `<span>Requisito Original</span>`,
+          className: "dt-left",
+        },
         {
           data: "retroalimentacion",
-          responsivePriority: 6,
-          title: `<span>Comentario del estudiante</span>`,
+          responsivePriority: 7,
+          title: `<span>Comentario del Estudiante</span>`,
           className: "dt-left",
         },
         {
@@ -314,10 +319,6 @@ class RequirementSuggestion {
 
   renderActions(row) {
     return `<div class="table-actions">
-    <button title="Actualizar revisión" onclick="requirementSuggestion.updateRequerimentModal('${row.id_requisito}','${row.descripcion}', '${row.es_funcional}', '${row.es_ambiguo}' ); event.stopPropagation();" 
-                            class="btn-action">
-                        <i class='bx bx-edit'></i>
-                    </button>
                     <button title="Dar Feedback" onclick="requirementSuggestion.viewDetails('${row.id_requisito}','${row.id_revisor}')" 
                             class="btn-action">
                         <i class='bx bx-message'></i>
