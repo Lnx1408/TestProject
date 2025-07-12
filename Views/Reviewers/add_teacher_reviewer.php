@@ -5,9 +5,21 @@
 
     <div class="game-container">
 
-        <!-- Botón Ver más -->
+    <div class="breadcrumbs-container">
+            <ul class="breadcrumbs">
+                <?php foreach ($data['breadcrumbs'] as $index => $crumb): ?>
+                    <li>
+                        <?php if (!empty($crumb['url'])): ?>
+                            <a href="<?= base_url() . '/' . $crumb['url']; ?>"><?= $crumb['name']; ?></a>
+                        <?php else: ?>
+                            <a href="javascript:void(0);"><?= $crumb['name']; ?></a>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
         <div class="header-section report-actions">
-                <h1 class="page-title">Asignar Docentes Revisores</h1>
+                <h1 class="page-title" id="page-title-r">Asignar Docente Revisor a:</h1>
         </div>
         
         <div class="report-actions">

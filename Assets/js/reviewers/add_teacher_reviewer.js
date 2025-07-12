@@ -8,7 +8,7 @@ const TableModule = {
       // ... otros selectores ...
     },
     endpoint: `${base_url}/Reviewers/get_teachers_reviewers_clasificacion`,
-    endpointReviewer: `${base_url}/Reviewers/update_reviewer`,
+    endpointReviewer: `${base_url}/Reviewers/update_teacher_reviewer`,
     params: {
       id: null, // Parámetro que necesitamos enviar
       gameCode: null,
@@ -158,23 +158,20 @@ const TableModule = {
   },
 
 
-  updateToReviewer(nombres, apellidos, id_jugador, rol_estudiante) {
-    let rol_estudianteTexto = "";
-    let rol_value = 0;
-    if (rol_estudiante === "ESTUDIANTE") {
-      rol_estudianteTexto = "ESTUDIANTE REVISOR";
-      rol_value = 1; // Asignar el valor correspondiente para revisor
-    }else {
-      rol_estudianteTexto = "ESTUDIANTE";
-    }
+  updateToReviewer(nombres, apellidos, id_jugador, rol_docente) {
+    if (rol_docente === "DOCENTE") {
+          rol_docente = "REVISOR";
+        }else{
+          rol_docente = "DOCENTE";
+        }
     Swal.fire({
-      title: "Agregar Docente Revisor",
-      html: `¿Desea agregar al docente <b>${nombres} ${apellidos}</b> como <b>Revisor</b> de la partida <b>${this.config.params.gameCode}</b>?`,
+      title: "Cambiar Rol",
+      html: `¿Desea cambiar el rol de <b>${nombres} ${apellidos}</b> como <b>${rol_docente}</b> de la partida <b>${this.config.params.gameCode}</b>?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#1976D2",
       cancelButtonColor: "#D32F2F",
-      confirmButtonText: "Sí, Agregar",
+      confirmButtonText: "Sí, Cambiar",
       cancelButtonText: "No, cancelar",
       customClass: {
         container: "analytics-type-modal",
@@ -183,10 +180,11 @@ const TableModule = {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log(
-          `Cambiando rol a: ${rol_estudianteTexto}`
+          `Cambiando rol a: ${rol_docente}`
         );
-        this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_value);
-        this.reload();
+        
+        this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_docente);
+        
         
       }
     });
@@ -253,7 +251,7 @@ const TableModule = {
       },
       {
         data: null,
-        title: `<span>Estado</span> `,
+        title: `<span>Rol</span> `,
         className: "dt-center",
         width: "15%",
         responsivePriority: 2,
@@ -386,8 +384,11 @@ const TableModule = {
         // --- PASO DE DEPURACIÓN CRUCIAL ---
         console.log("Datos descifrados:", decryptedString);
         // el problema está en la función `encryptResponse` de tu PHP.
+        this.showSuccessMessage(`Actualización exitosa`);
+        // Actualizar la tabla después de la modificación
 
     } catch (error) {
+      this.showErrorMessage(`Error al actualizar el rol`);
         console.error('Error en UpdateReviewer:', error.message);
         // Muestra el error al usuario
         // this.showErrorMessage('Error: ' + error.message);
@@ -470,6 +471,39 @@ const TableModule = {
       window.removeEventListener("resize", this.debounceResize);
     }
   },
+
+  showSuccessMessage(message) {
+        return Swal.fire({
+            icon: 'success',
+            title: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+    },
+
+    showErrorMessage(message) {
+        return Swal.fire({
+            icon: 'error',
+            title: this.translations.get('messages.error'),
+            text: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
 };
 
 // Módulo principal de funcionalidades
@@ -615,7 +649,19 @@ const DashboardModule = {
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", async () => {
   initializeModules();
+  modificarTituloPagina();
 });
+
+function modificarTituloPagina() {
+  const params = new URLSearchParams(window.location.search);
+  const gameCode = params.get("gamecode");
+    if (!gameCode) {
+      console.error("No se encontró el código de juego en la URL");
+      return false;
+    }
+    document.getElementById("page-title-r").innerHTML = "Asignar Docente Revisor a: <b>" + gameCode + "</b>";
+    return true;
+  }
 
 function initializeModules() {
   // Inicializar módulos principales

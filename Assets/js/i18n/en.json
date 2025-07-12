@@ -7,6 +7,7 @@
     "profile": "Profile",
     "analytics": "Statistics",
     "analyticsStudent": "Analysis",
+    "reviewerStudentsMenu": "Revisiones",
     "reviewers": "Reviewers",
     "teachers": "Teachers",
     "settings": "Settings",
@@ -1667,11 +1668,11 @@
     "description": "Manage reviewers and reviews",
     "options": {
       "create": {
-        "title": "Add user",
+        "title": "Add student reviewer",
         "description": "Add user with role \"reviewer\""
       },
       "reviews": {
-        "title": "View reviews",
+        "title": "View Student Reviews",
         "description": "Consult the suggestions of your reviewers"
       }
     },

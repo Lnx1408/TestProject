@@ -119,10 +119,11 @@ CREATE TABLE requisitos_sugerencias (
     id_requisito_sugerencia INT PRIMARY KEY AUTO_INCREMENT,
     id_requisito INT NOT NULL,
     descripcion TEXT NOT NULL,
+    es_ambiguo BOOLEAN NOT NULL,
     retroalimentacion TEXT,
+    es_funcional BOOLEAN NOT NULL,
     id_usuario_revisor INT NULL, 
-	id_usuario_creador INT NULL, 
-    codigo_lote_referencia VARCHAR(36) NULL,
+	id_usuario_creador INT NULL,
     FOREIGN KEY (id_requisito) REFERENCES requisitos(id_requisito),
     FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador),
     FOREIGN KEY (id_usuario_creador) REFERENCES jugadores(id_jugador)
@@ -132,11 +133,13 @@ CREATE TABLE feedback_requirement (
     id_feedback_requirement INT PRIMARY KEY AUTO_INCREMENT,
     id_requisito_sugerencia INT NOT NULL,
     id_partida INT NOT NULL,
-    id_usuario_revisor INT NULL,
+    id_usuario_revisor INT NOT NULL,
+    id_docente_revisor INT NOT NULL,
     feedback_description VARCHAR(250),
     FOREIGN KEY (id_requisito_sugerencia) REFERENCES requisitos_sugerencias(id_requisito_sugerencia),
     FOREIGN KEY (id_partida) REFERENCES partidas(id_partida),
-    FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador)
+    FOREIGN KEY (id_usuario_revisor) REFERENCES jugadores(id_jugador),
+    FOREIGN KEY (id_docente_revisor) REFERENCES jugadores(id_jugador)
 );
 
 CREATE TABLE requisitos_clasificacion_partida (
@@ -258,3 +261,16 @@ CREATE TABLE detalle_construccion_intento (
     FOREIGN KEY (id_intento) REFERENCES intentos_construccion(id_intento),
     FOREIGN KEY (id_fragmento) REFERENCES fragmentos_requisito(id_fragmento)
 );
+
+
+CREATE TABLE docente_revisor_partida (
+    id_revisor_partida INT PRIMARY KEY AUTO_INCREMENT,
+    id_partida INT,
+    id_docente_revisor INT,
+    rol ENUM('DOCENTE', 'REVISOR') DEFAULT 'REVISOR',
+    estado ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO',
+    
+    FOREIGN KEY (id_partida) REFERENCES partidas(id_partida),
+	FOREIGN KEY (id_docente_revisor) REFERENCES jugadores(id_jugador)
+);
+

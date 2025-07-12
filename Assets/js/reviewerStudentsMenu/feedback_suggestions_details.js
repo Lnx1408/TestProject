@@ -1,15 +1,17 @@
-class ReviewClassification {
+class RequirementSuggestion {
   constructor() {
     this.config = {
       selectors: {
         mainContainer: "#main",
       },
       endpoints: {
-        getRequirement: `${base_url}/Reviewers/get_requisitos_review`,
+        feedback_suggestions_details: `${base_url}/ReviewerStudentsMenu/get_feedback_suggestions_details`,
       },
-      params: {// Parámetro que necesitamos enviar
+      params: {
+        // Parámetro que necesitamos enviar
         gameCode: null,
-      }
+        requisito: null,
+      },
     };
 
     this.translations = {
@@ -30,45 +32,31 @@ class ReviewClassification {
           render: (data) => "",
         },
         {
-          data: "descripcion",
-          //title: this.translations.get('main_table.columns.description'),
-          title: `<span data-i18n="create_classification.main_table.columns.description">Descripción</span>`,
-          className: "wrap-cell",
+          data: "feedback_description",
           responsivePriority: 1,
+          title: `<span>Feedback del Docente</span>`,
+          className: "dt-left",
+        },
+        {
+          data: "docente_revisor",
+          title: `<span>Docente Revisor</span>`,
+          className: "wrap-cell",
+          responsivePriority: 2,
           render: function (data, type, row) {
-            if (type === "display") {
-              return `<div class="requirement-description">${data}</div>`;
-            }
-            return data;
+            return `<div class="ambiguous-state">${data}</div>`;
           },
         },
         {
-          data: "tipo",
-          responsivePriority: 3,
-          //title: this.translations.get('main_table.columns.type'),
-          title: `<span data-i18n="create_classification.main_table.columns.type">Tipo</span>`,
-          render: (data) => this.renderRequirementType(data),
-        },
-        {
-          data: "es_ambiguo",
-          responsivePriority: 3,
-          //title: this.translations.get('main_table.columns.is_ambiguous'),
-          title: `<span data-i18n="create_classification.main_table.columns.is_ambiguous">Es Ambiguo</span>`,
-          render: (data) => this.renderAmbiguousState(data),
-        },
-        {
-          data: null,
-          responsivePriority: 1,
-          title: `<span data-i18n="create_classification.main_table.columns.actions">Acciones</span>`,
-          className: "dt-center",
-          render: (data, type, row) => this.renderActions(row),
+          data: "descripcion",
+          //title: this.translations.get('main_table.columns.description'),
+          title: `<span>Mi sugerencia</span>`,
+          responsivePriority: 4,
         },
       ],
     };
 
     this.initializeParams();
     this.initializeTables();
-    this.modificarTituloPagina();
   }
 
   getUrlParameter(name) {
@@ -83,24 +71,27 @@ class ReviewClassification {
       console.error("No se encontró el código de juego en la URL");
       return false;
     }
+    const requisito = this.getUrlParameter("Requisito");
+    if (!gameCode) {
+      console.error("No se encontró el id requisito en la URL");
+      return false;
+    }
     this.config.params.gameCode = gameCode;
-    return true;
-  }
-  modificarTituloPagina() {
-    document.getElementById("page-title-r").innerHTML = "Requisitos de la partida: <b>" + this.config.params.gameCode + "</b>";
+    this.config.params.requisito = requisito;
     return true;
   }
 
   initializeTables() {
     this.elements.selectedTable = $("#existingRequirementsTable").DataTable({
       ajax: {
-        url: this.config.endpoints.getRequirement,
+        url: this.config.endpoints.feedback_suggestions_details,
         type: "POST",
         //dataSrc: 'data'
         data: (d) => {
           const requestData = {
             ...d,
             gamecode: this.config.params.gameCode,
+            requisito: this.config.params.requisito,
           };
           return JSON.stringify({
             encryptedData: CryptoModule.encrypt(requestData),
@@ -109,15 +100,11 @@ class ReviewClassification {
         dataSrc: (response) => {
           try {
             if (!response.data) {
-                
-                console.error("Invalid response data:", response);
+              console.error("Invalid response data:", response);
               throw new Error(this.translations.get("errors.invalid_data"));
             }
 
             const decryptedData = CryptoModule.decrypt(response.data);
-            
-            console.log(this.config.params.gameCode);
-            console.log("Decrypted Data:", decryptedData);
 
             if (!decryptedData) {
               throw new Error(
@@ -132,7 +119,9 @@ class ReviewClassification {
               );
             }
 
+            console.log(decryptedData);
             return decryptedData.data || [];
+            
           } catch (error) {
             console.error("Error processing data:", error);
             this.showErrorMessage(this.translations.get("errors.general"));
@@ -222,51 +211,31 @@ class ReviewClassification {
         },
         {
           targets: [1],
-          width: "50%",
+          width: "75%",
         },
       ],
       processing: true,
       serverSide: false,
-      
     });
   }
 
-  renderRequirementType(typeString) {
-    // console.log("typeString:", typeString); // Now this should show "Funcional" or "No Funcional"
-    const isFunctional = typeString === "Funcional";
 
+  renderRequirementType(isFunctional) {
     const typeClass = isFunctional ? "functional" : "non-functional";
-    const typeText = typeString; // Use the string directly from the data
-    console.log(typeText);
+    const typeText = isFunctional ? "Funcional" : "No Funcional";
     return `<span class="requirement-type ${typeClass}">${typeText}</span>`;
-}
+  }
 
-  renderAmbiguousState(isAmbiguousNum) {
-    // console.log("isAmbiguousNum:", isAmbiguousNum); // Now this should show 0 or 1
-    const isAmbiguous = isAmbiguousNum === 1;
+  renderAmbiguousState(isAmbiguous) {
     const stateClass = isAmbiguous ? "yes" : "no";
     const icon = isAmbiguous ? "bx-check" : "bx-x";
-    console.log(isAmbiguous)
     return `<span class="ambiguous-state ${stateClass}">
                     <i class='bx ${icon}'></i>
                     ${isAmbiguous ? "Sí" : "No"}
                 </span>`;
-}
+  }
 
-  renderActions(row) {
-    return `<div class="table-actions">
-                    <button title="Ver revisiones" onclick="reviewClassification.viewDetails('${row.id_requisito}')" 
-                            class="btn-action">
-                        <i class='ri-search-eye-line'></i>
-                    </button>
-                </div>`;
-  }
-  viewDetails(id_requisito) {
-        // Redirigir a la página de detalles
-        window.location.href = `${base_url}/Reviewers/requirements_suggestions?gamecode=${encodeURIComponent(
-          this.config.params.gameCode
-        )}&Requisito=${encodeURIComponent(id_requisito)}`;
-  }
+
   getDataTableLanguage() {
     const currentLanguage = LanguageManager.currentLang;
     // Definir el archivo según el idioma
@@ -283,9 +252,43 @@ class ReviewClassification {
     };
   }
 
+
+
+  showSuccessMessage(message) {
+    return Swal.fire({
+      icon: "success",
+      title: message,
+      confirmButtonColor: "#1976D2",
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
+
+  showErrorMessage(message) {
+    return Swal.fire({
+      icon: "error",
+      title: this.translations.get("messages.error"),
+      text: message,
+      confirmButtonColor: "#1976D2",
+      customClass: {
+        container: "game-type-modal",
+        popup: "game-levels-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
 }
 
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", async () => {
-  window.reviewClassification = new ReviewClassification();
+  window.requirementSuggestion = new RequirementSuggestion();
 });

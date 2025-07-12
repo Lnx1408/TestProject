@@ -210,7 +210,6 @@ const TableModule = {
           `Cambiando rol a: ${rol_estudianteTexto}`
         );
         this.UpdateReviewer(this.config.params.gameCode, id_jugador, rol_value);
-        this.reload();
         
       }
     });
@@ -305,11 +304,11 @@ const TableModule = {
         render: function (data, type, row) {
           return `
                     <div class="btn-group">
-                        <button class="btn-sm"
+                        <button class="btn-sm" title="Ver detalles"
                             onclick="TableModule.viewDetails('${row.nombres}', '${row.apellidos}', '${row.id_jugador}'); event.stopPropagation();">
                             <i class='bx bx-info-circle'></i>
                         </button>
-                        <button class="btn-sm"
+                        <button class="btn-sm" title="Cambiar rol a revisor"
                             onclick="TableModule.updateToReviewer('${row.nombres}', '${row.apellidos}', '${row.id_jugador}', '${row.estado.text}'); event.stopPropagation();">
                             <i class='bx bx-user-check' hint="123-45-678"></i>
                         </button>
@@ -423,8 +422,10 @@ const TableModule = {
         // --- PASO DE DEPURACIÓN CRUCIAL ---
         console.log("Datos descifrados:", decryptedString);
         // el problema está en la función `encryptResponse` de tu PHP.
+        this.showSuccessMessage(`Actualización exitosa`);
 
     } catch (error) {
+        this.showErrorMessage(`Error al actualizar el rol`);
         console.error('Error en UpdateReviewer:', error.message);
         // Muestra el error al usuario
         // this.showErrorMessage('Error: ' + error.message);
@@ -487,6 +488,7 @@ const TableModule = {
     return params.get(name);
   },
 
+
   // Función para inicializar parámetros
   initializeParams() {
     const gameCode = this.getUrlParameter("gamecode");
@@ -507,6 +509,39 @@ const TableModule = {
       window.removeEventListener("resize", this.debounceResize);
     }
   },
+
+  showSuccessMessage(message) {
+        return Swal.fire({
+            icon: 'success',
+            title: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+    },
+
+    showErrorMessage(message) {
+        return Swal.fire({
+            icon: 'error',
+            title: this.translations.get('messages.error'),
+            text: message,
+            confirmButtonColor: '#1976D2',
+            customClass: {
+                container: 'game-type-modal',
+                popup: 'game-levels-popup',
+            },
+        }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload(); // Recargar la página al confirmar
+      }
+    });
+  }
 };
 
 // Módulo principal de funcionalidades
@@ -652,8 +687,19 @@ const DashboardModule = {
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", async () => {
   initializeModules();
+  modificarTituloPagina();
 });
 
+function modificarTituloPagina() {
+  const params = new URLSearchParams(window.location.search);
+  const gameCode = params.get("gamecode");
+    if (!gameCode) {
+      console.error("No se encontró el código de juego en la URL");
+      return false;
+    }
+    document.getElementById("page-title-r").innerHTML = "Asignar Estudiante Revisor a: <b>" + gameCode + "</b>";
+    return true;
+  }
 function initializeModules() {
   // Inicializar módulos principales
   DashboardModule.init();

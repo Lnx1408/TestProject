@@ -57,7 +57,12 @@ $menuItems = [
       'icon' => 'ri-bar-chart-box-fill',
       'text' => 'Análisis',
       'roles' => [SessionManager::ROLE_STUDENT]
-   ]
+   ],
+   'reviewerStudentsMenu' => [
+      'icon' => 'ri-user-search-fill',
+      'text' => 'Revisiones',
+      'roles' => [SessionManager::ROLE_STUDENT],
+   ],
 ];
 $usersManagement = [
    'reviewers' => [

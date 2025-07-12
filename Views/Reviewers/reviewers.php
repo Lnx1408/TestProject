@@ -39,8 +39,8 @@
                                 <i class='bx bx-user-check'></i>
                             </div>
                             <div class="option-info">
-                                <h3>Agregar Docentes revisores</h3>
-                                <p >Lista de docentes que pueden acceder a tus partidas para revisiones</p>
+                                <h3>Agregar Docentes Revisores</h3>
+                                <p >Lista de docentes que pueden acceder a tus partidas para revisiones hechas por tus estudiantes</p>
                             </div>
                             <div class="option-chevron">
                                 <i class='bx bx-chevron-right'></i>
@@ -65,8 +65,26 @@
                         </a>
                     </div>
                 </div>
-                
+
+                <!-- Sección: Ver revisiones colaboraticas -->
+                <div class="teachers-section">
+                    <div id="personalInfo" class="section-content">
+                        <a href="<?= base_url(); ?>/reviewers/list_reviews_collab" class="menu-option">
+                            <div class="header-icon">
+                                <i class='bx bx-group'></i>
+                            </div>    
+                            <div class="option-info">
+                                <h3>Ver colaboraciones</h3>
+                                <p>Visualiza las revisiones de las partidas de otros docentes y da feedback a sus estudiantes.</p>
+                            </div>
+                            <div class="option-chevron">
+                                <i class='bx bx-chevron-right'></i>
+                            </div>
+                        </a>
+                    </div>
                 </div>
+                
+            </div>
         </div>
     </div>
 
