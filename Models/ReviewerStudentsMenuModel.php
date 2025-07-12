@@ -1,7 +1,7 @@
 <?php
-require_once("Infraestructure/ReviewerStudentsInfraestructure.php");
+require_once("Infraestructure/ReviewerStudentsMenuInfraestructure.php");
 
-class ReviewerStudentsModel extends ReviewerStudentsInfraestructure
+class ReviewerStudentsMenuModel extends ReviewerStudentsMenuInfraestructure
 {
 
     public function __construct()
@@ -65,6 +65,22 @@ class ReviewerStudentsModel extends ReviewerStudentsInfraestructure
             return [
                 'success' => false,
                 'message' => 'Datos no recibidos',
+            ];
+        }
+    }
+
+    public function get_feedback_suggestions($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            return $this->get_feedback_suggestionsDB($data['gamecode'], $idJugador);
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+                'data' => []
             ];
         }
     }

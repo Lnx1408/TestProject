@@ -2,7 +2,7 @@
 require_once("Libraries/Reports/ReportGeneralConstructionNarrativeGenerator.php");
 require_once("Libraries/Reports/ReportGeneralClassificationNarrativeGenerator.php");
 
-class ReviewerStudentsInfraestructure extends Mysql
+class ReviewerStudentsMenuInfraestructure extends Mysql
 {
 	private $db;
 	private const type_construction = "MOD-BUILD";
@@ -159,6 +159,41 @@ class ReviewerStudentsInfraestructure extends Mysql
 		} finally {
 			$this->cerrarConexion();
 		}
+		return $arrResponse;
+	}
+
+	public function get_feedback_suggestionsDB(string $requisito, string $idJugador)
+	{
+		try {
+			$responseAnalyticsJugadores = $this->executeProcedureWithParametersOut(
+				'sp_get_feedback_suggestions',
+				[$requisito, $idJugador],
+				['codigo', 'mensaje']  // Parámetros de salida
+			);
+			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'status' => true,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'status' => false,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'status' => false,
+				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
+				'data' => []
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
 		return $arrResponse;
 	}
 

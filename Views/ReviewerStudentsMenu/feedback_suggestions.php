@@ -21,7 +21,7 @@
         </div>
             <!-- Header con título y contador -->
             <div class="header-section">
-                <h1 id="page-title-r">Revisiones por estudiantes</h1>
+                <h1 id="page-title-r">Mis revisiones</h1>
             </div>
 
             <!-- Tabla principal -->
@@ -29,7 +29,7 @@
                 <div class="data-info container-table">
                     <div class="header-table">
                         <i class='bx ri-user-community-fill'></i>
-                        <h2>Revisiones de estudiantes</h2>
+                        <h2>Revisiones</h2>
                     </div>
                     <table id="existingRequirementsTable" class="nowrap">
                         <thead>
