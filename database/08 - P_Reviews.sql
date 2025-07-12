@@ -1145,3 +1145,66 @@ BEGIN
     SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
 END //
 DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_get_feedback_suggestions_details //
+CREATE PROCEDURE sp_get_feedback_suggestions_details(
+    -- Parámetros de entrada
+    IN p_id_requisito INT,
+    IN p_id_usuario INT,
+    -- Parámetros de salida
+    OUT p_codigo_retorno INT,
+    OUT p_mensaje_retorno VARCHAR(500)
+)
+BEGIN
+    -- Declaración de variables locales
+    DECLARE v_usuario_existe INT DEFAULT 0;
+    
+    -- Manejo de errores SQL
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            @sqlstate = RETURNED_SQLSTATE,
+            @errno = MYSQL_ERRNO,
+            @text = MESSAGE_TEXT;
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = CONCAT('Error en la ejecución del procedimiento: ', @text, ' (', @errno, ')');
+    END;
+
+    -- Inicialización de variables de salida
+    SET p_codigo_retorno = 0;
+    SET p_mensaje_retorno = 'Proceso iniciado correctamente';
+
+    -- Validar que el usuario existe
+    IF p_id_usuario IS NULL OR p_id_usuario <= 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El ID de usuario no es válido';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ID de usuario inválido';
+    END IF;
+    
+
+    SELECT COUNT(*) INTO v_usuario_existe
+    FROM jugadores 
+    WHERE id_jugador = p_id_usuario;
+
+    IF v_usuario_existe = 0 THEN
+        SET p_codigo_retorno = -1;
+        SET p_mensaje_retorno = 'El usuario no existe';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Usuario no existe';
+    END IF;
+
+    -- Obtener las partidas con la información requerida
+    SELECT rs.descripcion, concat(j.nombres, ' ', j.apellidos) AS docente_revisor, fr.feedback_description
+    FROM feedback_requirement fr
+    INNER JOIN jugadores j
+    ON j.id_jugador = fr.id_docente_revisor
+    INNER JOIN requisitos_sugerencias rs
+		ON rs.id_requisito_sugerencia = fr.id_requisito_sugerencia
+    WHERE fr.id_usuario_revisor = p_id_usuario
+		AND fr.id_requisito_sugerencia = p_id_requisito;
+
+    -- Si llegamos aquí, todo se ejecutó correctamente
+    SET p_codigo_retorno = 1;
+    SET p_mensaje_retorno = 'Partidas obtenidas exitosamente';
+END //
+DELIMITER ;

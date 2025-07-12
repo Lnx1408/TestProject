@@ -197,4 +197,39 @@ class ReviewerStudentsMenuInfraestructure extends Mysql
 		return $arrResponse;
 	}
 
+	public function get_feedback_suggestions_detailsDB(string $requisito, string $idJugador)
+	{
+		try {
+			$responseAnalyticsJugadores = $this->executeProcedureWithParametersOut(
+				'sp_get_feedback_suggestions_details',
+				[$requisito, $idJugador],
+				['codigo', 'mensaje']  // Parámetros de salida
+			);
+			if (!empty($responseAnalyticsJugadores) && $responseAnalyticsJugadores['outParams']['codigo'] == 1) {
+				$arrResponse = array(
+					'status' => true,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			} else {
+				$arrResponse = array(
+					'status' => false,
+					'data' => $responseAnalyticsJugadores['results'],
+					'message' => $responseAnalyticsJugadores['outParams']['mensaje']
+				);
+			}
+		} catch (PDOException $e) {
+			error_log("Error en procedimiento almacenado: " . $e->getMessage());
+			return [
+				'status' => false,
+				'message' => 'Error al obtener datos del juego: ' . $e->getMessage(),
+				'data' => []
+			];
+		} finally {
+			$this->cerrarConexion();
+		}
+
+		return $arrResponse;
+	}
+
 }

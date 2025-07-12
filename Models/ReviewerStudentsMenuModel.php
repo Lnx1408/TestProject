@@ -85,4 +85,20 @@ class ReviewerStudentsMenuModel extends ReviewerStudentsMenuInfraestructure
         }
     }
 
+    public function get_feedback_suggestions_details($postData, int $idJugador)
+    {
+        if (isset($postData['encryptedData'])) {
+            $decryptedData = decryptData($postData['encryptedData']);
+            $data = json_decode($decryptedData, true);
+
+            return $this->get_feedback_suggestions_detailsDB($data['requisito'], $idJugador);
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Datos no recibidos',
+                'data' => []
+            ];
+        }
+    }
+
 }
