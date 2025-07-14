@@ -49,8 +49,18 @@ class ReviewerStudentsMenuModel extends ReviewerStudentsMenuInfraestructure
             $decryptedData = decryptData($postData['encryptedData']);
             $data = json_decode($decryptedData, true);
             // Validar y procesar los datos
-            $es_ambiguo = $data['isAmbiguous'];
-            $es_funcional = $data['isFunctional'];
+            $es_ambiguo_d = $data['isAmbiguous'];
+            $es_funcional_d = $data['isFunctional'];
+            if ($es_funcional_d === true) {
+                $es_funcional = 1; // Convertir a entero
+            } else {
+                $es_funcional = 0; // Convertir a entero
+            }
+            if ($es_ambiguo_d === true) {
+                $es_ambiguo = 1; // Convertir a entero
+            } else {
+                $es_ambiguo = 0; // Convertir a entero
+            }
 
             // Llamar a la función de base de datos con los datos procesados
             return $this->create_suggestion_requirementsBD(
