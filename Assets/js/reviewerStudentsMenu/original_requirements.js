@@ -312,7 +312,7 @@ class ReviewClassification {
         `;
   }
 
-  validateAndGetFormData(isEditing = false) {
+  validateAndGetFormData() {
     const description = document.getElementById("reqDescription").value.trim();
     const feedback = document.getElementById("reqFeedback").value.trim();
     const isAmbiguous = document.getElementById("reqIsAmbiguous").checked;
